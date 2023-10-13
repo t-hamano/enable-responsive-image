@@ -1,0 +1,18 @@
+{
+	"name": "t-hamano/image-block-extension",
+	"description": "Add settings to the image block that allow you to register images for mobile devices.",
+	"license": "GPL-2.0-or-later",
+	"authors": [
+		{
+			"name": "Aki Hamano"
+		}
+	],
+	"require-dev": {
+		"squizlabs/php_codesniffer": "*",
+		"wp-coding-standards/wpcs": "^3.0"
+	},
+	"scripts": {
+		"phpcs": "phpcs --config-set installed_paths vendor/wp-coding-standards/wpcs",
+		"lint": "phpcs ./ --standard=./phpcs.ruleset.xml"
+	}
+}

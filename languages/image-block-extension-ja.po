@@ -1,0 +1,68 @@
+# Copyright (C) 2023 Aki Hamano
+# This file is distributed under the GPL2 or later.
+msgid ""
+msgstr ""
+"Project-Id-Version: Image Block Extension 1.0.0\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/image-block-"
+"extension\n"
+"POT-Creation-Date: 2023-10-13T18:11:04+09:00\n"
+"PO-Revision-Date: 2023-10-13 09:11+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: ja\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 3.4\n"
+"X-Domain: image-block-extension\n"
+
+#. Plugin Name of the plugin
+msgid "Image Block Extension"
+msgstr "Image Block Extension"
+
+#. Description of the plugin
+msgid ""
+"Add settings to the image block that allow you to register images for mobile "
+"devices."
+msgstr ""
+"モバイルデバイス用の画像を登録できるように画像ブロックに設定を追加します。"
+
+#. Author of the plugin
+msgid "Aki Hamano"
+msgstr "Aki Hamano"
+
+#. Author URI of the plugin
+msgid "https://github.com/t-hamano"
+msgstr "https://github.com/t-hamano"
+
+#: build/index.js:1
+msgid "Mobile Image"
+msgstr "モバイル画像"
+
+#: build/index.js:1
+msgid "To edit the image, you need permission to upload media."
+msgstr "画像を編集するには、メディアのアップロード権限が必要です。"
+
+#: build/index.js:1
+msgid "Set mobile image"
+msgstr "モバイル画像を設定"
+
+#: build/index.js:1
+msgid "Replace"
+msgstr "置換"
+
+#: build/index.js:1
+msgid "Remove"
+msgstr "削除"
+
+#: build/index.js:1
+msgid "Max Width (px)"
+msgstr "Max Width (px)"
+
+#: build/index.js:1
+msgid "Resolution"
+msgstr "解像度"
+
+#: build/index.js:1
+msgid "Select the size of the source image."
+msgstr "ソース画像のサイズを選択してください。"

@@ -1,0 +1,63 @@
+# Copyright (C) 2023 Aki Hamano
+# This file is distributed under the GPL2 or later.
+msgid ""
+msgstr ""
+"Project-Id-Version: Image Block Extension 1.0.0\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/image-block-extension\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2023-10-13T18:11:04+09:00\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"X-Generator: WP-CLI 2.8.1\n"
+"X-Domain: image-block-extension\n"
+
+#. Plugin Name of the plugin
+msgid "Image Block Extension"
+msgstr ""
+
+#. Description of the plugin
+msgid "Add settings to the image block that allow you to register images for mobile devices."
+msgstr ""
+
+#. Author of the plugin
+msgid "Aki Hamano"
+msgstr ""
+
+#. Author URI of the plugin
+msgid "https://github.com/t-hamano"
+msgstr ""
+
+#: build/index.js:1
+msgid "Mobile Image"
+msgstr ""
+
+#: build/index.js:1
+msgid "To edit the image, you need permission to upload media."
+msgstr ""
+
+#: build/index.js:1
+msgid "Set mobile image"
+msgstr ""
+
+#: build/index.js:1
+msgid "Replace"
+msgstr ""
+
+#: build/index.js:1
+msgid "Remove"
+msgstr ""
+
+#: build/index.js:1
+msgid "Max Width (px)"
+msgstr ""
+
+#: build/index.js:1
+msgid "Resolution"
+msgstr ""
+
+#: build/index.js:1
+msgid "Select the size of the source image."
+msgstr ""
