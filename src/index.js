@@ -55,4 +55,4 @@ const withInspectorControl = ( BlockEdit ) => ( props ) => {
 	);
 };
 
-addFilter( 'editor.BlockEdit', 'core/query', withInspectorControl );
+addFilter( 'editor.BlockEdit', 'image-block-extension/with-inspector-control', withInspectorControl );
