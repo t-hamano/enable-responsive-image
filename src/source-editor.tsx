@@ -16,6 +16,7 @@ import {
 import { MediaUpload, store as blockEditorStore } from '@wordpress/block-editor';
 import { useSelect } from '@wordpress/data';
 import { store as coreStore } from '@wordpress/core-data';
+import { chevronUp, chevronDown } from '@wordpress/icons';
 import type { Media, Source } from './types';
 
 const DEFAULT_MEDIA_VALUE = isNaN( parseInt( window?.enableResponsiveImage?.defaultMediaValue ) )
@@ -35,8 +36,11 @@ const MEDIA_TYPES = [
 
 type Props = {
 	source?: Source;
+	disableMoveUp?: boolean;
+	disableMoveDown?: boolean;
 	onChange: ( {}: Source ) => void;
 	onRemove: () => void;
+	onChangeOrder?: ( direction: number ) => void;
 	isSelected: boolean;
 };
 
@@ -48,6 +52,9 @@ export default function SourceEditor( {
 		mediaType: undefined,
 		mediaValue: undefined,
 	},
+	disableMoveUp = true,
+	disableMoveDown = true,
+	onChangeOrder,
 	onChange,
 	onRemove,
 	isSelected,
@@ -153,6 +160,24 @@ export default function SourceEditor( {
 								__( 'Set image source', 'enable-responsive-image' )
 							) }
 						</Button>
+						<HStack className="enable-responsive-image__movers" justify="flex-end">
+							<Button
+								className="enable-responsive-image__mover"
+								aria-label={ __( 'Move up', 'enable-responsive-image' ) }
+								icon={ chevronUp }
+								size="small"
+								disabled={ disableMoveUp }
+								onClick={ () => onChangeOrder?.( -1 ) }
+							/>
+							<Button
+								className="enable-responsive-image__mover"
+								aria-label={ __( 'Move up', 'enable-responsive-image' ) }
+								icon={ chevronDown }
+								size="small"
+								disabled={ disableMoveDown }
+								onClick={ () => onChangeOrder?.( 1 ) }
+							/>
+						</HStack>
 						{ !! id && (
 							<HStack className="enable-responsive-image__actions">
 								<Button

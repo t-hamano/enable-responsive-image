@@ -40,6 +40,14 @@ export default function ImageList( props: BlockEditProps< BlockAttributes > ) {
 		setAttributes( { sources: newSources } );
 	}
 
+	function onChangeOrder( direction: number, index: number ) {
+		const newSources = [ ...sources ];
+		const newIndex = index + direction;
+		const movedSource = newSources.splice( index, 1 )[ 0 ];
+		newSources.splice( newIndex, 0, movedSource );
+		setAttributes( { sources: newSources } );
+	}
+
 	function onRemoveSource( index: number ) {
 		const newSources = [ ...sources ];
 		newSources.splice( index, 1 );
@@ -72,7 +80,10 @@ export default function ImageList( props: BlockEditProps< BlockAttributes > ) {
 								<Fragment key={ index }>
 									<SourceEditor
 										{ ...props }
+										disableMoveUp={ index === 0 }
+										disableMoveDown={ index === sources.length - 1 }
 										source={ source }
+										onChangeOrder={ ( direction ) => onChangeOrder( direction, index ) }
 										onChange={ ( newSource ) => onChange( newSource, index ) }
 										onRemove={ () => onRemoveSource( index ) }
 									/>

@@ -27,6 +27,7 @@
 	&:focus,
 	&:focus-within {
 
+		.enable-responsive-image__movers,
 		.enable-responsive-image__actions {
 			opacity: 1;
 		}
@@ -58,6 +59,19 @@
 		background: $gray-300;
 		color: $gray-900;
 	}
+}
+
+.enable-responsive-image__movers {
+	top: 0;
+	opacity: 0;
+	padding: $grid-unit-10;
+	position: absolute;
+	transition: opacity 50ms ease-out;
+}
+
+.enable-responsive-image__mover {
+	backdrop-filter: blur(16px) saturate(180%);
+	background: rgba(255, 255, 255, 0.75);
 }
 
 .enable-responsive-image__actions {
