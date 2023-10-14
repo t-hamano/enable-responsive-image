@@ -35,7 +35,6 @@ function image_block_extension_enqueue_block_editor_assets() {
 	wp_set_script_translations(
 		'image-block-extension',
 		'image-block-extension',
-		$plugin_path . '/languages'
 	);
 
 	wp_enqueue_style(

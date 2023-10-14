@@ -10,16 +10,12 @@
 		"lint": "npm run lint:php && npm run lint:style && npm run lint:js",
 		"lint:php": "composer lint",
 		"lint:js": "wp-scripts lint-js",
-		"lint:style": "wp-scripts lint-style",
-		"make-pot": "wp i18n make-pot . languages/image-block-extension.pot --exclude=src",
-    "make-json-ja": "wp i18n make-json ./languages/image-block-extension-ja.po --no-purge"
+		"lint:style": "wp-scripts lint-style"
 	},
 	"devDependencies": {
-		"@wordpress/babel-plugin-makepot": "5.27.0",
 		"@wordpress/base-styles": "4.34.0",
 		"@wordpress/env": "^8.9.0",
 		"@wordpress/scripts": "^26.14.0",
-		"po2json": "0.4.5",
 		"prettier": "npm:wp-prettier@3.0.3"
 	},
 	"engines": {
