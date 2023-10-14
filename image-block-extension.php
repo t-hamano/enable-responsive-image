@@ -18,8 +18,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-defined( 'ABSPATH' ) || exit;
-
 function image_block_extension_enqueue_block_editor_assets() {
 	$plugin_path = untrailingslashit( plugin_dir_path( __FILE__ ) );
 	$plugin_url  = untrailingslashit( plugin_dir_url( __FILE__ ) );
