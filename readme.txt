@@ -1,5 +1,5 @@
 === Image Block Extension ===
-Contributors: wildworks
+Contributors: wildworks, Toro_Unit
 Requires at least: 6.3
 Tested up to: 6.3
 Stable tag: 1.0.0
