@@ -12,7 +12,7 @@ import SourceList from './source-list';
 import './editor.scss';
 import type { BlockAttributes } from './types';
 
-const addMobileImageAttributes = ( settings: { [ key: string ]: any } ) => {
+const addImageSourceAttributes = ( settings: { [ key: string ]: any } ) => {
 	if ( 'core/image' !== settings.name ) {
 		return settings;
 	}
@@ -35,8 +35,8 @@ const addMobileImageAttributes = ( settings: { [ key: string ]: any } ) => {
 
 addFilter(
 	'blocks.registerBlockType',
-	'enable-responsive-image/add-mobile-image-setting',
-	addMobileImageAttributes
+	'enable-responsive-image/add-image-source-attributes',
+	addImageSourceAttributes
 );
 
 const withInspectorControl =
