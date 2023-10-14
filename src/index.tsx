@@ -35,7 +35,7 @@ const addMobileImageAttributes = ( settings: { [ key: string ]: any } ) => {
 
 addFilter(
 	'blocks.registerBlockType',
-	'image-block-extension/add-mobile-image-setting',
+	'enable-responsive-image/add-mobile-image-setting',
 	addMobileImageAttributes
 );
 
@@ -60,6 +60,6 @@ const withInspectorControl =
 
 addFilter(
 	'editor.BlockEdit',
-	'image-block-extension/with-inspector-control',
+	'enable-responsive-image/with-inspector-control',
 	withInspectorControl
 );

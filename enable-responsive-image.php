@@ -1,6 +1,6 @@
 <?php
 /**
- * Plugin Name: Image Block Extension
+ * Plugin Name: Enable Responsive Image
  * Description: Add settings to the image block that allow you to register images for mobile devices.
  * Requires at least: 6.3
  * Requires PHP: 7.4
@@ -9,7 +9,7 @@
  * Author URI: https://github.com/t-hamano
  * License: GPL2 or later
  * License URI: https://www.gnu.org/licenses/gpl-2.0.html
- * Text Domain: image-block-extension
+ * Text Domain: enable-responsive-image
  * @author Aki Hamano
  * @license GPL-2.0+
  */
@@ -18,41 +18,41 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-function image_block_extension_enqueue_block_editor_assets() {
+function enable_responsive_image_enqueue_block_editor_assets() {
 	$plugin_path = untrailingslashit( plugin_dir_path( __FILE__ ) );
 	$plugin_url  = untrailingslashit( plugin_dir_url( __FILE__ ) );
 	$asset_file  = include untrailingslashit( plugin_dir_path( __FILE__ ) ) . '/build/index.asset.php';
 
 	wp_enqueue_script(
-		'image-block-extension',
+		'enable-responsive-image',
 		$plugin_url . '/build/index.js',
 		$asset_file['dependencies'],
 		filemtime( $plugin_path . '/build/index.js' )
 	);
 
 	wp_localize_script(
-		'image-block-extension',
-		'imageBlockExtension',
+		'enable-responsive-image',
+		'enableResponsiveImage',
 		array(
-			'defaultMediaValue' => (int) apply_filters( 'image_block_extension_default_media_value', 600 ),
+			'defaultMediaValue' => (int) apply_filters( 'enable_responsive_image_default_media_value', 600 ),
 		)
 	);
 
 	wp_set_script_translations(
-		'image-block-extension',
-		'image-block-extension',
+		'enable-responsive-image',
+		'enable-responsive-image',
 	);
 
 	wp_enqueue_style(
-		'image-block-extension',
+		'enable-responsive-image',
 		$plugin_url . '/build/index.css',
 		array(),
 		filemtime( $plugin_path . '/build/index.css' )
 	);
 }
-add_action( 'enqueue_block_editor_assets', 'image_block_extension_enqueue_block_editor_assets' );
+add_action( 'enqueue_block_editor_assets', 'enable_responsive_image_enqueue_block_editor_assets' );
 
-function image_block_extension_render_block_image( $block_content, $block ) {
+function enable_responsive_image_render_block_image( $block_content, $block ) {
 	if ( ! isset( $block['attrs']['sources'] ) ) {
 		return $block_content;
 	}
@@ -88,7 +88,7 @@ function image_block_extension_render_block_image( $block_content, $block ) {
 	 *
 	 * @param int $media_value The media value (px). Default is 600.
 	 */
-	$default_media_value = (int) apply_filters( 'image_block_extension_default_media_value', 600 );
+	$default_media_value = (int) apply_filters( 'enable_responsive_image_default_media_value', 600 );
 
 	$source_tags = '';
 
@@ -113,4 +113,4 @@ function image_block_extension_render_block_image( $block_content, $block ) {
 	return $block_content;
 }
 
-add_filter( 'render_block_core/image', 'image_block_extension_render_block_image', 10, 2 );
+add_filter( 'render_block_core/image', 'enable_responsive_image_render_block_image', 10, 2 );

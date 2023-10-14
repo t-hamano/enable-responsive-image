@@ -16,12 +16,12 @@ export interface Media {
 	[ key: string ]: any;
 }
 
-export interface ImageBlockExtensionVars {
+export interface enableResponsiveImageVars {
 	defaultMediaValue: string;
 }
 
 declare global {
 	interface Window {
-		imageBlockExtension: ImageBlockExtensionVars;
+		enableResponsiveImage: enableResponsiveImageVars;
 	}
 }

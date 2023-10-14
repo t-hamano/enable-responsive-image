@@ -52,15 +52,15 @@ export default function ImageList( props: BlockEditProps< BlockAttributes > ) {
 
 	return (
 		<PanelBody
-			title={ __( 'Image sources', 'image-block-extension' ) }
-			className="image-block-extension"
+			title={ __( 'Image sources', 'enable-responsive-image' ) }
+			className="enable-responsive-image"
 		>
 			<MediaUploadCheck
 				fallback={
 					<p>
 						{ __(
 							'To edit the image, you need permission to upload media.',
-							'image-block-extension'
+							'enable-responsive-image'
 						) }
 					</p>
 				}
@@ -81,10 +81,10 @@ export default function ImageList( props: BlockEditProps< BlockAttributes > ) {
 							) ) }
 							<Button
 								variant="primary"
-								className="image-block-extension__add-source"
+								className="enable-responsive-image__add-source"
 								onClick={ onAddSource }
 							>
-								{ __( 'Add image source', 'image-block-extension' ) }
+								{ __( 'Add image source', 'enable-responsive-image' ) }
 							</Button>
 						</>
 					) : (

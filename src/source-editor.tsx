@@ -18,17 +18,17 @@ import { useSelect } from '@wordpress/data';
 import { store as coreStore } from '@wordpress/core-data';
 import type { Media, Source } from './types';
 
-const DEFAULT_MEDIA_VALUE = isNaN( parseInt( window?.imageBlockExtension?.defaultMediaValue ) )
+const DEFAULT_MEDIA_VALUE = isNaN( parseInt( window?.enableResponsiveImage?.defaultMediaValue ) )
 	? 600
-	: parseInt( window?.imageBlockExtension?.defaultMediaValue );
+	: parseInt( window?.enableResponsiveImage?.defaultMediaValue );
 
 const MEDIA_TYPES = [
 	{
-		label: __( 'max-width', 'image-block-extension' ),
+		label: __( 'max-width', 'enable-responsive-image' ),
 		value: 'max-width',
 	},
 	{
-		label: __( 'min-width', 'image-block-extension' ),
+		label: __( 'min-width', 'enable-responsive-image' ),
 		value: 'min-width',
 	},
 ];
@@ -140,30 +140,30 @@ export default function SourceEditor( {
 				onSelect={ onSelectImage }
 				allowedTypes={ [ 'image' ] }
 				render={ ( { open } ) => (
-					<div className="image-block-extension__container">
+					<div className="enable-responsive-image__container">
 						<Button
 							className={
-								! id ? 'image-block-extension__toggle' : 'image-block-extension__preview'
+								! id ? 'enable-responsive-image__toggle' : 'enable-responsive-image__preview'
 							}
 							onClick={ open }
 						>
 							{ !! id && srcset ? (
 								<img src={ srcset } alt="" />
 							) : (
-								__( 'Set image source', 'image-block-extension' )
+								__( 'Set image source', 'enable-responsive-image' )
 							) }
 						</Button>
 						{ !! id && (
-							<HStack className="image-block-extension__actions">
+							<HStack className="enable-responsive-image__actions">
 								<Button
-									className="image-block-extension__action"
+									className="enable-responsive-image__action"
 									onClick={ open }
 									aria-hidden="true"
 								>
-									{ __( 'Replace', 'image-block-extension' ) }
+									{ __( 'Replace', 'enable-responsive-image' ) }
 								</Button>
-								<Button className="image-block-extension__action" onClick={ onRemove }>
-									{ __( 'Remove', 'image-block-extension' ) }
+								<Button className="enable-responsive-image__action" onClick={ onRemove }>
+									{ __( 'Remove', 'enable-responsive-image' ) }
 								</Button>
 							</HStack>
 						) }
@@ -176,7 +176,7 @@ export default function SourceEditor( {
 					<ToggleGroupControl
 						__nextHasNoMarginBottom
 						isBlock
-						label={ __( 'Media query type', 'image-block-extension' ) }
+						label={ __( 'Media query type', 'enable-responsive-image' ) }
 						onChange={ onChangeMediaType }
 						value={ mediaType || MEDIA_TYPES[ 0 ].value }
 					>
@@ -185,7 +185,7 @@ export default function SourceEditor( {
 						) ) }
 					</ToggleGroupControl>
 					<RangeControl
-						label={ __( 'Media query value', 'image-block-extension' ) }
+						label={ __( 'Media query value', 'enable-responsive-image' ) }
 						value={ mediaValue || DEFAULT_MEDIA_VALUE }
 						onChange={ onChangeMediaValue }
 						min={ 100 }
@@ -194,11 +194,11 @@ export default function SourceEditor( {
 						initialPosition={ DEFAULT_MEDIA_VALUE }
 					/>
 					<SelectControl
-						label={ __( 'Resolution', 'image-block-extension' ) }
+						label={ __( 'Resolution', 'enable-responsive-image' ) }
 						value={ srcsetSlug }
 						options={ imageSizeOptions }
 						onChange={ onChangeResolution }
-						help={ __( 'Select the size of the source image.', 'image-block-extension' ) }
+						help={ __( 'Select the size of the source image.', 'enable-responsive-image' ) }
 						// @ts-ignore
 						size={ '__unstable-large' }
 					/>

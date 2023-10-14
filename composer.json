@@ -1,5 +1,5 @@
 {
-	"name": "t-hamano/image-block-extension",
+	"name": "t-hamano/enable-responsive-image",
 	"description": "Add settings to the image block that allow you to register images for mobile devices.",
 	"license": "GPL-2.0-or-later",
 	"authors": [

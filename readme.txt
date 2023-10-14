@@ -1,4 +1,4 @@
-=== Image Block Extension ===
+=== Enable Responsive Image ===
 Contributors: wildworks, Toro_Unit
 Requires at least: 6.3
 Tested up to: 6.3
