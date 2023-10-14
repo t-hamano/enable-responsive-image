@@ -7,7 +7,7 @@ import { InspectorControls } from '@wordpress/block-editor';
 /**
  * Internal dependencies
  */
-import MobileImageEditor from './mobile-image-editor';
+import SourceList from './source-list';
 import './editor.scss';
 
 const addMobileImageAttributes = ( settings ) => {
@@ -19,17 +19,12 @@ const addMobileImageAttributes = ( settings ) => {
 		...settings,
 		attributes: {
 			...settings.attributes,
-			mobileUrl: {
-				type: 'string',
-			},
-			mobileId: {
-				type: 'number',
-			},
-			mobileSizeSlug: {
-				type: 'string',
-			},
-			mobileMaxWidth: {
-				type: 'number',
+			sources: {
+				type: 'array',
+				items: {
+					type: 'number',
+				},
+				default: [],
 			},
 		},
 	};
@@ -47,7 +42,7 @@ const withInspectorControl = ( BlockEdit ) => ( props ) => {
 		<>
 			<BlockEdit { ...props } />
 			<InspectorControls>
-				<MobileImageEditor { ...props } />
+				<SourceList { ...props } />
 			</InspectorControls>
 		</>
 	) : (

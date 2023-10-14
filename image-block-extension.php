@@ -47,7 +47,22 @@ function image_block_extension_enqueue_block_editor_assets() {
 add_action( 'enqueue_block_editor_assets', 'image_block_extension_enqueue_block_editor_assets' );
 
 function image_block_extension_render_block_image( $block_content, $block ) {
-	if ( ! isset( $block['attrs']['mobileUrl'] ) || ! isset( $block['attrs']['mobileId'] ) ) {
+	if ( ! isset( $block['attrs']['sources'] ) ) {
+		return $block_content;
+	}
+
+	if ( ! is_array( $block['attrs']['sources'] ) ) {
+		return $block_content;
+	}
+
+	$filtered_sources = array_filter(
+		$block['attrs']['sources'],
+		function ( $source ) {
+			return isset( $source['srcset'] ) && isset( $source['mediaType'] ) && isset( $source['mediaValue'] );
+		}
+	);
+
+	if ( empty( $filtered_sources ) ) {
 		return $block_content;
 	}
 
@@ -57,13 +72,24 @@ function image_block_extension_render_block_image( $block_content, $block ) {
 		return $block_content;
 	}
 
-	$image_tag = $matches[0];
-	$max_width = isset( $block['attrs']['mobileMaxWidth'] ) ? (int) $block['attrs']['mobileMaxWidth'] : 600;
+	$image_tag           = $matches[0];
+	$allowed_media_types = array( 'min-width', 'max-width' );
+
+	$source_tags = '';
+
+	foreach ( $filtered_sources as $source ) {
+		$media_type   = in_array( $source['mediaType'], $allowed_media_types, true ) ? $source['mediaType'] : 'max-width';
+		$source_tags .= sprintf(
+			'<source srcset="%1$s" media="(%2$s: %3$dpx)"/>',
+			esc_url( $source['srcset'] ),
+			$source['mediaType'],
+			$source['mediaValue'] ? (int) $source['mediaValue'] : 600,
+		);
+	}
 
 	$new_image_tag = sprintf(
-		'<picture><source srcset="%1$s" media="(max-width: %2$dpx)"/>%3$s</picture>',
-		$block['attrs']['mobileUrl'],
-		$max_width,
+		'<picture>%1$s%2$s</picture>',
+		$source_tags,
 		$image_tag
 	);
 

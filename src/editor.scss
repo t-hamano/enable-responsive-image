@@ -6,6 +6,18 @@
 	.components-base-control {
 		margin-bottom: 0;
 	}
+
+	.components-base-control__help {
+		margin-bottom: 0;
+	}
+
+	hr {
+		margin: 1em 0;
+	}
+}
+
+.image-block-extension__add-source {
+	justify-content: center;
 }
 
 .image-block-extension__container {
