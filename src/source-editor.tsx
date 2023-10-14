@@ -6,13 +6,17 @@ import {
 	Button,
 	RangeControl,
 	SelectControl,
+	// @ts-ignore: has no exported member
 	__experimentalHStack as HStack,
+	// @ts-ignore: has no exported member
 	__experimentalToggleGroupControl as ToggleGroupControl,
+	// @ts-ignore: has no exported member
 	__experimentalToggleGroupControlOption as ToggleGroupControlOption,
 } from '@wordpress/components';
 import { MediaUpload, store as blockEditorStore } from '@wordpress/block-editor';
 import { useSelect } from '@wordpress/data';
 import { store as coreStore } from '@wordpress/core-data';
+import type { Media, Source } from './types';
 
 const DEFAULT_MEDIA_VALUE = isNaN( parseInt( window?.imageBlockExtension?.defaultMediaValue ) )
 	? 600
@@ -29,11 +33,32 @@ const MEDIA_TYPES = [
 	},
 ];
 
-export default function SourceEditor( { source = {}, onChange, onRemove, isSelected } ) {
+type Props = {
+	source?: Source;
+	onChange: ( {}: Source ) => void;
+	onRemove: () => void;
+	isSelected: boolean;
+};
+
+export default function SourceEditor( {
+	source = {
+		srcset: undefined,
+		id: undefined,
+		slug: undefined,
+		mediaType: undefined,
+		mediaValue: undefined,
+	},
+	onChange,
+	onRemove,
+	isSelected,
+}: Props ) {
 	const { id, srcset, mediaType, mediaValue, slug: srcsetSlug } = source;
 	const { image } = useSelect(
 		( select ) => {
-			const { getMedia } = select( coreStore );
+			const {
+				// @ts-ignore
+				getMedia,
+			} = select( coreStore );
 			return {
 				image: id && isSelected ? getMedia( id, { context: 'view' } ) : null,
 			};
@@ -41,20 +66,23 @@ export default function SourceEditor( { source = {}, onChange, onRemove, isSelec
 		[ id, isSelected ]
 	);
 	const imageSizes = useSelect(
-		( select ) => select( blockEditorStore ).getSettings().imageSizes,
+		( select ) =>
+			select( blockEditorStore )
+				// @ts-ignore
+				.getSettings().imageSizes,
 		[]
 	);
 
 	const imageSizeOptions = imageSizes
-		.filter( ( { slug } ) => {
+		.filter( ( { slug }: { slug: string } ) => {
 			return image?.media_details?.sizes?.[ slug ]?.source_url;
 		} )
-		.map( ( { name, slug } ) => ( {
+		.map( ( { name, slug }: { name: string; slug: string } ) => ( {
 			value: slug,
 			label: name,
 		} ) );
 
-	function onSelectImage( media ) {
+	function onSelectImage( media: Media ) {
 		if ( ! media || ! media.url ) {
 			onChange( {
 				srcset: undefined,
@@ -75,21 +103,25 @@ export default function SourceEditor( { source = {}, onChange, onRemove, isSelec
 		} );
 	}
 
-	function onChangeMediaType( value ) {
+	function onChangeMediaType( value: string | number | undefined ) {
+		const filteredMediaType = MEDIA_TYPES.find( ( type ) => type.value === value );
+		if ( ! filteredMediaType ) {
+			return;
+		}
 		onChange( {
 			...source,
-			mediaType: value,
+			mediaType: filteredMediaType.value,
 		} );
 	}
 
-	function onChangeMediaValue( value ) {
+	function onChangeMediaValue( value: number | undefined ) {
 		onChange( {
 			...source,
 			mediaValue: value,
 		} );
 	}
 
-	function onChangeResolution( newSlug ) {
+	function onChangeResolution( newSlug: string ) {
 		const newUrl = image?.media_details?.sizes?.[ newSlug ]?.source_url;
 		if ( ! newUrl ) {
 			return null;
@@ -167,6 +199,7 @@ export default function SourceEditor( { source = {}, onChange, onRemove, isSelec
 						options={ imageSizeOptions }
 						onChange={ onChangeResolution }
 						help={ __( 'Select the size of the source image.', 'image-block-extension' ) }
+						// @ts-ignore
 						size={ '__unstable-large' }
 					/>
 				</>

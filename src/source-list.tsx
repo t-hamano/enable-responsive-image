@@ -3,19 +3,26 @@
  */
 import { __ } from '@wordpress/i18n';
 import { Fragment } from '@wordpress/element';
-import { Button, PanelBody, __experimentalVStack as VStack } from '@wordpress/components';
+import {
+	Button,
+	PanelBody,
+	// @ts-ignore: has no exported member
+	__experimentalVStack as VStack,
+} from '@wordpress/components';
 import { MediaUploadCheck } from '@wordpress/block-editor';
+import type { BlockEditProps } from '@wordpress/blocks';
 
 /**
  * Internal dependencies
  */
 import SourceEditor from './source-editor';
+import type { BlockAttributes, Source } from './types';
 
-export default function ImageList( props ) {
+export default function ImageList( props: BlockEditProps< BlockAttributes > ) {
 	const { attributes, setAttributes } = props;
 	const { sources, url } = attributes;
 
-	function onChange( newSource, index ) {
+	function onChange( newSource: Source, index: number ) {
 		const newSources = [ ...sources ];
 		newSources[ index ] = newSource;
 		setAttributes( { sources: newSources } );
@@ -23,11 +30,17 @@ export default function ImageList( props ) {
 
 	function onAddSource() {
 		const newSources = [ ...sources ];
-		newSources.push( {} );
+		newSources.push( {
+			srcset: undefined,
+			id: undefined,
+			slug: undefined,
+			mediaType: undefined,
+			mediaValue: undefined,
+		} );
 		setAttributes( { sources: newSources } );
 	}
 
-	function onRemoveSource( index ) {
+	function onRemoveSource( index: number ) {
 		const newSources = [ ...sources ];
 		newSources.splice( index, 1 );
 		setAttributes( { sources: newSources } );
@@ -43,14 +56,14 @@ export default function ImageList( props ) {
 			className="image-block-extension"
 		>
 			<MediaUploadCheck
-				fallback={ () => (
+				fallback={
 					<p>
 						{ __(
 							'To edit the image, you need permission to upload media.',
 							'image-block-extension'
 						) }
 					</p>
-				) }
+				}
 			>
 				<VStack>
 					{ sources.length > 0 ? (

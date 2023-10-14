@@ -1,6 +1,9 @@
 module.exports = {
-	extends: [ 'plugin:@wordpress/eslint-plugin/recommended' ],
-	parser: '@babel/eslint-parser',
+	extends: [
+		'plugin:@wordpress/eslint-plugin/recommended',
+		'plugin:@typescript-eslint/eslint-recommended',
+	],
+	parser: '@typescript-eslint/parser',
 	rules: {
 		'import/no-extraneous-dependencies': 'off',
 		'import/no-unresolved': 'off',

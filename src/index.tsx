@@ -3,14 +3,16 @@
  */
 import { addFilter } from '@wordpress/hooks';
 import { InspectorControls } from '@wordpress/block-editor';
+import type { BlockEditProps } from '@wordpress/blocks';
 
 /**
  * Internal dependencies
  */
 import SourceList from './source-list';
 import './editor.scss';
+import type { BlockAttributes } from './types';
 
-const addMobileImageAttributes = ( settings ) => {
+const addMobileImageAttributes = ( settings: { [ key: string ]: any } ) => {
 	if ( 'core/image' !== settings.name ) {
 		return settings;
 	}
@@ -37,17 +39,27 @@ addFilter(
 	addMobileImageAttributes
 );
 
-const withInspectorControl = ( BlockEdit ) => ( props ) => {
-	return props.name === 'core/image' ? (
-		<>
+const withInspectorControl =
+	( BlockEdit: React.ComponentType< BlockEditProps< BlockAttributes > > ) =>
+	(
+		props: BlockEditProps< BlockAttributes > & {
+			name: string;
+		}
+	) => {
+		return props.name === 'core/image' ? (
+			<>
+				<BlockEdit { ...props } />
+				<InspectorControls>
+					<SourceList { ...props } />
+				</InspectorControls>
+			</>
+		) : (
 			<BlockEdit { ...props } />
-			<InspectorControls>
-				<SourceList { ...props } />
-			</InspectorControls>
-		</>
-	) : (
-		<BlockEdit { ...props } />
-	);
-};
+		);
+	};
 
-addFilter( 'editor.BlockEdit', 'image-block-extension/with-inspector-control', withInspectorControl );
+addFilter(
+	'editor.BlockEdit',
+	'image-block-extension/with-inspector-control',
+	withInspectorControl
+);
