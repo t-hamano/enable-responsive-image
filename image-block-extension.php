@@ -32,6 +32,14 @@ function image_block_extension_enqueue_block_editor_assets() {
 		filemtime( $plugin_path . '/build/index.js' )
 	);
 
+	wp_localize_script(
+		'image-block-extension',
+		'imageBlockExtension',
+		array(
+			'defaultMediaValue' => (int) apply_filters( 'image_block_extension_default_media_value', 600 ),
+		)
+	);
+
 	wp_set_script_translations(
 		'image-block-extension',
 		'image-block-extension',
@@ -75,6 +83,15 @@ function image_block_extension_render_block_image( $block_content, $block ) {
 	$image_tag           = $matches[0];
 	$allowed_media_types = array( 'min-width', 'max-width' );
 
+	/**
+	 * Filters the default media value (px).
+	 *
+	 * @since 1.0.0
+	 *
+	 * @param int $media_value The media value (px). Default is 600.
+	 */
+	$default_media_value = (int) apply_filters( 'image_block_extension_default_media_value', 600 );
+
 	$source_tags = '';
 
 	foreach ( $filtered_sources as $source ) {
@@ -83,7 +100,7 @@ function image_block_extension_render_block_image( $block_content, $block ) {
 			'<source srcset="%1$s" media="(%2$s: %3$dpx)"/>',
 			esc_url( $source['srcset'] ),
 			$source['mediaType'],
-			$source['mediaValue'] ? (int) $source['mediaValue'] : 600,
+			$source['mediaValue'] ? (int) $source['mediaValue'] : $default_media_value,
 		);
 	}
 

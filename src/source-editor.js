@@ -14,7 +14,10 @@ import { MediaUpload, store as blockEditorStore } from '@wordpress/block-editor'
 import { useSelect } from '@wordpress/data';
 import { store as coreStore } from '@wordpress/core-data';
 
-const DEFAULT_MEDIA_VALUE = 600;
+const DEFAULT_MEDIA_VALUE = isNaN( parseInt( window?.imageBlockExtension?.defaultMediaValue ) )
+	? 600
+	: parseInt( window?.imageBlockExtension?.defaultMediaValue );
+
 const MEDIA_TYPES = [
 	{
 		label: __( 'max-width', 'image-block-extension' ),
