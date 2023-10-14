@@ -1,7 +1,7 @@
 <?php
 /**
  * Plugin Name: Enable Responsive Image
- * Description: Add settings to the image block that allow you to register images for mobile devices.
+ * Description: Adds settings to the Image block to display different images depending on the width of the screen on the front end.
  * Requires at least: 6.3
  * Requires PHP: 7.4
  * Version: 1.0.0
@@ -50,6 +50,7 @@ function enable_responsive_image_enqueue_block_editor_assets() {
 		filemtime( $plugin_path . '/build/index.css' )
 	);
 }
+
 add_action( 'enqueue_block_editor_assets', 'enable_responsive_image_enqueue_block_editor_assets' );
 
 function enable_responsive_image_render_block_image( $block_content, $block ) {
