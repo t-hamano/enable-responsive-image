@@ -21,6 +21,10 @@ Enable Responsive Image adds settings to the Image block to display different im
 
 == Frequently Asked Questions ==
 
+= How does this plugin work on the frontend? =
+
+This plugin rewrites the HTML markup for the image block rendered on the front end. Wrap the img element with a picture element, and add source elements with srcset and media attributes inside the picture element based on the settings of the added image.
+
 = What filters can I use? =
 
 You can find a list of the available filters in the [Github readme](https://github.com/t-hamano/enable-responsive-image#filters).
