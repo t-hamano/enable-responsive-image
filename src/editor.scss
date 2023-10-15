@@ -64,6 +64,7 @@
 .enable-responsive-image__movers {
 	top: 0;
 	opacity: 0;
+	right: 0;
 	padding: $grid-unit-10;
 	position: absolute;
 	transition: opacity 50ms ease-out;

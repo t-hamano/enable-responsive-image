@@ -150,7 +150,7 @@ export default function SourceEditor( {
 								__( 'Set image source', 'enable-responsive-image' )
 							) }
 						</Button>
-						<HStack className="enable-responsive-image__movers" justify="flex-end">
+						<HStack className="enable-responsive-image__movers" expanded={ false }>
 							<Button
 								className="enable-responsive-image__mover"
 								aria-label={ __( 'Move up', 'enable-responsive-image' ) }
