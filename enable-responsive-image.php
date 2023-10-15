@@ -114,4 +114,8 @@ function enable_responsive_image_render_block_image( $block_content, $block ) {
 	return $block_content;
 }
 
-add_filter( 'render_block_core/image', 'enable_responsive_image_render_block_image', 10, 2 );
+// The image block has the same hook with priority 10 and
+// adds a button element for the Lightbox after the img tag.
+// This hook must be run after so that this button element is
+// not wrapped in a picture tag.
+add_filter( 'render_block_core/image', 'enable_responsive_image_render_block_image', 20, 2 );

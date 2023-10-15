@@ -27,8 +27,9 @@ import { DEFAULT_MEDIA_VALUE, MEDIA_TYPES } from './constants';
 
 type Props = {
 	source?: Source;
-	disableMoveUp?: boolean;
-	disableMoveDown?: boolean;
+	disableMoveUp: boolean;
+	disableMoveDown: boolean;
+	disableActions?: boolean;
 	onChange: ( {}: Source ) => void;
 	onRemove: () => void;
 	onChangeOrder?: ( direction: number ) => void;
@@ -43,8 +44,9 @@ export default function SourceEditor( {
 		mediaType: undefined,
 		mediaValue: undefined,
 	},
-	disableMoveUp = true,
-	disableMoveDown = true,
+	disableMoveUp = false,
+	disableMoveDown = false,
+	disableActions = false,
 	onChangeOrder,
 	onChange,
 	onRemove,
@@ -152,31 +154,37 @@ export default function SourceEditor( {
 							) }
 						</Button>
 						<HStack className="enable-responsive-image__movers" expanded={ false }>
-							<Button
-								className="enable-responsive-image__mover"
-								aria-label={ __( 'Move up', 'enable-responsive-image' ) }
-								icon={ chevronUp }
-								size="small"
-								disabled={ disableMoveUp }
-								onClick={ () => onChangeOrder?.( -1 ) }
-							/>
-							<Button
-								className="enable-responsive-image__mover"
-								aria-label={ __( 'Move up', 'enable-responsive-image' ) }
-								icon={ chevronDown }
-								size="small"
-								disabled={ disableMoveDown }
-								onClick={ () => onChangeOrder?.( 1 ) }
-							/>
+							{ ! ( disableMoveUp && disableMoveDown ) && (
+								<>
+									<Button
+										className="enable-responsive-image__mover"
+										label={ __( 'Move up', 'enable-responsive-image' ) }
+										icon={ chevronUp }
+										size="small"
+										disabled={ disableMoveUp }
+										onClick={ () => onChangeOrder?.( -1 ) }
+									/>
+									<Button
+										className="enable-responsive-image__mover"
+										label={ __( 'Move down', 'enable-responsive-image' ) }
+										icon={ chevronDown }
+										size="small"
+										disabled={ disableMoveDown }
+										onClick={ () => onChangeOrder?.( 1 ) }
+									/>
+								</>
+							) }
 						</HStack>
-						{ !! id && (
+						{ ! disableActions && (
 							<HStack className="enable-responsive-image__actions">
 								<Button
 									className="enable-responsive-image__action"
 									onClick={ open }
 									aria-hidden="true"
 								>
-									{ __( 'Replace', 'enable-responsive-image' ) }
+									{ !! id
+										? __( 'Replace', 'enable-responsive-image' )
+										: __( 'Select', 'enable-responsive-image' ) }
 								</Button>
 								<Button className="enable-responsive-image__action" onClick={ onRemove }>
 									{ __( 'Remove', 'enable-responsive-image' ) }

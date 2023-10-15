@@ -43,7 +43,7 @@
 	overflow: hidden;
 	display: flex;
 	justify-content: center;
-	max-height: 150px;
+	height: 150px;
 }
 
 .enable-responsive-image__preview {
@@ -53,7 +53,6 @@
 .enable-responsive-image__toggle {
 	border-radius: $radius-block-ui;
 	background-color: $gray-100;
-	min-height: 90px;
 
 	&:hover {
 		background: $gray-300;

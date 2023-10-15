@@ -17,6 +17,7 @@ import type { BlockEditProps } from '@wordpress/blocks';
  */
 import SourceEditor from './source-editor';
 import type { BlockAttributes, Source } from './types';
+import { MAX_SOURCES } from './constants';
 
 export default function ImageList( props: BlockEditProps< BlockAttributes > ) {
 	const { attributes, setAttributes } = props;
@@ -78,25 +79,39 @@ export default function ImageList( props: BlockEditProps< BlockAttributes > ) {
 										{ ...props }
 										disableMoveUp={ index === 0 }
 										disableMoveDown={ index === sources.length - 1 }
+										disableActions={
+											sources.length === 1 && ! sources[ 0 ].id && ! sources[ 0 ].srcset
+										}
 										source={ source }
 										onChangeOrder={ ( direction ) => onChangeOrder( direction, index ) }
 										onChange={ ( newSource ) => onChange( newSource, index ) }
 										onRemove={ () => onRemoveSource( index ) }
 									/>
-									<hr />
+									{ index < sources.length - 1 && <hr /> }
 								</Fragment>
 							) ) }
-							<Button
-								variant="primary"
-								className="enable-responsive-image__add-source"
-								onClick={ onAddSource }
-							>
-								{ __( 'Add image source', 'enable-responsive-image' ) }
-							</Button>
+							{ ( sources.length > 1 ||
+								( sources.length === 1 && sources[ 0 ].id ) ||
+								sources[ 0 ].srcset ) && (
+								<>
+									<hr />
+									<Button
+										variant="primary"
+										className="enable-responsive-image__add-source"
+										disabled={ sources.length >= MAX_SOURCES }
+										onClick={ onAddSource }
+									>
+										{ __( 'Add image source', 'enable-responsive-image' ) }
+									</Button>
+								</>
+							) }
 						</>
 					) : (
 						<SourceEditor
 							{ ...props }
+							disableMoveUp={ true }
+							disableMoveDown={ true }
+							disableActions={ true }
 							onChange={ ( newSource ) => onChange( newSource, 0 ) }
 							onRemove={ () => onRemoveSource( 0 ) }
 						/>

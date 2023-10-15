@@ -45,28 +45,6 @@ addFilter(
 	addImageSourceAttributes
 );
 
-function ImageBlockControls( { isPreview }: { isPreview: false } ) {
-	const { setIsPreview } = useDispatch( 'enable-responsive-image' );
-
-	return (
-		// @ts-ignore
-		<BlockControls group="parent">
-			<ToolbarGroup>
-				<ToolbarButton
-					icon={ seen }
-					isPressed={ isPreview }
-					label={
-						isPreview
-							? __( 'Disable responsive image preview', 'enable-responsive-image' )
-							: __( 'Enable responsive image preview', 'enable-responsive-image' )
-					}
-					onClick={ () => setIsPreview( ! isPreview ) }
-				/>
-			</ToolbarGroup>
-		</BlockControls>
-	);
-}
-
 const withInspectorControl =
 	( BlockEdit: React.ComponentType< BlockEditProps< BlockAttributes > > ) =>
 	(
@@ -84,22 +62,32 @@ const withInspectorControl =
 		// @ts-ignore
 		const isPreview = useSelect( ( select ) => select( 'enable-responsive-image' ).getIsPreview() );
 
-		if ( url && isPreview ) {
-			return (
-				<>
-					<BlockEditPreview { ...props } />
-					<ImageBlockControls isPreview={ isPreview } />
-					<InspectorControls>
-						<SourceList { ...props } />
-					</InspectorControls>
-				</>
-			);
-		}
+		const { setIsPreview } = useDispatch( 'enable-responsive-image' );
 
 		return (
 			<>
-				<BlockEdit { ...props } />
-				{ url && sources?.length > 0 && <ImageBlockControls isPreview={ isPreview } /> }
+				{ url && sources?.length > 0 && isPreview ? (
+					<BlockEditPreview { ...props } />
+				) : (
+					<BlockEdit { ...props } />
+				) }
+				{ url && sources?.length > 0 && (
+					// @ts-ignore
+					<BlockControls group="parent">
+						<ToolbarGroup>
+							<ToolbarButton
+								icon={ seen }
+								isPressed={ isPreview }
+								label={
+									isPreview
+										? __( 'Disable responsive image preview', 'enable-responsive-image' )
+										: __( 'Enable responsive image preview', 'enable-responsive-image' )
+								}
+								onClick={ () => setIsPreview( ! isPreview ) }
+							/>
+						</ToolbarGroup>
+					</BlockControls>
+				) }
 				{ url && (
 					<InspectorControls>
 						<SourceList { ...props } />

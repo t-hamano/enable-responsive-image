@@ -19,3 +19,5 @@ export const MEDIA_TYPES = [
 		value: 'min-width',
 	},
 ];
+
+export const MAX_SOURCES = 5;

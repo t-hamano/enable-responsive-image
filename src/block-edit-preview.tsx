@@ -23,8 +23,7 @@ import type { BlockEditProps } from '@wordpress/blocks';
 import type { BlockAttributes } from './types';
 
 export default function BlockEditPreview( { attributes }: BlockEditProps< BlockAttributes > ) {
-	const { url, alt, caption, align, width, height, aspectRatio, scale, id, sizeSlug, sources } =
-		attributes;
+	const { url, alt, caption, align, width, height, aspectRatio, scale, sources } = attributes;
 
 	const borderProps = getBorderClassesAndStyles( attributes );
 
@@ -34,15 +33,9 @@ export default function BlockEditPreview( { attributes }: BlockEditProps< BlockA
 
 	const classes = classnames( {
 		[ `align${ align }` ]: align,
-		[ `size-${ sizeSlug }` ]: sizeSlug,
-		'is-resized': width || height,
 		'has-custom-border':
 			!! borderProps.className ||
 			( borderProps.style && Object.keys( borderProps.style ).length > 0 ),
-	} );
-
-	const imageClasses = classnames( borderProps.className, {
-		[ `wp-image-${ id }` ]: !! id,
 	} );
 
 	const blockProps = useBlockProps( {
@@ -62,7 +55,7 @@ export default function BlockEditPreview( { attributes }: BlockEditProps< BlockA
 					) ) }
 				<img
 					src={ url }
-					className={ imageClasses || undefined }
+					className={ borderProps.className || undefined }
 					style={ {
 						...borderProps.style,
 						aspectRatio,
