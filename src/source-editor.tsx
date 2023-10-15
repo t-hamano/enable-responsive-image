@@ -19,20 +19,10 @@ import { store as coreStore } from '@wordpress/core-data';
 import { chevronUp, chevronDown } from '@wordpress/icons';
 import type { Media, Source } from './types';
 
-const DEFAULT_MEDIA_VALUE = isNaN( parseInt( window?.enableResponsiveImage?.defaultMediaValue ) )
-	? 600
-	: parseInt( window?.enableResponsiveImage?.defaultMediaValue );
-
-const MEDIA_TYPES = [
-	{
-		label: __( 'max-width', 'enable-responsive-image' ),
-		value: 'max-width',
-	},
-	{
-		label: __( 'min-width', 'enable-responsive-image' ),
-		value: 'min-width',
-	},
-];
+/**
+ * Internal dependencies
+ */
+import { DEFAULT_MEDIA_VALUE, MEDIA_TYPES } from './constants';
 
 type Props = {
 	source?: Source;

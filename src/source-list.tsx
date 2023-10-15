@@ -20,7 +20,7 @@ import type { BlockAttributes, Source } from './types';
 
 export default function ImageList( props: BlockEditProps< BlockAttributes > ) {
 	const { attributes, setAttributes } = props;
-	const { sources, url } = attributes;
+	const { sources } = attributes;
 
 	function onChange( newSource: Source, index: number ) {
 		const newSources = [ ...sources ];
@@ -52,10 +52,6 @@ export default function ImageList( props: BlockEditProps< BlockAttributes > ) {
 		const newSources = [ ...sources ];
 		newSources.splice( index, 1 );
 		setAttributes( { sources: newSources } );
-	}
-
-	if ( ! url ) {
-		return null;
 	}
 
 	return (
