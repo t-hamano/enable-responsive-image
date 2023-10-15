@@ -21,3 +21,5 @@ export const MEDIA_TYPES = [
 ];
 
 export const MAX_SOURCES = 5;
+export const MIN_MEDIA_VALUE = 100;
+export const MAX_MEDIA_VALUE = 2000;

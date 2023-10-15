@@ -23,7 +23,7 @@ import type { Media, Source } from './types';
 /**
  * Internal dependencies
  */
-import { DEFAULT_MEDIA_VALUE, MEDIA_TYPES } from './constants';
+import { DEFAULT_MEDIA_VALUE, MEDIA_TYPES, MIN_MEDIA_VALUE, MAX_MEDIA_VALUE } from './constants';
 
 type Props = {
 	source?: Source;
@@ -213,8 +213,8 @@ export default function SourceEditor( {
 						label={ __( 'Media query value', 'enable-responsive-image' ) }
 						value={ mediaValue || DEFAULT_MEDIA_VALUE }
 						onChange={ onChangeMediaValue }
-						min={ 100 }
-						max={ 2000 }
+						min={ MIN_MEDIA_VALUE }
+						max={ MAX_MEDIA_VALUE }
 						allowReset
 						initialPosition={ DEFAULT_MEDIA_VALUE }
 					/>
