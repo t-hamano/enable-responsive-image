@@ -17,6 +17,7 @@ import { MediaUpload, store as blockEditorStore } from '@wordpress/block-editor'
 import { useSelect } from '@wordpress/data';
 import { store as coreStore } from '@wordpress/core-data';
 import { chevronUp, chevronDown } from '@wordpress/icons';
+import { filterURLForDisplay } from '@wordpress/url';
 import type { Media, Source } from './types';
 
 /**
@@ -188,6 +189,7 @@ export default function SourceEditor( {
 			/>
 			{ !! id && srcset && (
 				<>
+					<div className="enable-responsive-image__url">{ filterURLForDisplay( srcset, 35 ) }</div>
 					<ToggleGroupControl
 						__nextHasNoMarginBottom
 						isBlock
