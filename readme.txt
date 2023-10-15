@@ -8,11 +8,11 @@ Requires PHP: 7.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
-WordPress plugin that adds settings to the Image block to display different images depending on the width of the screen on the front end.
+WordPress plugin that adds settings to the Image block to display different images depending on the width of the screen.
 
 == Description ==
 
-Enable Responsive Image adds settings to the Image block to display different images depending on the width of the screen. You can add multiple images and set media queries and resolution for each image. On the front end side, if the screen width matches the conditions of that media query, it will switch to the corresponding image.
+Enable Responsive Image adds settings to the Image block to display different images depending on the width of the screen. You can add multiple images and set media queries and resolution for each image. If the screen width matches the conditions of that media query, it will switch to the corresponding image.
 
 == Installation ==
 
@@ -21,17 +21,17 @@ Enable Responsive Image adds settings to the Image block to display different im
 
 == Frequently Asked Questions ==
 
-= How does this plugin work on the frontend? =
+= How does this plugin work? =
 
 This plugin rewrites the HTML markup for the image block rendered on the front end. Wrap the img element with a picture element, and add source elements with srcset and media attributes inside the picture element based on the settings of the added image.
+
+= Even if I switch the screen width or device on the editor, it does not switch to the set image. =
+
+On the editor side, images do not switch by default. Click the "Enable responsive image preview" button on the block toolbar.
 
 = What filters can I use? =
 
 You can find a list of the available filters in the [Github readme](https://github.com/t-hamano/enable-responsive-image#filters).
-
-= Even if I switch the screen width or device on the editor, it does not switch to the set image. =
-
-Switching images according to screen width is currently only effective on the front end. Switching on the editor side does not work due to technical or performance issues. It may be supported in the future.
 
 == Screenshots ==
 

@@ -6,7 +6,7 @@
 
 **⚒️⚒️⚒️ Note: This plugin is under development. Disruptive changes may be made without notice. We recommend that you do not use this plugin on your production site. ⚒️⚒️⚒️**
 
-WordPress plugin that adds settings to the Image block to display different images depending on the width of the screen on the front end.
+WordPress plugin that adds settings to the Image block to display different images depending on the width of the screen.
 
 ## Screenshot
 

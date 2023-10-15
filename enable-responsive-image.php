@@ -1,7 +1,7 @@
 <?php
 /**
  * Plugin Name: Enable Responsive Image
- * Description: Adds settings to the Image block to display different images depending on the width of the screen on the front end.
+ * Description: Adds settings to the Image block to display different images depending on the width of the screen.
  * Requires at least: 6.3
  * Requires PHP: 7.4
  * Version: 1.0.0
