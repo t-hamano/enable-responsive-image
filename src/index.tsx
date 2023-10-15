@@ -99,7 +99,6 @@ const withInspectorControl =
 		return (
 			<>
 				<BlockEdit { ...props } />
-				{ /* @ts-ignore */ }
 				{ url && sources?.length > 0 && <ImageBlockControls isPreview={ isPreview } /> }
 				{ url && (
 					<InspectorControls>
