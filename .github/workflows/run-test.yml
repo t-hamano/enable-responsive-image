@@ -13,6 +13,29 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        include:
+          - php: '7.4'
+            wp: WordPress
+          - php: '7.4'
+            wp: WordPress#6.3.2
+          - php: '7.4'
+            wp: WordPress#6.2.3
+          - php: '8.0'
+            wp: WordPress
+          - php: '8.0'
+            wp: WordPress#6.3.2
+          - php: '8.0'
+            wp: WordPress#6.2.3
+          - php: '8.2'
+            wp: WordPress
+          - php: '8.2'
+            wp: WordPress#6.3.2
+          - php: '8.2'
+            wp: WordPress#6.2.3
+    name: PHP ${{ matrix.php }} / ${{ matrix.wp }} Test
+
     steps:
       - uses: actions/checkout@v3
 
@@ -33,3 +56,24 @@ jobs:
 
       - name: Running lint check
         run: npm run lint
+
+      - name: Install Playwright dependencies
+        run: |
+            npx playwright install chromium firefox webkit --with-deps
+
+      - name: Install WordPress
+        run: |
+          WP_ENV_CORE=WordPress/${{ matrix.wp }} WP_ENV_PHP_VERSION=${{ matrix.php }} npm run wp-env start
+          npm run wp-env run cli wp core version
+          npm run wp-env run cli wp cli info
+
+      - name: Running e2e tests
+        run: npm run test:e2e
+
+      - name: Archive debug artifacts
+        uses: actions/upload-artifact@v3
+        if: always()
+        with:
+          name: failures-artifacts
+          path: artifacts
+          if-no-files-found: ignore

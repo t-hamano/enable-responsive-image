@@ -10,6 +10,29 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        include:
+          - php: '7.4'
+            wp: WordPress
+          - php: '7.4'
+            wp: WordPress#6.3.2
+          - php: '7.4'
+            wp: WordPress#6.2.3
+          - php: '8.0'
+            wp: WordPress
+          - php: '8.0'
+            wp: WordPress#6.3.2
+          - php: '8.0'
+            wp: WordPress#6.2.3
+          - php: '8.2'
+            wp: WordPress
+          - php: '8.2'
+            wp: WordPress#6.3.2
+          - php: '8.2'
+            wp: WordPress#6.2.3
+    name: PHP ${{ matrix.php }} / ${{ matrix.wp }} Test
+
     steps:
       - uses: actions/checkout@v3
 
