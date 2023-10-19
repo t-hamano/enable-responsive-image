@@ -1,4 +1,5 @@
 .vscode
+artifacts/
 build/
 node_modules/
 vendor/
