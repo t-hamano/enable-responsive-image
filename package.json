@@ -17,13 +17,13 @@
 		"test:e2e:debug": "wp-scripts test-playwright --debug"
 	},
 	"devDependencies": {
-		"@types/wordpress__block-editor": "11.5.5",
-		"@types/wordpress__components": "23.0.4",
-		"@wordpress/base-styles": "4.34.0",
-		"@wordpress/core-data": "6.20.1",
-		"@wordpress/env": "^8.9.0",
-		"@wordpress/icons": "9.34.0",
-		"@wordpress/scripts": "^26.14.0",
+		"@types/wordpress__block-editor": "11.5.6",
+		"@types/wordpress__components": "23.0.5",
+		"@wordpress/base-styles": "4.36.0",
+		"@wordpress/core-data": "6.22.0",
+		"@wordpress/env": "^8.11.0",
+		"@wordpress/icons": "9.36.0",
+		"@wordpress/scripts": "^26.16.0",
 		"prettier": "npm:wp-prettier@3.0.3",
 		"typescript": "5.2.2"
 	},
