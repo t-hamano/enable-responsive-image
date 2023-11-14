@@ -5,16 +5,17 @@ import { useState } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 import {
 	Button,
-	RangeControl,
-	SelectControl,
 	DropZone,
+	RangeControl,
+	Spinner,
+	SelectControl,
 	withNotices,
 	// @ts-ignore: has no exported member
 	__experimentalHStack as HStack,
 	// @ts-ignore: has no exported member
 	__experimentalToggleGroupControl as ToggleGroupControl,
 	// @ts-ignore: has no exported member
-	__experimentalToggleGroupControlOption as ToggleGroupControlOption, Spinner,
+	__experimentalToggleGroupControlOption as ToggleGroupControlOption,
 } from '@wordpress/components';
 
 import { MediaUpload, store as blockEditorStore } from '@wordpress/block-editor';
@@ -32,7 +33,6 @@ import type { WithNoticeProps } from '@wordpress/components/src/higher-order/wit
 import type { Media, Source } from './types';
 import { DEFAULT_MEDIA_VALUE, MEDIA_TYPES, MIN_MEDIA_VALUE, MAX_MEDIA_VALUE } from './constants';
 
-
 type Props = {
 	source?: Source;
 	disableMoveUp: boolean;
@@ -44,7 +44,7 @@ type Props = {
 	isSelected: boolean;
 } & WithNoticeProps;
 
-export default withNotices(function SourceEditor( {
+export default withNotices( function SourceEditor( {
 	source = {
 		srcset: undefined,
 		id: undefined,
@@ -76,17 +76,17 @@ export default withNotices(function SourceEditor( {
 		[ id, isSelected ]
 	);
 
-	const { mediaUpload, imageSizes } = useSelect( ( select ) => (
-		{
+	const { mediaUpload, imageSizes } = useSelect(
+		( select ) => ( {
 			// @ts-ignore
 			imageSizes: select( blockEditorStore ).getSettings().imageSizes,
 			// @ts-ignore
 			mediaUpload: select( blockEditorStore ).getSettings().mediaUpload,
-		}
-	), [] );
+		} ),
+		[]
+	);
 
 	const [ isLoading, setIsLoading ] = useState( false );
-
 
 	const imageSizeOptions = imageSizes
 		.filter( ( { slug }: { slug: string } ) => {
@@ -149,17 +149,16 @@ export default withNotices(function SourceEditor( {
 		} );
 	}
 
-
 	function onDropFiles( filesList: File[] ) {
 		mediaUpload( {
 			allowedTypes: [ 'image' ],
 			filesList,
-			onFileChange( [ image ]: Media[] ) {
-				if ( isBlobURL( image?.url ) ) {
+			onFileChange( [ newImage ]: Media[] ) {
+				if ( isBlobURL( newImage?.url ) ) {
 					setIsLoading( true );
 					return;
 				}
-				onSelectImage( image );
+				onSelectImage( newImage );
 				setIsLoading( false );
 			},
 			onError( message: string ) {
@@ -185,8 +184,10 @@ export default withNotices(function SourceEditor( {
 						>
 							{ !! id && srcset ? (
 								<img src={ srcset } alt="" />
+							) : isLoading ? (
+								<Spinner />
 							) : (
-								isLoading ? <Spinner /> : __( 'Set image source', 'enable-responsive-image' )
+								__( 'Set image source', 'enable-responsive-image' )
 							) }
 						</Button>
 						<HStack className="enable-responsive-image__movers" expanded={ false }>
@@ -268,4 +269,4 @@ export default withNotices(function SourceEditor( {
 			) }
 		</>
 	);
-});
+} );
