@@ -9,7 +9,6 @@ import {
 	RangeControl,
 	Spinner,
 	SelectControl,
-	withNotices,
 	// @ts-ignore: has no exported member
 	__experimentalHStack as HStack,
 	// @ts-ignore: has no exported member
@@ -19,13 +18,12 @@ import {
 } from '@wordpress/components';
 
 import { MediaUpload, store as blockEditorStore } from '@wordpress/block-editor';
-import { useSelect } from '@wordpress/data';
+import { useDispatch, useSelect } from '@wordpress/data';
 import { store as coreStore } from '@wordpress/core-data';
+import { store as noticesStore } from '@wordpress/notices';
 import { chevronUp, chevronDown } from '@wordpress/icons';
 import { filterURLForDisplay } from '@wordpress/url';
 import { isBlobURL } from '@wordpress/blob';
-
-import type { WithNoticeProps } from '@wordpress/components/src/higher-order/with-notices/types';
 
 /**
  * Internal dependencies
@@ -42,9 +40,9 @@ type Props = {
 	onRemove: () => void;
 	onChangeOrder?: ( direction: number ) => void;
 	isSelected: boolean;
-} & WithNoticeProps;
+};
 
-export default withNotices( function SourceEditor( {
+export default function SourceEditor( {
 	source = {
 		srcset: undefined,
 		id: undefined,
@@ -59,8 +57,6 @@ export default withNotices( function SourceEditor( {
 	onChange,
 	onRemove,
 	isSelected,
-	noticeUI,
-	noticeOperations,
 }: Props ) {
 	const { id, srcset, mediaType, mediaValue, slug: srcsetSlug } = source;
 	const { image } = useSelect(
@@ -85,6 +81,8 @@ export default withNotices( function SourceEditor( {
 		} ),
 		[]
 	);
+
+	const { createErrorNotice, removeAllNotices } = useDispatch( noticesStore );
 
 	const [ isLoading, setIsLoading ] = useState( false );
 
@@ -162,15 +160,14 @@ export default withNotices( function SourceEditor( {
 				setIsLoading( false );
 			},
 			onError( message: string ) {
-				noticeOperations.removeAllNotices();
-				noticeOperations.createErrorNotice( message );
+				removeAllNotices();
+				createErrorNotice( message, { type: 'snackbar' } );
 			},
 		} );
 	}
 
 	return (
 		<>
-			{ noticeUI }
 			<MediaUpload
 				onSelect={ onSelectImage }
 				allowedTypes={ [ 'image' ] }
@@ -269,4 +266,4 @@ export default withNotices( function SourceEditor( {
 			) }
 		</>
 	);
-} );
+}
