@@ -83,8 +83,8 @@ export default function ImageList( props: BlockEditProps< BlockAttributes > ) {
 											sources.length === 1 && ! sources[ 0 ].id && ! sources[ 0 ].srcset
 										}
 										source={ source }
-										onChangeOrder={ ( direction ) => onChangeOrder( direction, index ) }
-										onChange={ ( newSource ) => onChange( newSource, index ) }
+										onChangeOrder={ ( direction: number ) => onChangeOrder( direction, index ) }
+										onChange={ ( newSource: Source ) => onChange( newSource, index ) }
 										onRemove={ () => onRemoveSource( index ) }
 									/>
 									{ index < sources.length - 1 && <hr /> }
@@ -112,7 +112,7 @@ export default function ImageList( props: BlockEditProps< BlockAttributes > ) {
 							disableMoveUp={ true }
 							disableMoveDown={ true }
 							disableActions={ true }
-							onChange={ ( newSource ) => onChange( newSource, 0 ) }
+							onChange={ ( newSource: Source ) => onChange( newSource, 0 ) }
 							onRemove={ () => onRemoveSource( 0 ) }
 						/>
 					) }
