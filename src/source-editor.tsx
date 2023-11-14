@@ -1,29 +1,37 @@
 /**
  * WordPress dependencies
  */
+import { useState } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 import {
 	Button,
 	RangeControl,
 	SelectControl,
+	DropZone,
+	withNotices,
 	// @ts-ignore: has no exported member
 	__experimentalHStack as HStack,
 	// @ts-ignore: has no exported member
 	__experimentalToggleGroupControl as ToggleGroupControl,
 	// @ts-ignore: has no exported member
-	__experimentalToggleGroupControlOption as ToggleGroupControlOption,
+	__experimentalToggleGroupControlOption as ToggleGroupControlOption, Spinner,
 } from '@wordpress/components';
+
 import { MediaUpload, store as blockEditorStore } from '@wordpress/block-editor';
 import { useSelect } from '@wordpress/data';
 import { store as coreStore } from '@wordpress/core-data';
 import { chevronUp, chevronDown } from '@wordpress/icons';
 import { filterURLForDisplay } from '@wordpress/url';
-import type { Media, Source } from './types';
+import { isBlobURL } from '@wordpress/blob';
+
+import type { WithNoticeProps } from '@wordpress/components/src/higher-order/with-notices/types';
 
 /**
  * Internal dependencies
  */
+import type { Media, Source } from './types';
 import { DEFAULT_MEDIA_VALUE, MEDIA_TYPES, MIN_MEDIA_VALUE, MAX_MEDIA_VALUE } from './constants';
+
 
 type Props = {
 	source?: Source;
@@ -34,9 +42,9 @@ type Props = {
 	onRemove: () => void;
 	onChangeOrder?: ( direction: number ) => void;
 	isSelected: boolean;
-};
+} & WithNoticeProps;
 
-export default function SourceEditor( {
+export default withNotices(function SourceEditor( {
 	source = {
 		srcset: undefined,
 		id: undefined,
@@ -51,6 +59,8 @@ export default function SourceEditor( {
 	onChange,
 	onRemove,
 	isSelected,
+	noticeUI,
+	noticeOperations,
 }: Props ) {
 	const { id, srcset, mediaType, mediaValue, slug: srcsetSlug } = source;
 	const { image } = useSelect(
@@ -65,13 +75,18 @@ export default function SourceEditor( {
 		},
 		[ id, isSelected ]
 	);
-	const imageSizes = useSelect(
-		( select ) =>
-			select( blockEditorStore )
-				// @ts-ignore
-				.getSettings().imageSizes,
-		[]
-	);
+
+	const { mediaUpload, imageSizes } = useSelect( ( select ) => (
+		{
+			// @ts-ignore
+			imageSizes: select( blockEditorStore ).getSettings().imageSizes,
+			// @ts-ignore
+			mediaUpload: select( blockEditorStore ).getSettings().mediaUpload,
+		}
+	), [] );
+
+	const [ isLoading, setIsLoading ] = useState( false );
+
 
 	const imageSizeOptions = imageSizes
 		.filter( ( { slug }: { slug: string } ) => {
@@ -134,8 +149,29 @@ export default function SourceEditor( {
 		} );
 	}
 
+
+	function onDropFiles( filesList: File[] ) {
+		mediaUpload( {
+			allowedTypes: [ 'image' ],
+			filesList,
+			onFileChange( [ image ]: Media[] ) {
+				if ( isBlobURL( image?.url ) ) {
+					setIsLoading( true );
+					return;
+				}
+				onSelectImage( image );
+				setIsLoading( false );
+			},
+			onError( message: string ) {
+				noticeOperations.removeAllNotices();
+				noticeOperations.createErrorNotice( message );
+			},
+		} );
+	}
+
 	return (
 		<>
+			{ noticeUI }
 			<MediaUpload
 				onSelect={ onSelectImage }
 				allowedTypes={ [ 'image' ] }
@@ -150,7 +186,7 @@ export default function SourceEditor( {
 							{ !! id && srcset ? (
 								<img src={ srcset } alt="" />
 							) : (
-								__( 'Set image source', 'enable-responsive-image' )
+								isLoading ? <Spinner /> : __( 'Set image source', 'enable-responsive-image' )
 							) }
 						</Button>
 						<HStack className="enable-responsive-image__movers" expanded={ false }>
@@ -191,6 +227,7 @@ export default function SourceEditor( {
 								</Button>
 							</HStack>
 						) }
+						<DropZone onFilesDrop={ onDropFiles } />
 					</div>
 				) }
 				value={ id }
@@ -231,4 +268,4 @@ export default function SourceEditor( {
 			) }
 		</>
 	);
-}
+});
