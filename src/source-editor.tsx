@@ -96,14 +96,8 @@ export default function SourceEditor( {
 		} ) );
 
 	function onSelectImage( media: Media ) {
-		if ( ! media || ! media.url ) {
-			onChange( {
-				srcset: undefined,
-				id: undefined,
-				slug: undefined,
-				mediaType: undefined,
-				mediaValue: undefined,
-			} );
+		if ( ! media ) {
+			return;
 		}
 
 		onChange( {
