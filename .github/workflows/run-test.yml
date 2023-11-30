@@ -58,8 +58,7 @@ jobs:
         run: npm run lint
 
       - name: Install Playwright dependencies
-        run: |
-            npx playwright install chromium firefox webkit --with-deps
+        run: npx playwright install chromium firefox webkit --with-deps
 
       - name: Install WordPress
         run: |

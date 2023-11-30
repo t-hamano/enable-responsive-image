@@ -54,10 +54,22 @@ jobs:
       - name: Running lint check
         run: npm run lint
 
+      - name: Install Playwright dependencies
+        run: npx playwright install chromium firefox webkit --with-deps
+
+      - name: Install WordPress
+        run: |
+          WP_ENV_CORE=WordPress/${{ matrix.wp }} WP_ENV_PHP_VERSION=${{ matrix.php }} npm run wp-env start
+          npm run wp-env run cli wp core version
+          npm run wp-env run cli wp cli info
+
+      - name: Running e2e tests
+        run: npm run test:e2e
+
   deploy:
     name: Deploy to WP.org
     runs-on: ubuntu-latest
-    needs: [ test ]
+    needs: [test]
 
     steps:
       - name: Checkout
