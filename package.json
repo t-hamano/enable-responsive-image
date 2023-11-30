@@ -4,7 +4,12 @@
 	"description": "WordPress plugin that adds settings to the Image block to display different images depending on the width of the screen.",
 	"author": "Aki Hamano",
 	"license": "GPL-2.0-or-later",
-	"keywords": ["gutenberg", "block", "image", "responsive"],
+	"keywords": [
+		"gutenberg",
+		"block",
+		"image",
+		"responsive"
+	],
 	"homepage": "https://github.com/t-hamano/enable-responsive-image",
 	"repository": "git+https://github.com/t-hamano/enable-responsive-image.git",
 	"bugs": {
