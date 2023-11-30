@@ -4,7 +4,7 @@
 
 [![Test and Deploy](https://github.com/t-hamano/enable-responsive-image/actions/workflows/run-test-and-deploy.yml/badge.svg)](https://github.com/t-hamano/enable-responsive-image/actions/workflows/run-test-and-deploy.yml)
 
-**⚒️⚒️⚒️ Note: This plugin is under development. Disruptive changes may be made without notice. We recommend that you do not use this plugin on your production site. ⚒️⚒️⚒️**
+⚒️⚒️⚒️ **Note: This plugin is under development. Disruptive changes may be made without notice. We recommend that you do not use this plugin on your production site.** ⚒️⚒️⚒️
 
 WordPress plugin that adds settings to the Image block to display different images depending on the width of the screen.
 
@@ -16,9 +16,9 @@ WordPress plugin that adds settings to the Image block to display different imag
 
 ## How to build
 
-```
-$ npm install
-$ npm run build
+```sh
+npm install
+npm run build
 ```
 
 ## Filters
@@ -47,8 +47,8 @@ add_filter( 'enable_responsive_image_default_media_value', 'custom_enable_respon
 
 ### Image for screenshot
 
-* License: Public Domain
-* Source: https://openverse.org/ja/image/cd8e5cc5-d38a-462e-b4c1-1ea5c6f94e20
+- License: Public Domain
+- Source: <https://openverse.org/ja/image/cd8e5cc5-d38a-462e-b4c1-1ea5c6f94e20>
 
 ## Author
 
