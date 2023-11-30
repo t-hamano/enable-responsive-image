@@ -1,20 +1,22 @@
 {
 	"name": "enable-responsive-image",
+	"version": "1.0.0",
+	"description": "WordPress plugin that adds settings to the Image block to display different images depending on the width of the screen.",
 	"author": "Aki Hamano",
-	"license": "GPL-2.0+",
-	"scripts": {
-		"wp-env": "wp-env",
-		"stop": "wp-env stop",
-		"start": "wp-scripts start",
-		"build": "wp-scripts build",
-		"lint": "npm run lint:style && npm run lint:js && npm run lint:types && npm run lint:php",
-		"lint:php": "composer lint",
-		"lint:js": "wp-scripts lint-js",
-		"lint:style": "wp-scripts lint-style",
-		"lint:types": "tsc",
-		"test": "npm run lint:js && npm run test:e2e",
-		"test:e2e": "wp-scripts test-playwright",
-		"test:e2e:debug": "wp-scripts test-playwright --debug"
+	"license": "GPL-2.0-or-later",
+	"keywords": ["gutenberg", "block", "image", "responsive"],
+	"homepage": "https://github.com/t-hamano/enable-responsive-image",
+	"repository": "git+https://github.com/t-hamano/enable-responsive-image.git",
+	"bugs": {
+		"url": "https://github.com/t-hamano/enable-responsive-image/issues"
+	},
+	"engines": {
+		"node": ">=16.0.0",
+		"npm": ">=8.0.0"
+	},
+	"volta": {
+		"node": "16.18.0",
+		"npm": "8.19.2"
 	},
 	"devDependencies": {
 		"@types/wordpress__block-editor": "11.5.6",
@@ -27,12 +29,22 @@
 		"prettier": "npm:wp-prettier@3.0.3",
 		"typescript": "5.2.2"
 	},
-	"engines": {
-		"node": ">=16.0.0",
-		"npm": ">=8.0.0"
-	},
-	"volta": {
-		"node": "16.18.0",
-		"npm": "8.19.2"
+	"scripts": {
+		"wp-env": "wp-env",
+		"stop": "wp-env stop",
+		"start": "wp-scripts start",
+		"build": "wp-scripts build",
+		"check-licenses": "wp-scripts check-licenses",
+		"lint": "npm run lint:css && npm run lint:js && npm run lint:types && npm run lint:php && npm run lint:md:docs && npm run lint:pkg-json",
+		"lint:css": "wp-scripts lint-style",
+		"lint:js": "wp-scripts lint-js",
+		"lint:types": "tsc",
+		"lint:php": "composer lint",
+		"lint:md:docs": "wp-scripts lint-md-docs",
+		"lint:pkg-json": "wp-scripts lint-pkg-json",
+		"format": "wp-scripts format",
+		"test": "npm run lint:js && npm run test:e2e",
+		"test:e2e": "wp-scripts test-playwright",
+		"test:e2e:debug": "wp-scripts test-playwright --debug"
 	}
 }

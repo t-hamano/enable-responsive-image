@@ -9,6 +9,6 @@ const config = {
 	parenSpacing: true,
 	parser: 'typescript',
 	bracketSameLine: false,
-}
+};
 
 module.exports = config;
