@@ -7,7 +7,6 @@ const config = {
 	printWidth: 100,
 	bracketSpacing: true,
 	parenSpacing: true,
-	parser: 'typescript',
 	bracketSameLine: false,
 };
 
