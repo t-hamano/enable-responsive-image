@@ -9,6 +9,7 @@
 .editorconfig
 .eslintignore
 .eslintrc.js
+.markdownlint.json
 .gitignore
 .npmrc
 .nvmrc

@@ -35,6 +35,7 @@ function enable_responsive_image_enqueue_block_editor_assets() {
 		'enableResponsiveImage',
 		array(
 			'defaultMediaValue' => (int) apply_filters( 'enable_responsive_image_default_media_value', 600 ),
+			'showPreviewButton' => (bool) apply_filters( 'enable_responsive_image_show_preview_button', true ),
 		)
 	);
 

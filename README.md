@@ -41,6 +41,23 @@ function custom_enable_responsive_image_default_media_value( $default_media_valu
 add_filter( 'enable_responsive_image_default_media_value', 'custom_enable_responsive_image_default_media_value' );
 ```
 
+### `enable_responsive_image_show_preview_button( $show_preview_button )`
+
+Filters whether the preview button is displayed on the block toolbar.
+
+#### Parameters
+
+- `$show_preview_button`
+
+  *(boolean)* Whether the preview button is displayed on the block toolbar. Default is `true`.
+
+#### Example
+
+```php
+// Disable the preview button.
+add_filter( 'enable_responsive_image_show_preview_button', '__return_false' );
+```
+
 ## Resources
 
 ### Image for screenshot
