@@ -48,7 +48,7 @@ add_filter( 'enable_responsive_image_default_media_value', 'custom_enable_respon
 ### Image for screenshot
 
 - License: Public Domain
-- Source: <https://openverse.org/ja/image/cd8e5cc5-d38a-462e-b4c1-1ea5c6f94e20>
+- Source: <https://openverse.org/image/cd8e5cc5-d38a-462e-b4c1-1ea5c6f94e20>
 
 ## Author
 
