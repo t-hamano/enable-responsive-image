@@ -167,6 +167,7 @@ export default function SourceEditor( {
 			<MediaUpload
 				onSelect={ onSelectImage }
 				allowedTypes={ [ 'image' ] }
+				value={ id }
 				render={ ( { open } ) => (
 					<div className="enable-responsive-image__container">
 						<Button
@@ -224,7 +225,6 @@ export default function SourceEditor( {
 						<DropZone onFilesDrop={ onDropFiles } />
 					</div>
 				) }
-				value={ id }
 			/>
 			{ !! id && srcset && (
 				<>
