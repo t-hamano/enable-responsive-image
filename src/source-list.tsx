@@ -21,12 +21,12 @@ import { MAX_SOURCES } from './constants';
 
 export default function ImageList( props: BlockEditProps< BlockAttributes > ) {
 	const { attributes, setAttributes } = props;
-	const { sources } = attributes;
+	const { enableResponsiveImageSources: sources } = attributes;
 
 	function onChange( newSource: Source, index: number ) {
 		const newSources = [ ...sources ];
 		newSources[ index ] = newSource;
-		setAttributes( { sources: newSources } );
+		setAttributes( { enableResponsiveImageSources: newSources } );
 	}
 
 	function onAddSource() {
@@ -38,7 +38,7 @@ export default function ImageList( props: BlockEditProps< BlockAttributes > ) {
 			mediaType: undefined,
 			mediaValue: undefined,
 		} );
-		setAttributes( { sources: newSources } );
+		setAttributes( { enableResponsiveImageSources: newSources } );
 	}
 
 	function onChangeOrder( direction: number, index: number ) {
@@ -46,13 +46,13 @@ export default function ImageList( props: BlockEditProps< BlockAttributes > ) {
 		const newIndex = index + direction;
 		const movedSource = newSources.splice( index, 1 )[ 0 ];
 		newSources.splice( newIndex, 0, movedSource );
-		setAttributes( { sources: newSources } );
+		setAttributes( { enableResponsiveImageSources: newSources } );
 	}
 
 	function onRemoveSource( index: number ) {
 		const newSources = [ ...sources ];
 		newSources.splice( index, 1 );
-		setAttributes( { sources: newSources } );
+		setAttributes( { enableResponsiveImageSources: newSources } );
 	}
 
 	return (

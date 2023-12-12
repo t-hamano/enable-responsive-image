@@ -1,5 +1,5 @@
 export interface BlockAttributes {
-	sources: Source[];
+	enableResponsiveImageSources: Source[];
 	[ key: string ]: any;
 }
 

@@ -76,7 +76,7 @@ test.describe( 'Block', () => {
 			{
 				name: 'core/image',
 				attributes: {
-					sources: [
+					enableResponsiveImageSources: [
 						{
 							slug: 'medium',
 							mediaType: 'max-width',
@@ -92,7 +92,7 @@ test.describe( 'Block', () => {
 			},
 		] );
 
-		const sources = blocks[ 0 ].attributes.sources;
+		const sources = blocks[ 0 ].attributes.enableResponsiveImageSources;
 		expect( sources[ 0 ].srcset.includes( firstSourceFilename ) ).toBe( true );
 		expect( sources[ 1 ].srcset.includes( secondSourceFilename ) ).toBe( true );
 	} );

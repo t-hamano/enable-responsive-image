@@ -54,16 +54,16 @@ function enable_responsive_image_enqueue_block_editor_assets() {
 add_action( 'enqueue_block_editor_assets', 'enable_responsive_image_enqueue_block_editor_assets' );
 
 function enable_responsive_image_render_block_image( $block_content, $block ) {
-	if ( ! isset( $block['attrs']['sources'] ) ) {
+	if ( ! isset( $block['attrs']['enableResponsiveImageSources'] ) ) {
 		return $block_content;
 	}
 
-	if ( ! is_array( $block['attrs']['sources'] ) ) {
+	if ( ! is_array( $block['attrs']['enableResponsiveImageSources'] ) ) {
 		return $block_content;
 	}
 
 	$filtered_sources = array_filter(
-		$block['attrs']['sources'],
+		$block['attrs']['enableResponsiveImageSources'],
 		function ( $source ) {
 			return isset( $source['srcset'] ) && isset( $source['mediaType'] ) && isset( $source['mediaValue'] );
 		}
