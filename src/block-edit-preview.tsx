@@ -23,7 +23,17 @@ import type { BlockEditProps } from '@wordpress/blocks';
 import type { BlockAttributes } from './types';
 
 export default function BlockEditPreview( { attributes }: BlockEditProps< BlockAttributes > ) {
-	const { url, alt, caption, align, width, height, aspectRatio, scale, sources } = attributes;
+	const {
+		url,
+		alt,
+		caption,
+		align,
+		width,
+		height,
+		aspectRatio,
+		scale,
+		enableResponsiveImageSources: sources,
+	} = attributes;
 
 	const borderProps = getBorderClassesAndStyles( attributes );
 
