@@ -22,7 +22,7 @@ test.describe( 'Block', () => {
 		await admin.createNewPost();
 	} );
 
-	test( 'should create image block', async ( { editor, page, mediaUtils } ) => {
+	test( 'should create image block with image sources', async ( { editor, page, mediaUtils } ) => {
 		// Insert Image block.
 		await editor.insertBlock( { name: 'core/image' } );
 
