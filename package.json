@@ -24,15 +24,15 @@
 		"npm": "8.19.2"
 	},
 	"devDependencies": {
-		"@types/wordpress__block-editor": "11.5.6",
-		"@types/wordpress__components": "23.0.5",
-		"@wordpress/base-styles": "4.36.0",
-		"@wordpress/core-data": "6.22.0",
-		"@wordpress/env": "^8.11.0",
-		"@wordpress/icons": "9.36.0",
-		"@wordpress/scripts": "^26.16.0",
+		"@types/wordpress__block-editor": "11.5.8",
+		"@types/wordpress__components": "23.0.10",
+		"@wordpress/base-styles": "4.38.0",
+		"@wordpress/core-data": "6.24.0",
+		"@wordpress/env": "^8.13.0",
+		"@wordpress/icons": "9.38.0",
+		"@wordpress/scripts": "^26.18.0",
 		"prettier": "npm:wp-prettier@3.0.3",
-		"typescript": "5.2.2"
+		"typescript": "5.3.3"
 	},
 	"scripts": {
 		"wp-env": "wp-env",
