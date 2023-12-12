@@ -9,6 +9,8 @@ export const DEFAULT_MEDIA_VALUE = isNaN(
 	? 600
 	: parseInt( window?.enableResponsiveImage?.defaultMediaValue );
 
+export const SHOW_PREVIEW_BUTTON = window?.enableResponsiveImage?.showPreviewButton === '1';
+
 export const MEDIA_TYPES = [
 	{
 		label: __( 'max-width', 'enable-responsive-image' ),

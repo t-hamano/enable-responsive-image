@@ -16,6 +16,7 @@ import BlockEditPreview from './block-edit-preview';
 import SourceList from './source-list';
 import './editor.scss';
 import './store';
+import { SHOW_PREVIEW_BUTTON } from './constants';
 import type { BlockAttributes } from './types';
 
 const addSourceAttributes = ( settings: { [ key: string ]: any } ) => {
@@ -70,7 +71,7 @@ const withInspectorControl =
 				) : (
 					<BlockEdit { ...props } />
 				) }
-				{ url && sources?.length > 0 && (
+				{ url && sources?.length > 0 && SHOW_PREVIEW_BUTTON && (
 					<BlockControls
 						// @ts-ignore
 						group="parent"
