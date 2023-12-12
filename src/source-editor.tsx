@@ -12,6 +12,8 @@ import {
 	// @ts-ignore: has no exported member
 	__experimentalHStack as HStack,
 	// @ts-ignore: has no exported member
+	__experimentalVStack as VStack,
+	// @ts-ignore: has no exported member
 	__experimentalToggleGroupControl as ToggleGroupControl,
 	// @ts-ignore: has no exported member
 	__experimentalToggleGroupControlOption as ToggleGroupControlOption,
@@ -161,7 +163,7 @@ export default function SourceEditor( {
 	}
 
 	return (
-		<>
+		<VStack spacing={ 4 }>
 			<MediaUpload
 				onSelect={ onSelectImage }
 				allowedTypes={ [ 'image' ] }
@@ -228,7 +230,6 @@ export default function SourceEditor( {
 				<>
 					<div className="enable-responsive-image__url">{ filterURLForDisplay( srcset, 35 ) }</div>
 					<ToggleGroupControl
-						__nextHasNoMarginBottom
 						isBlock
 						label={ __( 'Media query type', 'enable-responsive-image' ) }
 						onChange={ onChangeMediaType }
@@ -258,6 +259,6 @@ export default function SourceEditor( {
 					/>
 				</>
 			) }
-		</>
+		</VStack>
 	);
 }

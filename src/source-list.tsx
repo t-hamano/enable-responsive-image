@@ -70,7 +70,7 @@ export default function ImageList( props: BlockEditProps< BlockAttributes > ) {
 					</p>
 				}
 			>
-				<VStack>
+				<VStack spacing={ 4 }>
 					{ sources.length > 0 ? (
 						<>
 							{ sources.map( ( source, index ) => (
