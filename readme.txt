@@ -25,6 +25,10 @@ Enable Responsive Image adds settings to the Image block to display different im
 
 This plugin rewrites the HTML markup for the image block rendered on the front end. Wrap the img element with a picture element, and add source elements with srcset and media attributes inside the picture element based on the settings of the added image.
 
+= It does not work correctly when multiple image sources are set. =
+
+Try rearranging the order of the images. For example, if both images have a Media Query Type of max-width, the one with the smaller value should be ordered on top.
+
 = Even if I switch the screen width or device on the editor, it does not switch to the set image. =
 
 On the editor side, images do not switch by default. Click the "Enable responsive image preview" button on the block toolbar.
