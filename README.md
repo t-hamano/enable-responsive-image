@@ -34,8 +34,8 @@ Filters the default media value (px).
 #### Example
 
 ```php
-function custom_enable_responsive_image_default_media_value( $media_value ) {
-	// Override media value.
+function custom_enable_responsive_image_default_media_value( $default_media_value ) {
+	// Override default media value.
 	return 400;
 }
 add_filter( 'enable_responsive_image_default_media_value', 'custom_enable_responsive_image_default_media_value' );
