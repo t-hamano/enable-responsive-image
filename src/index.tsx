@@ -57,7 +57,7 @@ const withInspectorControl =
 		}
 
 		const { attributes } = props;
-		const { url, sources } = attributes;
+		const { url, enableResponsiveImageSources: sources } = attributes;
 
 		// @ts-ignore
 		const isPreview = useSelect( ( select ) => select( 'enable-responsive-image' ).getIsPreview() );
@@ -73,7 +73,7 @@ const withInspectorControl =
 				) }
 				{ url && sources?.length > 0 && (
 					// @ts-ignore
-					<BlockControls group="parent">
+					<BlockControls>
 						<ToolbarGroup>
 							<ToolbarButton
 								icon={ seen }
