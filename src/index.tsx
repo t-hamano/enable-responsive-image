@@ -6,8 +6,8 @@ import { addFilter } from '@wordpress/hooks';
 import { useSelect, useDispatch } from '@wordpress/data';
 import { BlockControls, InspectorControls } from '@wordpress/block-editor';
 import { seen } from '@wordpress/icons';
-import type { BlockEditProps } from '@wordpress/blocks';
 import { ToolbarGroup, ToolbarButton } from '@wordpress/components';
+import type { BlockEditProps } from '@wordpress/blocks';
 
 /**
  * Internal dependencies
@@ -18,12 +18,12 @@ import './editor.scss';
 import './store';
 import type { BlockAttributes } from './types';
 
-const addImageSourceAttributes = ( settings: { [ key: string ]: any } ) => {
+const addSourceAttributes = ( settings: { [ key: string ]: any } ) => {
 	if ( 'core/image' !== settings.name ) {
 		return settings;
 	}
 
-	const newSettings = {
+	return {
 		...settings,
 		attributes: {
 			...settings.attributes,
@@ -36,13 +36,12 @@ const addImageSourceAttributes = ( settings: { [ key: string ]: any } ) => {
 			},
 		},
 	};
-	return newSettings;
 };
 
 addFilter(
 	'blocks.registerBlockType',
-	'enable-responsive-image/add-image-source-attributes',
-	addImageSourceAttributes
+	'enable-responsive-image/add-source-attributes',
+	addSourceAttributes
 );
 
 const withInspectorControl =
@@ -72,8 +71,10 @@ const withInspectorControl =
 					<BlockEdit { ...props } />
 				) }
 				{ url && sources?.length > 0 && (
-					// @ts-ignore
-					<BlockControls>
+					<BlockControls
+						// @ts-ignore
+						group="parent"
+					>
 						<ToolbarGroup>
 							<ToolbarButton
 								icon={ seen }
