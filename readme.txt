@@ -43,7 +43,7 @@ You can find a list of the available filters in the [Github readme](https://gith
 = Image for screenshot =
 
 * License: Public Domain
-* Source: https://openverse.org/ja/image/cd8e5cc5-d38a-462e-b4c1-1ea5c6f94e20
+* Source: https://openverse.org/image/cd8e5cc5-d38a-462e-b4c1-1ea5c6f94e20
 
 == Changelog ==
 
