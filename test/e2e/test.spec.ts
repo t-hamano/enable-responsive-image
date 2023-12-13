@@ -1,17 +1,20 @@
 /**
  * External dependencies
  */
-const path = require( 'path' );
-const fs = require( 'fs/promises' );
-const os = require( 'os' );
-const { v4: uuid } = require( 'uuid' );
+import type { Page } from '@playwright/test';
+import path from 'path';
+import fs from 'fs';
+import os from 'os';
+import { v4 as uuid } from 'uuid';
 
 /**
  * WordPress dependencies
  */
-import { test, expect } from '@wordpress/e2e-test-utils-playwright';
+import { test as base, expect } from '@wordpress/e2e-test-utils-playwright';
 
-test.use( {
+const test = base.extend< {
+	mediaUtils: MediaUtils;
+} >( {
 	mediaUtils: async ( { page }, use ) => {
 		await use( new MediaUtils( { page } ) );
 	},
@@ -30,7 +33,7 @@ test.describe( 'Block', () => {
 		await expect( imageBlock ).toBeVisible();
 
 		// Upload image.
-		await mediaUtils.upload(
+		await mediaUtils.uploadImage(
 			imageBlock.locator( 'data-testid=form-file-upload-input' ),
 			'1000x750.png'
 		);
@@ -62,7 +65,9 @@ test.describe( 'Block', () => {
 		await enableResponsiveImagePanel
 			.locator( 'role=radiogroup[name="Media query type"i]' )
 			.nth( 1 )
-			.click( 'role=radio[name="min-width"i]' );
+			.getByRole( 'radio', { name: 'min-width' } )
+			.setChecked( true );
+
 		await enableResponsiveImagePanel
 			.locator( 'role=combobox[name="Resolution"i]' )
 			.nth( 1 )
@@ -99,24 +104,27 @@ test.describe( 'Block', () => {
 } );
 
 class MediaUtils {
+	page: Page;
+	basePath: string;
+
 	constructor( { page } ) {
 		this.page = page;
 		this.basePath = path.join( __dirname, 'assets' );
 	}
 
-	async upload( inputElement, customFile ) {
-		const tmpDirectory = await fs.mkdtemp( path.join( os.tmpdir(), 'test-image-' ) );
+	async uploadImage( inputElement, customFile ) {
+		const tmpDirectory = await fs.mkdtempSync( path.join( os.tmpdir(), 'test-image-' ) );
 		const filename = uuid();
 		const tmpFileName = path.join( tmpDirectory, filename + '.png' );
 		const filepath = path.join( this.basePath, customFile );
-		await fs.copyFile( filepath, tmpFileName );
+		await fs.copyFileSync( filepath, tmpFileName );
 		await inputElement.setInputFiles( tmpFileName );
 		return filename;
 	}
 
 	async uploadSource( customFile ) {
 		await this.page.click( 'role=button[name="Set image source"i]' );
-		const filename = await this.upload(
+		const filename = await this.uploadImage(
 			this.page.locator( '.media-modal .moxie-shim input[type=file]' ),
 			customFile
 		);
