@@ -20,16 +20,21 @@ const test = base.extend< {
 	},
 } );
 
-test.describe( 'Block', () => {
+test.describe( 'Image Block', () => {
 	test.beforeEach( async ( { admin } ) => {
 		await admin.createNewPost();
 	} );
 
-	test( 'should create image block with image sources', async ( { editor, page, mediaUtils } ) => {
+	test.afterAll( async ( { requestUtils } ) => {
+		await requestUtils.deleteAllMedia();
+	} );
+
+	test( 'should create image with image sources', async ( { editor, page, mediaUtils } ) => {
 		// Insert Image block.
 		await editor.insertBlock( { name: 'core/image' } );
-
-		const imageBlock = editor.canvas.locator( 'role=document[name="Block: Image"i]' );
+		const imageBlock = editor.canvas.getByRole( 'document', {
+			name: 'Block: Image',
+		} );
 		await expect( imageBlock ).toBeVisible();
 
 		// Upload image.
@@ -41,39 +46,29 @@ test.describe( 'Block', () => {
 		// Add first image source.
 		await editor.openDocumentSettingsSidebar();
 		const firstSourceFilename = await mediaUtils.uploadSource( '600x450.png' );
-		const firstSource = page.locator( 'role=region[name="Editor settings"i] >> img' );
+		const firstSource = page.getByRole( 'region', { name: 'Editor settings' } ).locator( 'img' );
 		await expect( firstSource ).toBeVisible();
 		await expect( firstSource ).toHaveAttribute( 'src', new RegExp( firstSourceFilename ) );
 
-		const enableResponsiveImagePanel = page.locator( '.enable-responsive-image' );
-
 		// Change first image setting.
-		await page.fill( 'role=spinbutton[name="Media query value"i]', '800' );
-		await enableResponsiveImagePanel.locator( 'role=combobox[name="Resolution"i]' ).selectOption( {
-			label: 'Medium',
-		} );
+		await mediaUtils.changeMediaQueryValue( '800' );
+		await mediaUtils.changeResolution( 'Medium' );
 
 		// Add second image source.
-		await page.click( 'role=button[name="Add image source"i]' );
+		await page.getByRole( 'button', { name: 'Add image source' } ).click();
 		const secondSourceFilename = await mediaUtils.uploadSource( '400x300.png' );
-		const secondSource = page.locator( 'role=region[name="Editor settings"i] >> img' ).nth( 1 );
+		const secondSource = page
+			.getByRole( 'region', { name: 'Editor settings' } )
+			.locator( 'img' )
+			.nth( 1 );
+
 		await expect( secondSource ).toBeVisible();
 		await expect( secondSource ).toHaveAttribute( 'src', new RegExp( secondSourceFilename ) );
 
 		// Chage second image setting.
-		await page.locator( 'role=spinbutton[name="Media query value"i]' ).nth( 1 ).fill( '500' );
-		await enableResponsiveImagePanel
-			.locator( 'role=radiogroup[name="Media query type"i]' )
-			.nth( 1 )
-			.getByRole( 'radio', { name: 'min-width' } )
-			.setChecked( true );
-
-		await enableResponsiveImagePanel
-			.locator( 'role=combobox[name="Resolution"i]' )
-			.nth( 1 )
-			.selectOption( {
-				label: 'Thumbnail',
-			} );
+		await mediaUtils.changeMediaQueryValue( '500', 1 );
+		await mediaUtils.changeMediaQueryType( 'min-width', 1 );
+		await mediaUtils.changeResolution( 'Thumbnail', 1 );
 
 		const blocks = await editor.getBlocks();
 
@@ -123,12 +118,45 @@ class MediaUtils {
 	}
 
 	async uploadSource( customFile ) {
-		await this.page.click( 'role=button[name="Set image source"i]' );
+		await this.page.getByRole( 'button', { name: 'Set image source' } ).click();
 		const filename = await this.uploadImage(
 			this.page.locator( '.media-modal .moxie-shim input[type=file]' ),
 			customFile
 		);
-		await this.page.click( 'role=dialog >> role=button[name="Select"i]' );
+		await this.page
+			.getByRole( 'dialog' )
+			.getByRole( 'button', { name: 'Select', exact: true } )
+			.click();
 		return filename;
+	}
+
+	async changeMediaQueryType( option, index = 0 ) {
+		const blockSettings = this.page.getByRole( 'region', {
+			name: 'Editor settings',
+		} );
+		await blockSettings
+			.getByRole( 'radiogroup', { name: 'Media query type' } )
+			.nth( index )
+			.getByRole( 'radio', { name: option } )
+			.setChecked( true );
+	}
+
+	async changeMediaQueryValue( value, index = 0 ) {
+		const blockSettings = this.page.getByRole( 'region', {
+			name: 'Editor settings',
+		} );
+		await blockSettings
+			.getByRole( 'spinbutton', { name: 'Media query value' } )
+			.nth( index )
+			.fill( value );
+	}
+
+	async changeResolution( option, index = 0 ) {
+		const blockSettings = this.page.getByRole( 'region', {
+			name: 'Editor settings',
+		} );
+		await blockSettings.getByRole( 'combobox', { name: 'Resolution' } ).nth( index ).selectOption( {
+			label: option,
+		} );
 	}
 }
