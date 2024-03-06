@@ -12,6 +12,11 @@ import { v4 as uuid } from 'uuid';
  */
 import { test as base, expect } from '@wordpress/e2e-test-utils-playwright';
 
+/**
+ * Internal dependencies
+ */
+import { Source } from '../../src/types';
+
 const test = base.extend< {
 	mediaUtils: MediaUtils;
 } >( {
@@ -92,7 +97,7 @@ test.describe( 'Image Block', () => {
 			},
 		] );
 
-		const sources = blocks[ 0 ].attributes.enableResponsiveImageSources;
+		const sources = blocks[ 0 ].attributes.enableResponsiveImageSources || [];
 		expect( sources[ 0 ].srcset.includes( firstSourceFilename ) ).toBe( true );
 		expect( sources[ 1 ].srcset.includes( secondSourceFilename ) ).toBe( true );
 	} );
