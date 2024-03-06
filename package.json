@@ -24,7 +24,7 @@
 		"npm": "10.5.0"
 	},
 	"devDependencies": {
-		"@types/wordpress__block-editor": "11.5.8",
+		"@types/wordpress__block-editor": "11.5.11",
 		"@types/wordpress__components": "23.0.10",
 		"@wordpress/base-styles": "4.44.0",
 		"@wordpress/core-data": "6.30.0",
