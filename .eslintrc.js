@@ -5,6 +5,7 @@ module.exports = {
 	],
 	parser: '@typescript-eslint/parser',
 	rules: {
+		'react/jsx-boolean-value': 'error',
 		'import/no-extraneous-dependencies': 'off',
 		'import/no-unresolved': 'off',
 		'@wordpress/no-unsafe-wp-apis': 'off',

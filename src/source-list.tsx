@@ -109,9 +109,9 @@ export default function ImageList( props: BlockEditProps< BlockAttributes > ) {
 					) : (
 						<SourceEditor
 							{ ...props }
-							disableMoveUp={ true }
-							disableMoveDown={ true }
-							disableActions={ true }
+							disableMoveUp
+							disableMoveDown
+							disableActions
 							onChange={ ( newSource: Source ) => onChange( newSource, 0 ) }
 							onRemove={ () => onRemoveSource( 0 ) }
 						/>
