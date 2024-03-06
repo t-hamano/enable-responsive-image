@@ -59,8 +59,13 @@ const withInspectorControl =
 		const { attributes } = props;
 		const { url, enableResponsiveImageSources: sources } = attributes;
 
-		// @ts-ignore
-		const isPreview = useSelect( ( select ) => select( 'enable-responsive-image' ).getIsPreview() );
+		const isPreview = useSelect(
+			( select ) =>
+				select( 'enable-responsive-image' )
+					// @ts-ignore
+					.getIsPreview(),
+			[]
+		);
 
 		const { setIsPreview } = useDispatch( 'enable-responsive-image' );
 

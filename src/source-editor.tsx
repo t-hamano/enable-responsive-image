@@ -76,10 +76,12 @@ export default function SourceEditor( {
 
 	const { mediaUpload, imageSizes } = useSelect(
 		( select ) => ( {
-			// @ts-ignore
-			imageSizes: select( blockEditorStore ).getSettings().imageSizes,
-			// @ts-ignore
-			mediaUpload: select( blockEditorStore ).getSettings().mediaUpload,
+			imageSizes: select( blockEditorStore )
+				// @ts-ignore
+				.getSettings().imageSizes,
+			mediaUpload: select( blockEditorStore )
+				// @ts-ignore
+				.getSettings().mediaUpload,
 		} ),
 		[]
 	);
@@ -254,7 +256,6 @@ export default function SourceEditor( {
 						options={ imageSizeOptions }
 						onChange={ onChangeResolution }
 						help={ __( 'Select the size of the source image.', 'enable-responsive-image' ) }
-						// @ts-ignore
 						size={ '__unstable-large' }
 					/>
 				</>
