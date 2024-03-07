@@ -13,6 +13,8 @@ import {
 	__experimentalGetElementClassName,
 	// @ts-ignore: has no exported member
 	__experimentalGetBorderClassesAndStyles as getBorderClassesAndStyles,
+	// @ts-ignore: has no exported member
+	__experimentalGetShadowClassesAndStyles as getShadowClassesAndStyles,
 } from '@wordpress/block-editor';
 import { __ } from '@wordpress/i18n';
 import type { BlockEditProps } from '@wordpress/blocks';
@@ -36,6 +38,8 @@ export default function BlockEditPreview( { attributes }: BlockEditProps< BlockA
 	} = attributes;
 
 	const borderProps = getBorderClassesAndStyles( attributes );
+	const shadowProps =
+		typeof getShadowClassesAndStyles === 'function' ? getShadowClassesAndStyles( attributes ) : {};
 
 	const filteredSources = sources.filter( ( { srcset, mediaType, mediaValue } ) => {
 		return srcset && mediaType && mediaValue;
@@ -68,6 +72,7 @@ export default function BlockEditPreview( { attributes }: BlockEditProps< BlockA
 					className={ borderProps.className || undefined }
 					style={ {
 						...borderProps.style,
+						...shadowProps.style,
 						aspectRatio,
 						objectFit: scale,
 						width,
