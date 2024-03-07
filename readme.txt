@@ -55,8 +55,5 @@ You can find a list of the available filters in the [Github readme](https://gith
 * Tested to WordPress 6.5
 * Enhancement: Polish block sidebar
 
-e004716 (HEAD -> main, origin/main, origin/HEAD) Apply shadow support to image preview
-51362f7 Use new 32px/40px default size
-
 = 1.0.0 =
 * Initial release
