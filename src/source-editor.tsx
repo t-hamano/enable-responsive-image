@@ -214,12 +214,17 @@ export default function SourceEditor( {
 									className="enable-responsive-image__action"
 									onClick={ open }
 									aria-hidden="true"
+									size="compact"
 								>
 									{ !! id
 										? __( 'Replace', 'enable-responsive-image' )
 										: __( 'Select', 'enable-responsive-image' ) }
 								</Button>
-								<Button className="enable-responsive-image__action" onClick={ onRemove }>
+								<Button
+									className="enable-responsive-image__action"
+									onClick={ onRemove }
+									size="compact"
+								>
 									{ __( 'Remove', 'enable-responsive-image' ) }
 								</Button>
 							</HStack>
@@ -236,6 +241,7 @@ export default function SourceEditor( {
 						label={ __( 'Media query type', 'enable-responsive-image' ) }
 						onChange={ onChangeMediaType }
 						value={ mediaType || MEDIA_TYPES[ 0 ].value }
+						size={ '__unstable-large' }
 					>
 						{ MEDIA_TYPES.map( ( { label, value } ) => (
 							<ToggleGroupControlOption key={ value } label={ label } value={ value } />
@@ -249,6 +255,7 @@ export default function SourceEditor( {
 						max={ MAX_MEDIA_VALUE }
 						allowReset
 						initialPosition={ DEFAULT_MEDIA_VALUE }
+						__next40pxDefaultSize
 					/>
 					<SelectControl
 						label={ __( 'Resolution', 'enable-responsive-image' ) }

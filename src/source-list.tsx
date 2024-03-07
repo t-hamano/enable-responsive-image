@@ -100,6 +100,7 @@ export default function ImageList( props: BlockEditProps< BlockAttributes > ) {
 										className="enable-responsive-image__add-source"
 										disabled={ sources.length >= MAX_SOURCES }
 										onClick={ onAddSource }
+										__next40pxDefaultSize
 									>
 										{ __( 'Add image source', 'enable-responsive-image' ) }
 									</Button>
