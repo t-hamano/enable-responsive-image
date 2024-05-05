@@ -9,6 +9,13 @@ module.exports = {
 		'import/no-extraneous-dependencies': 'off',
 		'import/no-unresolved': 'off',
 		'@wordpress/no-unsafe-wp-apis': 'off',
+		'@wordpress/dependency-group': 'error',
+		'@wordpress/i18n-text-domain': [
+			'error',
+			{
+				allowedTextDomain: 'enable-responsive-image',
+			},
+		],
 		'no-nested-ternary': 'off',
 		'prettier/prettier': [
 			'error',
