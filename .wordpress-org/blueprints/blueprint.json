@@ -16,7 +16,7 @@
 		},
 		{
 			"step": "runPHP",
-			"code": "<?php\ninclude 'wordpress/wp-load.php';\nwp_insert_post(array(\n'import_id' => 5,\n'post_title' => 'Enable Responsive Image',\n'post_content' => '',\n'post_status' => 'publish',\n'post_author' => 1\n));"
+			"code": "<?php\ninclude 'wordpress/wp-load.php';\nwp_insert_post(array(\n'import_id' => 5,\n'post_title' => 'Enable Responsive Image',\n'post_content' => '<!-- wp:paragraph -->\n<p>Select the Image block, open the block sidebar, and check the \"Image sources\" section.</p>\n<!-- /wp:paragraph -->\n<!-- wp:image {\"sizeSlug\":\"large\"} -->\n<figure class=\"wp-block-image size-large\"><img src=\"https://s.w.org/images/home/screen-themes.png\" alt=\"\"/></figure>\n<!-- /wp:image -->',\n'post_status' => 'publish',\n'post_author' => 1\n));"
 		}
 	]
 }
