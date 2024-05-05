@@ -11,7 +11,7 @@
 			"step": "installPlugin",
 			"pluginZipFile": {
 				"resource": "wordpress.org/plugins",
-				"slug": "flexible-table-block"
+				"slug": "enable-responsive-image"
 			}
 		},
 		{
