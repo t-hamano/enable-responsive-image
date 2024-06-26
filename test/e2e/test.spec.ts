@@ -43,10 +43,15 @@ test.describe( 'Image Block', () => {
 			'1000x750.png'
 		);
 
+		const blockSettings = page.getByRole( 'region', {
+			name: 'Editor settings',
+		} );
+		const ImageSourcesPanel = await blockSettings.locator( '.enable-responsive-image' );
+
 		// Add first image source.
 		await editor.openDocumentSettingsSidebar();
 		const firstSourceFilename = await mediaUtils.uploadSource( '600x450.png' );
-		const firstSource = page.getByRole( 'region', { name: 'Editor settings' } ).locator( 'img' );
+		const firstSource = ImageSourcesPanel.locator( 'img' );
 		await expect( firstSource ).toBeVisible();
 		await expect( firstSource ).toHaveAttribute( 'src', new RegExp( firstSourceFilename ) );
 
@@ -57,10 +62,7 @@ test.describe( 'Image Block', () => {
 		// Add second image source.
 		await page.getByRole( 'button', { name: 'Add image source' } ).click();
 		const secondSourceFilename = await mediaUtils.uploadSource( '400x300.png' );
-		const secondSource = page
-			.getByRole( 'region', { name: 'Editor settings' } )
-			.locator( 'img' )
-			.nth( 1 );
+		const secondSource = ImageSourcesPanel.locator( 'img' ).nth( 1 );
 
 		await expect( secondSource ).toBeVisible();
 		await expect( secondSource ).toHaveAttribute( 'src', new RegExp( secondSourceFilename ) );
@@ -134,8 +136,8 @@ class MediaUtils {
 		const blockSettings = this.page.getByRole( 'region', {
 			name: 'Editor settings',
 		} );
-		await blockSettings
-			.getByRole( 'radiogroup', { name: 'Media query type' } )
+		const ImageSourcesPanel = await blockSettings.locator( '.enable-responsive-image' );
+		await ImageSourcesPanel.getByRole( 'radiogroup', { name: 'Media query type' } )
 			.nth( index )
 			.getByRole( 'radio', { name: option } )
 			.setChecked( true );
@@ -145,8 +147,8 @@ class MediaUtils {
 		const blockSettings = this.page.getByRole( 'region', {
 			name: 'Editor settings',
 		} );
-		await blockSettings
-			.getByRole( 'spinbutton', { name: 'Media query value' } )
+		const ImageSourcesPanel = await blockSettings.locator( '.enable-responsive-image' );
+		await ImageSourcesPanel.getByRole( 'spinbutton', { name: 'Media query value' } )
 			.nth( index )
 			.fill( value );
 	}
@@ -155,8 +157,12 @@ class MediaUtils {
 		const blockSettings = this.page.getByRole( 'region', {
 			name: 'Editor settings',
 		} );
-		await blockSettings.getByRole( 'combobox', { name: 'Resolution' } ).nth( index ).selectOption( {
-			label: option,
-		} );
+		const ImageSourcesPanel = await blockSettings.locator( '.enable-responsive-image' );
+
+		await ImageSourcesPanel.getByRole( 'combobox', { name: 'Resolution' } )
+			.nth( index )
+			.selectOption( {
+				label: option,
+			} );
 	}
 }
