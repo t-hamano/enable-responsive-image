@@ -63,12 +63,13 @@ export default function SourceEditor( {
 	const { id, srcset, mediaType, mediaValue, slug: srcsetSlug } = source;
 	const { image } = useSelect(
 		( select ) => {
-			const {
-				// @ts-ignore
-				getMedia,
-			} = select( coreStore );
 			return {
-				image: id && isSelected ? getMedia( id, { context: 'view' } ) : null,
+				image:
+					id && isSelected
+						? select( coreStore )
+								// @ts-ignore
+								.getMedia( id, { context: 'view' } )
+						: null,
 			};
 		},
 		[ id, isSelected ]
