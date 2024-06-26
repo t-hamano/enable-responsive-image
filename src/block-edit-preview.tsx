@@ -1,7 +1,7 @@
 /**
  * External dependencies
  */
-import classnames from 'classnames';
+import clsx from 'clsx';
 
 /**
  * WordPress dependencies
@@ -45,7 +45,7 @@ export default function BlockEditPreview( { attributes }: BlockEditProps< BlockA
 		return srcset && mediaType && mediaValue;
 	} );
 
-	const classes = classnames( {
+	const classes = clsx( {
 		[ `align${ align }` ]: align,
 		'has-custom-border':
 			!! borderProps.className ||
