@@ -159,7 +159,9 @@ export default function SourceEditor( {
 				setIsLoading( false );
 			},
 			onError( message: string ) {
+				// @ts-ignore
 				removeAllNotices();
+				// @ts-ignore
 				createErrorNotice( message, { type: 'snackbar' } );
 			},
 		} );
