@@ -3,12 +3,7 @@
  */
 import { __ } from '@wordpress/i18n';
 import { Fragment } from '@wordpress/element';
-import {
-	Button,
-	PanelBody,
-	// @ts-ignore: has no exported member
-	__experimentalVStack as VStack,
-} from '@wordpress/components';
+import { Button, PanelBody, __experimentalVStack as VStack } from '@wordpress/components';
 import { MediaUploadCheck } from '@wordpress/block-editor';
 import type { BlockEditProps } from '@wordpress/blocks';
 

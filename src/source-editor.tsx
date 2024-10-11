@@ -9,13 +9,9 @@ import {
 	RangeControl,
 	Spinner,
 	SelectControl,
-	// @ts-ignore: has no exported member
 	__experimentalHStack as HStack,
-	// @ts-ignore: has no exported member
 	__experimentalVStack as VStack,
-	// @ts-ignore: has no exported member
 	__experimentalToggleGroupControl as ToggleGroupControl,
-	// @ts-ignore: has no exported member
 	__experimentalToggleGroupControlOption as ToggleGroupControlOption,
 } from '@wordpress/components';
 

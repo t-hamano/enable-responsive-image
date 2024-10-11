@@ -77,10 +77,7 @@ const withInspectorControl =
 					<BlockEdit { ...props } />
 				) }
 				{ url && sources?.length > 0 && SHOW_PREVIEW_BUTTON && (
-					<BlockControls
-						// @ts-ignore
-						group="parent"
-					>
+					<BlockControls group="parent">
 						<ToolbarGroup>
 							<ToolbarButton
 								icon={ seen }
