@@ -148,7 +148,7 @@ class MediaUtils {
 			name: 'Editor settings',
 		} );
 		const ImageSourcesPanel = await blockSettings.locator( '.enable-responsive-image' );
-		await ImageSourcesPanel.getByRole( 'spinbutton', { name: 'Media query value' } )
+		await ImageSourcesPanel.getByRole( 'spinbutton', { name: 'Media query value (px)' } )
 			.nth( index )
 			.fill( value );
 	}
