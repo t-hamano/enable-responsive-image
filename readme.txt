@@ -1,7 +1,7 @@
 === Enable Responsive Image ===
 Contributors: wildworks, Toro_Unit
 Tags: gutenberg, block, image, responsive
-Requires at least: 6.4
+Requires at least: 6.5
 Tested up to: 6.6
 Stable tag: 1.2.0
 Requires PHP: 7.4
