@@ -53,7 +53,7 @@
 		"test": "npm run lint:js && npm run test:e2e",
 		"test:e2e": "wp-scripts test-playwright",
 		"test:e2e:debug": "wp-scripts test-playwright --debug",
-		"prepare": "husky install"
+		"prepare": "husky"
 	},
 	"lint-staged": {
 		"*.{js,json,ts,tsx,yml,yaml}": [
