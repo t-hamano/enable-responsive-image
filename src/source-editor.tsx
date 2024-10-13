@@ -249,7 +249,7 @@ export default function SourceEditor( {
 					</ToggleGroupControl>
 					<RangeControl
 						__nextHasNoMarginBottom
-						label={ __( 'Media query value', 'enable-responsive-image' ) }
+						label={ __( 'Media query value (px)', 'enable-responsive-image' ) }
 						value={ mediaValue || DEFAULT_MEDIA_VALUE }
 						onChange={ onChangeMediaValue }
 						min={ MIN_MEDIA_VALUE }
