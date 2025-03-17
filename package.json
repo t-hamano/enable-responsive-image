@@ -1,6 +1,6 @@
 {
 	"name": "enable-responsive-image",
-	"version": "1.3.0",
+	"version": "1.4.0",
 	"description": "WordPress plugin that adds settings to the Image block to display different images depending on the width of the screen.",
 	"author": "Aki Hamano",
 	"license": "GPL-2.0-or-later",
