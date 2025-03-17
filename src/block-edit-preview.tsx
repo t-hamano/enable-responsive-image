@@ -16,7 +16,6 @@ import {
 	// @ts-ignore: has no exported member
 	__experimentalGetShadowClassesAndStyles as getShadowClassesAndStyles,
 } from '@wordpress/block-editor';
-import { __ } from '@wordpress/i18n';
 import type { BlockEditProps } from '@wordpress/blocks';
 
 /**
