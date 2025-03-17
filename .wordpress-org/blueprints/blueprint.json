@@ -4,12 +4,11 @@
 	"steps": [
 		{
 			"step": "login",
-			"username": "admin",
-			"password": "password"
+			"username": "admin"
 		},
 		{
 			"step": "installPlugin",
-			"pluginZipFile": {
+			"pluginData": {
 				"resource": "wordpress.org/plugins",
 				"slug": "enable-responsive-image"
 			}
