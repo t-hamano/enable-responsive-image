@@ -1,5 +1,5 @@
-@import "@wordpress/base-styles/colors";
-@import "@wordpress/base-styles/variables";
+@use "./base-styles" as wpBaseStyles;
+@include wpBaseStyles.wordpress-admin-schemes();
 
 .enable-responsive-image {
 
@@ -9,7 +9,7 @@
 
 	hr {
 		margin: 0;
-		border-color: $gray-200;
+		border-color: wpBaseStyles.$gray-200;
 	}
 }
 
@@ -41,7 +41,7 @@
 	display: flex;
 	justify-content: center;
 	height: 150px;
-	background-color: $gray-100;
+	background-color: wpBaseStyles.$gray-100;
 }
 
 .enable-responsive-image__preview {
@@ -49,11 +49,11 @@
 }
 
 .enable-responsive-image__toggle {
-	border-radius: $radius-block-ui;
+	border-radius: 2px;
 
 	&:hover {
-		background: $gray-300;
-		color: $gray-900;
+		background: wpBaseStyles.$gray-300;
+		color: wpBaseStyles.$gray-900;
 	}
 }
 
@@ -61,7 +61,7 @@
 	top: 0;
 	opacity: 0;
 	right: 0;
-	padding: $grid-unit-10;
+	padding: wpBaseStyles.$grid-unit-10;
 	position: absolute;
 	transition: opacity 50ms ease-out;
 }
@@ -74,7 +74,7 @@
 .enable-responsive-image__actions {
 	bottom: 0;
 	opacity: 0;
-	padding: $grid-unit-10;
+	padding: wpBaseStyles.$grid-unit-10;
 	position: absolute;
 	transition: opacity 50ms ease-out;
 }
@@ -87,6 +87,6 @@
 }
 
 .enable-responsive-image__url {
-	color: $gray-700;
+	color: wpBaseStyles.$gray-700;
 	font-size: 12px;
 }
