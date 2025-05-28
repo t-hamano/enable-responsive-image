@@ -22,29 +22,31 @@ jobs:
           - php: '7.4'
             wp: WordPress
           - php: '7.4'
+            wp: WordPress#6.8.1
+          - php: '7.4'
             wp: WordPress#6.7.2
           - php: '7.4'
             wp: WordPress#6.6.2
           - php: '8.0'
             wp: WordPress
           - php: '8.0'
+            wp: WordPress#6.8.1
+          - php: '8.0'
             wp: WordPress#6.7.2
           - php: '8.0'
             wp: WordPress#6.6.2
           - php: '8.2'
             wp: WordPress
           - php: '8.2'
+            wp: WordPress#6.8.1
+          - php: '8.2'
             wp: WordPress#6.7.2
           - php: '8.2'
             wp: WordPress#6.6.2
-          - php: '8.3'
-            wp: WordPress
-          - php: '8.3'
-            wp: WordPress#6.7.2
-          - php: '8.3'
-            wp: WordPress#6.6.2
           - php: '8.4'
             wp: WordPress
+          - php: '8.4'
+            wp: WordPress#6.8.1
           - php: '8.4'
             wp: WordPress#6.7.2
     name: PHP ${{ matrix.php }} / ${{ matrix.wp }} Test
