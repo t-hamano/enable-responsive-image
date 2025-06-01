@@ -1,5 +1,5 @@
-@use "./base-styles" as wpBaseStyles;
-@include wpBaseStyles.wordpress-admin-schemes();
+@use "~@wordpress/base-styles/variables" as variables;
+@use "~@wordpress/base-styles/colors" as colors;
 
 .enable-responsive-image {
 
@@ -9,7 +9,7 @@
 
 	hr {
 		margin: 0;
-		border-color: wpBaseStyles.$gray-200;
+		border-color: colors.$gray-200;
 	}
 }
 
@@ -40,7 +40,7 @@
 	display: flex;
 	justify-content: center;
 	height: 150px;
-	background-color: wpBaseStyles.$gray-100;
+	background-color: colors.$gray-100;
 
 	@media not (prefers-reduced-motion) {
 		transition: all 0.1s ease-out;
@@ -55,8 +55,8 @@
 	border-radius: 2px;
 
 	&:hover {
-		background: wpBaseStyles.$gray-300;
-		color: wpBaseStyles.$gray-900;
+		background: colors.$gray-300;
+		color: colors.$gray-900;
 	}
 }
 
@@ -64,7 +64,7 @@
 	top: 0;
 	opacity: 0;
 	right: 0;
-	padding: wpBaseStyles.$grid-unit-10;
+	padding: variables.$grid-unit-10;
 	position: absolute;
 
 	@media not (prefers-reduced-motion) {
@@ -80,7 +80,7 @@
 .enable-responsive-image__actions {
 	bottom: 0;
 	opacity: 0;
-	padding: wpBaseStyles.$grid-unit-10;
+	padding: variables.$grid-unit-10;
 	position: absolute;
 
 	@media not (prefers-reduced-motion) {
