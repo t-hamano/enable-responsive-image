@@ -52,7 +52,7 @@
 }
 
 .enable-responsive-image__toggle {
-	border-radius: 2px;
+	border-radius: variables.$radius-small;
 
 	&:hover {
 		background: colors.$gray-300;
@@ -74,7 +74,7 @@
 
 .enable-responsive-image__mover {
 	backdrop-filter: blur(16px) saturate(180%);
-	background: rgba(255, 255, 255, 0.75);
+	background: rgba(colors.$white, 0.75);
 }
 
 .enable-responsive-image__actions {
@@ -89,13 +89,13 @@
 }
 
 .enable-responsive-image__action {
-	backdrop-filter: blur(16px) saturate(180%);
-	background: rgba(255, 255, 255, 0.75);
+	backdrop-filter: blur(variables.$grid-unit-20) saturate(180%);
+	background: rgba(colors.$white, 0.75);
 	flex-grow: 1;
 	justify-content: center;
 }
 
 .enable-responsive-image__url {
-	font-size: 12px;
+	font-size: variables.$font-size-small;
 	word-break: break-all;
 }
