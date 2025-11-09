@@ -5,7 +5,6 @@ import { __ } from '@wordpress/i18n';
 import { addFilter } from '@wordpress/hooks';
 import { useSelect, useDispatch } from '@wordpress/data';
 import { BlockControls, InspectorControls } from '@wordpress/block-editor';
-import { seen } from '@wordpress/icons';
 import { ToolbarGroup, ToolbarButton } from '@wordpress/components';
 import type { BlockEditProps } from '@wordpress/blocks';
 
@@ -18,6 +17,7 @@ import './editor.scss';
 import './store';
 import { SHOW_PREVIEW_BUTTON } from './constants';
 import type { BlockAttributes } from './types';
+import { icon } from './icon';
 
 const addSourceAttributes = ( settings: { [ key: string ]: any } ) => {
 	if ( 'core/image' !== settings.name ) {
@@ -80,7 +80,7 @@ const withInspectorControl =
 					<BlockControls group="parent">
 						<ToolbarGroup>
 							<ToolbarButton
-								icon={ seen }
+								icon={ icon }
 								isPressed={ isPreview }
 								label={
 									isPreview
