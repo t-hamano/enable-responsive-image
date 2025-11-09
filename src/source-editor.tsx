@@ -57,16 +57,16 @@ export default function SourceEditor( {
 	isSelected,
 }: Props ) {
 	const { id, srcset, mediaType, mediaValue, slug: srcsetSlug } = source;
-	const { image } = useSelect(
+	const image = useSelect(
 		( select ) => {
-			return {
-				image:
-					id && isSelected
-						? select( coreStore )
-								// @ts-ignore
-								.getMedia( id, { context: 'view' } )
-						: null,
-			};
+			if ( ! id || ! isSelected ) {
+				return null;
+			}
+			return (
+				select( coreStore )
+					// @ts-ignore
+					.getEntityRecord( 'postType', 'attachment', id )
+			);
 		},
 		[ id, isSelected ]
 	);
