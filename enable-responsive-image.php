@@ -4,7 +4,7 @@
  * Description: Adds settings to the Image block to display different images depending on the width of the screen.
  * Requires at least: 6.8
  * Requires PHP: 8.0
- * Version: 1.4.0
+ * Version: 1.5.0
  * Author: Aki Hamano
  * Author URI: https://github.com/t-hamano
  * License: GPL2 or later
