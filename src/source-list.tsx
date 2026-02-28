@@ -1,10 +1,15 @@
 /**
  * WordPress dependencies
  */
-import { __ } from '@wordpress/i18n';
-import { Fragment } from '@wordpress/element';
-import { Button, PanelBody, __experimentalVStack as VStack } from '@wordpress/components';
+import { __, sprintf } from '@wordpress/i18n';
+import {
+	Button,
+	Notice,
+	__experimentalToolsPanel as ToolsPanel,
+	__experimentalToolsPanelItem as ToolsPanelItem,
+} from '@wordpress/components';
 import { MediaUploadCheck } from '@wordpress/block-editor';
+import { useViewportMatch } from '@wordpress/compose';
 import type { BlockEditProps } from '@wordpress/blocks';
 
 /**
@@ -49,71 +54,86 @@ export default function ImageList( props: BlockEditProps< BlockAttributes > ) {
 		newSources.splice( index, 1 );
 		setAttributes( { enableResponsiveImageSources: newSources } );
 	}
+	const dropdownMenuProps = ! useViewportMatch( 'medium', '<' )
+		? {
+				popoverProps: {
+					placement: 'left-start',
+					offset: 259,
+				},
+				// TODO: Once the type is fixed upstream, remove this property.
+				// See: https://github.com/WordPress/gutenberg/pull/76027
+				label: '',
+		  }
+		: // TODO: Once the type is fixed upstream, remove this property.
+		  // See: https://github.com/WordPress/gutenberg/pull/76027
+		  { label: '' };
 
 	return (
-		<PanelBody
-			title={ __( 'Image sources', 'enable-responsive-image' ) }
+		<ToolsPanel
+			label={ __( 'Image sources', 'enable-responsive-image' ) }
+			resetAll={ () => setAttributes( { enableResponsiveImageSources: [] } ) }
 			className="enable-responsive-image"
+			dropdownMenuProps={ dropdownMenuProps }
 		>
 			<MediaUploadCheck
 				fallback={
-					<p>
+					<Notice
+						className="enable-responsive-image__notice"
+						status="warning"
+						isDismissible={ false }
+					>
 						{ __(
 							'To edit the image, you need permission to upload media.',
 							'enable-responsive-image'
 						) }
-					</p>
+					</Notice>
 				}
 			>
-				<VStack spacing={ 4 }>
-					{ sources.length > 0 ? (
-						<>
-							{ sources.map( ( source, index ) => (
-								<Fragment key={ index }>
-									<SourceEditor
-										{ ...props }
-										disableMoveUp={ index === 0 }
-										disableMoveDown={ index === sources.length - 1 }
-										disableActions={
-											sources.length === 1 && ! sources[ 0 ].id && ! sources[ 0 ].srcset
-										}
-										source={ source }
-										onChangeOrder={ ( direction: number ) => onChangeOrder( direction, index ) }
-										onChange={ ( newSource: Source ) => onChange( newSource, index ) }
-										onRemove={ () => onRemoveSource( index ) }
-									/>
-									{ index < sources.length - 1 && <hr /> }
-								</Fragment>
-							) ) }
-							{ ( sources.length > 1 ||
-								( sources.length === 1 && sources[ 0 ].id ) ||
-								sources[ 0 ].srcset ) && (
-								<>
-									<hr />
-									<Button
-										variant="primary"
-										className="enable-responsive-image__add-source"
-										disabled={ sources.length >= MAX_SOURCES }
-										onClick={ onAddSource }
-										__next40pxDefaultSize
-									>
-										{ __( 'Add image source', 'enable-responsive-image' ) }
-									</Button>
-								</>
+				{ sources.length > 0 &&
+					sources.map( ( source, index ) => (
+						<ToolsPanelItem
+							key={ index }
+							hasValue={ () => true }
+							isShownByDefault
+							label={ sprintf(
+								/* translators: %d: Image source number */
+								__( 'Image source %d', 'enable-responsive-image' ),
+								index + 1
 							) }
-						</>
-					) : (
-						<SourceEditor
-							{ ...props }
-							disableMoveUp
-							disableMoveDown
-							disableActions
-							onChange={ ( newSource: Source ) => onChange( newSource, 0 ) }
-							onRemove={ () => onRemoveSource( 0 ) }
-						/>
-					) }
-				</VStack>
+							onDeselect={ () => onRemoveSource( index ) }
+							className="enable-responsive-image__source"
+						>
+							<fieldset>
+								<legend>
+									{ sprintf(
+										/* translators: %d: Image source number */
+										__( 'Image source %d', 'enable-responsive-image' ),
+										index + 1
+									) }
+								</legend>
+								<SourceEditor
+									{ ...props }
+									disableMoveUp={ index === 0 }
+									disableMoveDown={ index === sources.length - 1 }
+									source={ source }
+									onChangeOrder={ ( direction: number ) => onChangeOrder( direction, index ) }
+									onChange={ ( newSource: Source ) => onChange( newSource, index ) }
+									onRemove={ () => onRemoveSource( index ) }
+								/>
+								{ index < sources.length - 1 && <hr /> }
+							</fieldset>
+						</ToolsPanelItem>
+					) ) }
+				<Button
+					variant="primary"
+					className="enable-responsive-image__add-source"
+					disabled={ sources.length >= MAX_SOURCES }
+					onClick={ onAddSource }
+					__next40pxDefaultSize
+				>
+					{ __( 'Add image source', 'enable-responsive-image' ) }
+				</Button>
 			</MediaUploadCheck>
-		</PanelBody>
+		</ToolsPanel>
 	);
 }

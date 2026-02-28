@@ -1,20 +1,29 @@
 @use "~@wordpress/base-styles/variables" as variables;
 @use "~@wordpress/base-styles/colors" as colors;
 
-.enable-responsive-image {
+.enable-responsive-image__source {
 
-	.components-base-control {
-		margin-bottom: 0;
+	legend {
+		font-size: variables.$font-size-x-small;
+		font-weight: 499;
+		text-transform: uppercase;
+		display: block;
+		margin-bottom: variables.$grid-unit-10;
 	}
 
 	hr {
-		margin: 0;
+		margin: variables.$grid-unit-20 0 0;
 		border-color: colors.$gray-200;
 	}
 }
 
+.enable-responsive-image__notice {
+	grid-column: 1 / -1;
+}
+
 .enable-responsive-image__add-source {
 	justify-content: center;
+	grid-column: 1 / -1;
 }
 
 .enable-responsive-image__container {

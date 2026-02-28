@@ -30,6 +30,8 @@ test.describe( 'Image Block', () => {
 	} );
 
 	test( 'should create image with image sources', async ( { editor, page, mediaUtils } ) => {
+		const wpVersion = await mediaUtils.getWpVersion();
+
 		// Insert Image block.
 		await editor.insertBlock( { name: 'core/image' } );
 		const imageBlock = editor.canvas.getByRole( 'document', {
@@ -50,6 +52,11 @@ test.describe( 'Image Block', () => {
 
 		// Add first image source.
 		await editor.openDocumentSettingsSidebar();
+		if ( wpVersion !== '6.9' ) {
+			await page.getByRole( 'tab', { name: 'Settings' } ).click();
+		}
+		await page.getByRole( 'button', { name: 'Add image source' } ).click();
+		await page.getByRole( 'button', { name: 'Set image source' } ).click();
 		const firstSourceFilename = await mediaUtils.uploadSource( '600x450.png' );
 		const firstSource = ImageSourcesPanel.locator( 'img' );
 		await expect( firstSource ).toBeVisible();
@@ -61,6 +68,7 @@ test.describe( 'Image Block', () => {
 
 		// Add second image source.
 		await page.getByRole( 'button', { name: 'Add image source' } ).click();
+		await page.getByRole( 'button', { name: 'Set image source' } ).click();
 		const secondSourceFilename = await mediaUtils.uploadSource( '400x300.png' );
 		const secondSource = ImageSourcesPanel.locator( 'img' ).nth( 1 );
 
@@ -120,13 +128,6 @@ class MediaUtils {
 	}
 
 	async uploadSource( customFile ) {
-		const wpVersion = await this.getWpVersion();
-		if ( wpVersion === '6.9' ) {
-			await this.page.getByRole( 'button', { name: 'Set image source' } ).click();
-		} else {
-			await this.page.getByRole( 'tab', { name: 'Settings' } ).click();
-			await this.page.getByRole( 'button', { name: 'Set image source' } ).click();
-		}
 		const filename = await this.uploadImage(
 			this.page.locator( '.media-modal .moxie-shim input[type=file]' ),
 			customFile
