@@ -14,22 +14,22 @@ jobs:
           - php: '8.0'
             wp: WordPress
           - php: '8.0'
-            wp: WordPress#6.9
+            wp: WordPress#6.9.1
 
           - php: '8.2'
             wp: WordPress
           - php: '8.2'
-            wp: WordPress#6.9
+            wp: WordPress#6.9.1
 
           - php: '8.4'
             wp: WordPress
           - php: '8.4'
-            wp: WordPress#6.9
+            wp: WordPress#6.9.1
 
           - php: '8.5'
             wp: WordPress
           - php: '8.5'
-            wp: WordPress#6.9
+            wp: WordPress#6.9.1
 
     name: PHP ${{ matrix.php }} / ${{ matrix.wp }} Test
 
