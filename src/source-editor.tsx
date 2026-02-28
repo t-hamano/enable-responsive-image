@@ -177,6 +177,11 @@ export default function SourceEditor( {
 									! id ? 'enable-responsive-image__toggle' : 'enable-responsive-image__preview'
 								}
 								onClick={ open }
+								aria-label={
+									! id
+										? __( 'Set image source', 'enable-responsive-image' )
+										: __( 'Replace image source', 'enable-responsive-image' )
+								}
 							>
 								{ !! id && srcset ? (
 									<img src={ srcset } alt="" />
