@@ -120,7 +120,13 @@ class MediaUtils {
 	}
 
 	async uploadSource( customFile ) {
-		await this.page.getByRole( 'button', { name: 'Set image source' } ).click();
+		const wpVersion = await this.getWpVersion();
+		if ( wpVersion === '6.9' ) {
+			await this.page.getByRole( 'button', { name: 'Set image source' } ).click();
+		} else {
+			await this.page.getByRole( 'tab', { name: 'Settings' } ).click();
+			await this.page.getByRole( 'button', { name: 'Set image source' } ).click();
+		}
 		const filename = await this.uploadImage(
 			this.page.locator( '.media-modal .moxie-shim input[type=file]' ),
 			customFile
@@ -164,5 +170,15 @@ class MediaUtils {
 			.selectOption( {
 				label: option,
 			} );
+	}
+
+	async getWpVersion() {
+		const body = await this.page.$( 'body' );
+		if ( ! body ) {
+			throw new Error( 'Could not find body element' );
+		}
+		const bodyClassNames = await ( await body.getProperty( 'className' ) ).jsonValue();
+		const matches = bodyClassNames.match( /branch-([0-9]*-*[0-9])/ );
+		return matches?.[ 1 ];
 	}
 }
