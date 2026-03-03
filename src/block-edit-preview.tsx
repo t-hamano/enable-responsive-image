@@ -23,6 +23,10 @@ import type { BlockEditProps } from '@wordpress/blocks';
  */
 import type { BlockAttributes } from './types';
 
+function mediaPosition( { x, y } = { x: 0.5, y: 0.5 } ) {
+	return `${ Math.round( x * 100 ) }% ${ Math.round( y * 100 ) }%`;
+}
+
 export default function BlockEditPreview( { attributes }: BlockEditProps< BlockAttributes > ) {
 	const {
 		url,
@@ -33,6 +37,7 @@ export default function BlockEditPreview( { attributes }: BlockEditProps< BlockA
 		height,
 		aspectRatio,
 		scale,
+		focalPoint,
 		enableResponsiveImageSources: sources,
 	} = attributes;
 
@@ -74,6 +79,7 @@ export default function BlockEditPreview( { attributes }: BlockEditProps< BlockA
 						...shadowProps.style,
 						aspectRatio,
 						objectFit: scale,
+						objectPosition: focalPoint && scale ? mediaPosition( focalPoint ) : undefined,
 						width,
 						height,
 					} }
