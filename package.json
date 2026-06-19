@@ -19,10 +19,6 @@
 		"node": ">=24.0.0",
 		"npm": ">=11.0.0"
 	},
-	"volta": {
-		"node": "24.16.0",
-		"npm": "11.16.0"
-	},
 	"devDependencies": {
 		"@types/wordpress__block-editor": "15.0.6",
 		"@wordpress/base-styles": "10.0.1",
