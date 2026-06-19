@@ -24,7 +24,7 @@ export const store = createReduxStore( 'enable-responsive-image', {
 		},
 	},
 	actions: {
-		setIsPreview( value ) {
+		setIsPreview( value: boolean ) {
 			return {
 				type: 'UPDATE_IS_PREVIEW',
 				value,
