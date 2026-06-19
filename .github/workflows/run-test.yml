@@ -68,9 +68,9 @@ jobs:
 
       - name: Install WordPress
         run: |
-          WP_ENV_CORE=WordPress/${{ matrix.wp }} WP_ENV_PHP_VERSION=${{ matrix.php }} npm run wp-env start
-          npm run wp-env run cli wp core version
-          npm run wp-env run cli wp cli info
+          WP_ENV_CORE=WordPress/${{ matrix.wp }} WP_ENV_PHP_VERSION=${{ matrix.php }} npm run wp-env-test start
+          npm run wp-env-test run cli wp core version
+          npm run wp-env-test run cli wp cli info
 
       - name: Running e2e tests
         run: npm run test:e2e

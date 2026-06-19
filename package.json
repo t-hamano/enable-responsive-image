@@ -34,7 +34,8 @@
 	},
 	"scripts": {
 		"wp-env": "wp-env",
-		"stop": "wp-env stop",
+		"wp-env-test": "wp-env --config .wp-env.test.json",
+		"stop": "wp-env stop && wp-env --config .wp-env.test.json stop",
 		"start": "wp-scripts start",
 		"build": "wp-scripts build",
 		"check-licenses": "wp-scripts check-licenses",

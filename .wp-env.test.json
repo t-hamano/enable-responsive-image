@@ -5,5 +5,10 @@
 		"https://downloads.wordpress.org/plugin/wp-downgrade.zip"
 	],
 	"testsEnvironment": false,
-	"phpmyadminPort": 9000
+	"port": 8889,
+	"phpmyadminPort": 9001,
+	"config": {
+		"WP_DEBUG": true,
+		"SCRIPT_DEBUG": true
+	}
 }
