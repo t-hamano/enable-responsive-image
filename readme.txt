@@ -3,7 +3,7 @@ Contributors: wildworks, Toro_Unit
 Tags: gutenberg, block, image, responsive
 Requires at least: 6.9
 Tested up to: 7.0
-Stable tag: 1.6.0
+Stable tag: 1.6.1
 Requires PHP: 8.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -50,6 +50,9 @@ You can find a list of the available filters in the [Github readme](https://gith
 * Source: https://openverse.org/image/cd8e5cc5-d38a-462e-b4c1-1ea5c6f94e20
 
 == Changelog ==
+
+= 1.6.1 =
+* Security: Fix stored XSS by using validated media type in source tag
 
 = 1.6.0 =
 * Tested to WordPress 7.0
