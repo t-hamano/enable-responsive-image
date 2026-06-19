@@ -99,7 +99,7 @@ function enable_responsive_image_render_block_image( $block_content, $block ) {
 		$source_tags .= sprintf(
 			'<source srcset="%1$s" media="(%2$s: %3$dpx)"/>',
 			esc_url( $source['srcset'] ),
-			$source['mediaType'],
+			$media_type,
 			$source['mediaValue'] ? (int) $source['mediaValue'] : $default_media_value,
 		);
 	}
