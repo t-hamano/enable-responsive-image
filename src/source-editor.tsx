@@ -34,7 +34,7 @@ type Props = {
 	disableMoveUp: boolean;
 	disableMoveDown: boolean;
 	disableActions?: boolean;
-	onChange: ( {}: Source ) => void;
+	onChange: ( source: Source ) => void;
 	onRemove: () => void;
 	onChangeOrder?: ( direction: number ) => void;
 	isSelected: boolean;

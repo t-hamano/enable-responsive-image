@@ -4,11 +4,11 @@ export interface BlockAttributes {
 }
 
 export interface Source {
-	srcset: string | undefined;
-	id: number | undefined;
-	slug: string | undefined;
-	mediaType: string | undefined;
-	mediaValue: number | undefined;
+	srcset?: string;
+	id?: number;
+	slug?: string;
+	mediaType?: string;
+	mediaValue?: number;
 }
 
 export interface Media {
