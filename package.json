@@ -24,17 +24,17 @@
 		"npm": "10.9.2"
 	},
 	"devDependencies": {
-		"@types/wordpress__block-editor": "15.0.5",
-		"@wordpress/base-styles": "6.16.0",
-		"@wordpress/core-data": "7.40.1",
-		"@wordpress/env": "^10.39.0",
-		"@wordpress/icons": "11.7.0",
-		"@wordpress/scripts": "^31.5.0",
+		"@types/wordpress__block-editor": "15.0.6",
+		"@wordpress/base-styles": "10.0.1",
+		"@wordpress/core-data": "7.48.1",
+		"@wordpress/env": "^11.8.1",
+		"@wordpress/icons": "14.0.1",
+		"@wordpress/scripts": "^32.4.1",
 		"clsx": "2.1.1",
 		"husky": "^9.1.7",
-		"lint-staged": "16.2.7",
+		"lint-staged": "17.0.7",
 		"prettier": "npm:wp-prettier@3.0.3",
-		"typescript": "5.9.3"
+		"typescript": "6.0.3"
 	},
 	"scripts": {
 		"wp-env": "wp-env",
