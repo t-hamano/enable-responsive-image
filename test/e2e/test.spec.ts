@@ -1,7 +1,8 @@
+/// <reference types="node" />
 /**
  * External dependencies
  */
-import type { Page } from '@playwright/test';
+import type { Locator, Page } from '@playwright/test';
 import path from 'path';
 import fs from 'fs';
 import os from 'os';
@@ -11,6 +12,11 @@ import { v4 as uuid } from 'uuid';
  * WordPress dependencies
  */
 import { test as base, expect } from '@wordpress/e2e-test-utils-playwright';
+
+/**
+ * Internal dependencies
+ */
+import type { Source } from '../../src/types';
 
 const test = base.extend< {
 	mediaUtils: MediaUtils;
@@ -102,9 +108,9 @@ test.describe( 'Image Block', () => {
 			},
 		] );
 
-		const sources = blocks[ 0 ].attributes.enableResponsiveImageSources;
-		expect( sources?.[ 0 ].srcset.includes( firstSourceFilename ) ).toBe( true );
-		expect( sources?.[ 1 ].srcset.includes( secondSourceFilename ) ).toBe( true );
+		const sources = blocks[ 0 ].attributes.enableResponsiveImageSources as Source[];
+		expect( sources?.[ 0 ]?.srcset?.includes( firstSourceFilename ) ).toBe( true );
+		expect( sources?.[ 1 ]?.srcset?.includes( secondSourceFilename ) ).toBe( true );
 	} );
 } );
 
@@ -112,12 +118,12 @@ class MediaUtils {
 	page: Page;
 	basePath: string;
 
-	constructor( { page } ) {
+	constructor( { page }: { page: Page } ) {
 		this.page = page;
 		this.basePath = path.join( __dirname, 'assets' );
 	}
 
-	async uploadImage( inputElement, customFile ) {
+	async uploadImage( inputElement: Locator, customFile: string ) {
 		const tmpDirectory = await fs.mkdtempSync( path.join( os.tmpdir(), 'test-image-' ) );
 		const filename = uuid();
 		const tmpFileName = path.join( tmpDirectory, filename + '.png' );
@@ -127,7 +133,7 @@ class MediaUtils {
 		return filename;
 	}
 
-	async uploadSource( customFile ) {
+	async uploadSource( customFile: string ) {
 		const filename = await this.uploadImage(
 			this.page.locator( '.media-modal .moxie-shim input[type=file]' ),
 			customFile
@@ -139,7 +145,7 @@ class MediaUtils {
 		return filename;
 	}
 
-	async changeMediaQueryType( option, index = 0 ) {
+	async changeMediaQueryType( option: string, index = 0 ) {
 		const blockSettings = this.page.getByRole( 'region', {
 			name: 'Editor settings',
 		} );
@@ -150,7 +156,7 @@ class MediaUtils {
 			.setChecked( true );
 	}
 
-	async changeMediaQueryValue( value, index = 0 ) {
+	async changeMediaQueryValue( value: string, index = 0 ) {
 		const blockSettings = this.page.getByRole( 'region', {
 			name: 'Editor settings',
 		} );
@@ -160,7 +166,7 @@ class MediaUtils {
 			.fill( value );
 	}
 
-	async changeResolution( option, index = 0 ) {
+	async changeResolution( option: string, index = 0 ) {
 		const blockSettings = this.page.getByRole( 'region', {
 			name: 'Editor settings',
 		} );

@@ -37,10 +37,13 @@ module.exports = [
 			],
 		},
 	},
-	{
-		files: [ 'test/**' ],
+	...defaultConfig.configs[ 'test-e2e' ].map( ( config ) => ( {
+		...config,
+		files: [ 'test/e2e/**/*.ts' ],
 		rules: {
+			...config.rules,
+			'jest/expect-expect': 'off',
 			'react-hooks/rules-of-hooks': 'off',
 		},
-	},
+	} ) ),
 ];
