@@ -3,7 +3,7 @@
  */
 const config = require( '@wordpress/scripts/config/playwright.config.js' );
 
-export default {
+module.exports = {
 	...config,
 	testDir: './test/e2e',
 	webServer: {

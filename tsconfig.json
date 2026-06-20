@@ -10,6 +10,6 @@
 		"resolveJsonModule": true,
 		"skipLibCheck": true
 	},
-	"include": [ "src/**/*", "src/**/*.json" ],
+	"include": [ "src/**/*", "src/**/*.json", "test/**/*" ],
 	"exclude": [ "**/build/**" ]
 }
