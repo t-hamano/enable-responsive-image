@@ -36,8 +36,6 @@ test.describe( 'Image Block', () => {
 	} );
 
 	test( 'should create image with image sources', async ( { editor, page, mediaUtils } ) => {
-		const wpVersion = await mediaUtils.getWpVersion();
-
 		// Insert Image block.
 		await editor.insertBlock( { name: 'core/image' } );
 		const imageBlock = editor.canvas.getByRole( 'document', {
@@ -58,9 +56,7 @@ test.describe( 'Image Block', () => {
 
 		// Add first image source.
 		await editor.openDocumentSettingsSidebar();
-		if ( wpVersion !== '6.9' ) {
-			await page.getByRole( 'tab', { name: 'Settings' } ).click();
-		}
+		await page.getByRole( 'tab', { name: 'Settings' } ).click();
 		await page.getByRole( 'button', { name: 'Add image source' } ).click();
 		await page.getByRole( 'button', { name: 'Set image source' } ).click();
 		const firstSourceFilename = await mediaUtils.uploadSource( '600x450.png' );
@@ -177,15 +173,5 @@ class MediaUtils {
 			.selectOption( {
 				label: option,
 			} );
-	}
-
-	async getWpVersion() {
-		const body = await this.page.$( 'body' );
-		if ( ! body ) {
-			throw new Error( 'Could not find body element' );
-		}
-		const bodyClassNames = await ( await body.getProperty( 'className' ) ).jsonValue();
-		const matches = bodyClassNames.match( /branch-([0-9]*-*[0-9])/ );
-		return matches?.[ 1 ];
 	}
 }
