@@ -247,7 +247,6 @@ export default function SourceEditor( {
 			{ !! id && srcset && (
 				<>
 					<ToggleGroupControl
-						__nextHasNoMarginBottom
 						isBlock
 						label={ __( 'Media query type', 'enable-responsive-image' ) }
 						onChange={ onChangeMediaType }
@@ -259,7 +258,6 @@ export default function SourceEditor( {
 						) ) }
 					</ToggleGroupControl>
 					<RangeControl
-						__nextHasNoMarginBottom
 						label={ __( 'Media query value (px)', 'enable-responsive-image' ) }
 						value={ mediaValue || DEFAULT_MEDIA_VALUE }
 						onChange={ onChangeMediaValue }
@@ -270,7 +268,6 @@ export default function SourceEditor( {
 						__next40pxDefaultSize
 					/>
 					<SelectControl
-						__nextHasNoMarginBottom
 						label={ __( 'Resolution', 'enable-responsive-image' ) }
 						value={ srcsetSlug }
 						options={ imageSizeOptions }
