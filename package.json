@@ -19,6 +19,9 @@
 		"node": ">=24.0.0",
 		"npm": ">=11.0.0"
 	},
+	"dependencies": {
+		"@wordpress/ui": "0.16.0"
+	},
 	"devDependencies": {
 		"@types/wordpress__block-editor": "15.0.6",
 		"@wordpress/base-styles": "10.1.0",

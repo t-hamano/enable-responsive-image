@@ -6,16 +6,13 @@ import { __ } from '@wordpress/i18n';
 import {
 	Button,
 	DropZone,
-	ExternalLink,
 	RangeControl,
 	Spinner,
 	SelectControl,
-	__experimentalHStack as HStack,
-	__experimentalVStack as VStack,
 	__experimentalToggleGroupControl as ToggleGroupControl,
 	__experimentalToggleGroupControlOption as ToggleGroupControlOption,
 } from '@wordpress/components';
-
+import { Stack, Link } from '@wordpress/ui';
 import { MediaUpload, store as blockEditorStore } from '@wordpress/block-editor';
 import { useDispatch, useSelect } from '@wordpress/data';
 import { store as coreStore } from '@wordpress/core-data';
@@ -164,8 +161,8 @@ export default function SourceEditor( {
 	}
 
 	return (
-		<VStack spacing={ 4 }>
-			<VStack spacing={ 2 }>
+		<Stack direction="column" gap="lg">
+			<Stack direction="column" gap="sm">
 				<MediaUpload
 					onSelect={ onSelectImage }
 					allowedTypes={ [ 'image' ] }
@@ -191,7 +188,12 @@ export default function SourceEditor( {
 									__( 'Set image source', 'enable-responsive-image' )
 								) }
 							</Button>
-							<HStack className="enable-responsive-image__movers" expanded={ false }>
+							<Stack
+								align="center"
+								justify="space-between"
+								gap="sm"
+								className="enable-responsive-image__movers"
+							>
 								{ ! ( disableMoveUp && disableMoveDown ) && (
 									<>
 										<Button
@@ -212,9 +214,14 @@ export default function SourceEditor( {
 										/>
 									</>
 								) }
-							</HStack>
+							</Stack>
 							{ ! disableActions && (
-								<HStack className="enable-responsive-image__actions">
+								<Stack
+									align="center"
+									justify="space-between"
+									gap="sm"
+									className="enable-responsive-image__actions"
+								>
 									<Button
 										className="enable-responsive-image__action"
 										onClick={ open }
@@ -232,18 +239,18 @@ export default function SourceEditor( {
 									>
 										{ __( 'Remove', 'enable-responsive-image' ) }
 									</Button>
-								</HStack>
+								</Stack>
 							) }
 							<DropZone onFilesDrop={ onDropFiles } />
 						</div>
 					) }
 				/>
 				{ !! id && srcset && (
-					<ExternalLink className="enable-responsive-image__url" href={ srcset }>
+					<Link className="enable-responsive-image__url" href={ srcset } openInNewTab>
 						{ srcset }
-					</ExternalLink>
+					</Link>
 				) }
-			</VStack>
+			</Stack>
 			{ !! id && srcset && (
 				<>
 					<ToggleGroupControl
@@ -277,6 +284,6 @@ export default function SourceEditor( {
 					/>
 				</>
 			) }
-		</VStack>
+		</Stack>
 	);
 }
