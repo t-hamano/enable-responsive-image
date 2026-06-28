@@ -4,10 +4,10 @@
 import { __, sprintf } from '@wordpress/i18n';
 import {
 	Button,
-	Notice,
 	__experimentalToolsPanel as ToolsPanel,
 	__experimentalToolsPanelItem as ToolsPanelItem,
 } from '@wordpress/components';
+import { Notice } from '@wordpress/ui';
 import { MediaUploadCheck } from '@wordpress/block-editor';
 import { useViewportMatch } from '@wordpress/compose';
 import type { BlockEditProps } from '@wordpress/blocks';
@@ -77,16 +77,14 @@ export default function ImageList( props: BlockEditProps< BlockAttributes > ) {
 		>
 			<MediaUploadCheck
 				fallback={
-					<Notice
-						className="enable-responsive-image__notice"
-						status="warning"
-						isDismissible={ false }
-					>
-						{ __(
-							'To edit the image, you need permission to upload media.',
-							'enable-responsive-image'
-						) }
-					</Notice>
+					<Notice.Root className="enable-responsive-image__notice" intent="warning">
+						<Notice.Description>
+							{ __(
+								'To edit the image, you need permission to upload media.',
+								'enable-responsive-image'
+							) }
+						</Notice.Description>
+					</Notice.Root>
 				}
 			>
 				{ sources.length > 0 &&
