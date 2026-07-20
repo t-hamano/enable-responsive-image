@@ -111,6 +111,7 @@ export default function ImageList( props: BlockEditProps< BlockAttributes > ) {
 								</legend>
 								<SourceEditor
 									{ ...props }
+									index={ index }
 									disableMoveUp={ index === 0 }
 									disableMoveDown={ index === sources.length - 1 }
 									source={ source }
