@@ -1,4 +1,9 @@
 /**
+ * External dependencies
+ */
+import type { Ref } from 'react';
+
+/**
  * WordPress dependencies
  */
 import { useState } from '@wordpress/element';
@@ -33,6 +38,8 @@ type Props = {
 	disableMoveUp: boolean;
 	disableMoveDown: boolean;
 	disableActions?: boolean;
+	moveUpRef?: Ref< HTMLButtonElement >;
+	moveDownRef?: Ref< HTMLButtonElement >;
 	onChange: ( source: Source ) => void;
 	onRemove: () => void;
 	onChangeOrder?: ( direction: number ) => void;
@@ -51,6 +58,8 @@ export default function SourceEditor( {
 	disableMoveUp = false,
 	disableMoveDown = false,
 	disableActions = false,
+	moveUpRef,
+	moveDownRef,
 	onChangeOrder,
 	onChange,
 	onRemove,
@@ -204,6 +213,7 @@ export default function SourceEditor( {
 								{ ! ( disableMoveUp && disableMoveDown ) && (
 									<>
 										<Button
+											ref={ moveUpRef }
 											className="enable-responsive-image__mover"
 											label={ __( 'Move up', 'enable-responsive-image' ) }
 											icon={ chevronUp }
@@ -236,6 +246,7 @@ export default function SourceEditor( {
 											</VisuallyHidden>
 										) }
 										<Button
+											ref={ moveDownRef }
 											className="enable-responsive-image__mover"
 											label={ __( 'Move down', 'enable-responsive-image' ) }
 											icon={ chevronDown }

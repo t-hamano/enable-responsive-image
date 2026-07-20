@@ -1,6 +1,7 @@
 /**
  * WordPress dependencies
  */
+import { useRef } from '@wordpress/element';
 import { __, sprintf } from '@wordpress/i18n';
 import {
 	Button,
@@ -22,6 +23,9 @@ import { MAX_SOURCES } from './constants';
 export default function ImageList( props: BlockEditProps< BlockAttributes > ) {
 	const { attributes, setAttributes } = props;
 	const { enableResponsiveImageSources: sources } = attributes;
+
+	const moveUpRefs = useRef< ( HTMLButtonElement | null )[] >( [] );
+	const moveDownRefs = useRef< ( HTMLButtonElement | null )[] >( [] );
 
 	function onChange( newSource: Source, index: number ) {
 		const newSources = [ ...sources ];
@@ -47,6 +51,13 @@ export default function ImageList( props: BlockEditProps< BlockAttributes > ) {
 		const movedSource = newSources.splice( index, 1 )[ 0 ];
 		newSources.splice( newIndex, 0, movedSource );
 		setAttributes( { enableResponsiveImageSources: newSources } );
+
+		// Move focus to the mover button at the new position so it follows the
+		// moved source, after the reorder has rendered.
+		window.requestAnimationFrame( () => {
+			const refs = direction < 0 ? moveUpRefs : moveDownRefs;
+			refs.current[ newIndex ]?.focus();
+		} );
 	}
 
 	function onRemoveSource( index: number ) {
@@ -114,6 +125,12 @@ export default function ImageList( props: BlockEditProps< BlockAttributes > ) {
 									index={ index }
 									disableMoveUp={ index === 0 }
 									disableMoveDown={ index === sources.length - 1 }
+									moveUpRef={ ( el ) => {
+										moveUpRefs.current[ index ] = el;
+									} }
+									moveDownRef={ ( el ) => {
+										moveDownRefs.current[ index ] = el;
+									} }
 									source={ source }
 									onChangeOrder={ ( direction ) => onChangeOrder( direction, index ) }
 									onChange={ ( newSource ) => onChange( newSource, index ) }
