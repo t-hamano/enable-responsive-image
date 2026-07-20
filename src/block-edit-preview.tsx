@@ -42,8 +42,7 @@ export default function BlockEditPreview( { attributes }: BlockEditProps< BlockA
 	} = attributes;
 
 	const borderProps = getBorderClassesAndStyles( attributes );
-	const shadowProps =
-		typeof getShadowClassesAndStyles === 'function' ? getShadowClassesAndStyles( attributes ) : {};
+	const shadowProps = getShadowClassesAndStyles( attributes );
 
 	const filteredSources = sources.filter( ( { srcset, mediaType, mediaValue } ) => {
 		return srcset && mediaType && mediaValue;
