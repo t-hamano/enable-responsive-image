@@ -1,8 +1,13 @@
 /**
+ * External dependencies
+ */
+import type { Ref } from 'react';
+
+/**
  * WordPress dependencies
  */
 import { useState } from '@wordpress/element';
-import { __ } from '@wordpress/i18n';
+import { __, sprintf } from '@wordpress/i18n';
 import {
 	Button,
 	DropZone,
@@ -12,7 +17,8 @@ import {
 	__experimentalToggleGroupControl as ToggleGroupControl,
 	__experimentalToggleGroupControlOption as ToggleGroupControlOption,
 } from '@wordpress/components';
-import { Stack, Link } from '@wordpress/ui';
+import { Stack, Link, VisuallyHidden } from '@wordpress/ui';
+import { useInstanceId } from '@wordpress/compose';
 import { MediaUpload, store as blockEditorStore } from '@wordpress/block-editor';
 import { useDispatch, useSelect } from '@wordpress/data';
 import { store as coreStore } from '@wordpress/core-data';
@@ -28,9 +34,12 @@ import { DEFAULT_MEDIA_VALUE, MEDIA_TYPES, MIN_MEDIA_VALUE, MAX_MEDIA_VALUE } fr
 
 type Props = {
 	source?: Source;
+	index?: number;
 	disableMoveUp: boolean;
 	disableMoveDown: boolean;
 	disableActions?: boolean;
+	moveUpRef?: Ref< HTMLButtonElement >;
+	moveDownRef?: Ref< HTMLButtonElement >;
 	onChange: ( source: Source ) => void;
 	onRemove: () => void;
 	onChangeOrder?: ( direction: number ) => void;
@@ -45,9 +54,12 @@ export default function SourceEditor( {
 		mediaType: undefined,
 		mediaValue: undefined,
 	},
+	index,
 	disableMoveUp = false,
 	disableMoveDown = false,
 	disableActions = false,
+	moveUpRef,
+	moveDownRef,
 	onChangeOrder,
 	onChange,
 	onRemove,
@@ -83,6 +95,10 @@ export default function SourceEditor( {
 	const { createErrorNotice, removeAllNotices } = useDispatch( noticesStore );
 
 	const [ isLoading, setIsLoading ] = useState( false );
+
+	const instanceId = useInstanceId( SourceEditor );
+	const moveUpDescriptionId = `enable-responsive-image__mover-description-up-${ instanceId }`;
+	const moveDownDescriptionId = `enable-responsive-image__mover-description-down-${ instanceId }`;
 
 	const imageSizeOptions = imageSizes
 		.filter( ( { slug }: { slug: string } ) => {
@@ -197,21 +213,71 @@ export default function SourceEditor( {
 								{ ! ( disableMoveUp && disableMoveDown ) && (
 									<>
 										<Button
+											ref={ moveUpRef }
 											className="enable-responsive-image__mover"
 											label={ __( 'Move up', 'enable-responsive-image' ) }
 											icon={ chevronUp }
 											size="small"
 											disabled={ disableMoveUp }
+											aria-describedby={ moveUpDescriptionId }
 											onClick={ () => onChangeOrder?.( -1 ) }
+											accessibleWhenDisabled
 										/>
+										{ index !== undefined && (
+											<VisuallyHidden id={ moveUpDescriptionId }>
+												{ disableMoveUp
+													? sprintf(
+															/* translators: %d: Image source number. */
+															__(
+																'Image source %d is at the beginning of the content and can’t be moved up',
+																'enable-responsive-image'
+															),
+															index + 1
+													  )
+													: sprintf(
+															/* translators: 1: Current image source number. 2: New image source number. */
+															__(
+																'Move image source %1$d to position %2$d',
+																'enable-responsive-image'
+															),
+															index + 1,
+															index
+													  ) }
+											</VisuallyHidden>
+										) }
 										<Button
+											ref={ moveDownRef }
 											className="enable-responsive-image__mover"
 											label={ __( 'Move down', 'enable-responsive-image' ) }
 											icon={ chevronDown }
 											size="small"
 											disabled={ disableMoveDown }
+											aria-describedby={ moveDownDescriptionId }
 											onClick={ () => onChangeOrder?.( 1 ) }
+											accessibleWhenDisabled
 										/>
+										{ index !== undefined && (
+											<VisuallyHidden id={ moveDownDescriptionId }>
+												{ disableMoveDown
+													? sprintf(
+															/* translators: %d: Image source number. */
+															__(
+																'Image source %d is at the end of the content and can’t be moved down',
+																'enable-responsive-image'
+															),
+															index + 1
+													  )
+													: sprintf(
+															/* translators: 1: Current image source number. 2: New image source number. */
+															__(
+																'Move image source %1$d to position %2$d',
+																'enable-responsive-image'
+															),
+															index + 1,
+															index + 2
+													  ) }
+											</VisuallyHidden>
+										) }
 									</>
 								) }
 							</Stack>

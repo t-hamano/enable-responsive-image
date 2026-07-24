@@ -108,6 +108,92 @@ test.describe( 'Image Block', () => {
 		expect( sources?.[ 0 ]?.srcset?.includes( firstSourceFilename ) ).toBe( true );
 		expect( sources?.[ 1 ]?.srcset?.includes( secondSourceFilename ) ).toBe( true );
 	} );
+
+	test( 'should move an image source up', async ( { editor, page, mediaUtils } ) => {
+		// Insert Image block with a main image.
+		await editor.insertBlock( { name: 'core/image' } );
+		const imageBlock = editor.canvas.getByRole( 'document', { name: 'Block: Image' } );
+		await expect( imageBlock ).toBeVisible();
+		await mediaUtils.uploadImage(
+			imageBlock.locator( 'data-testid=form-file-upload-input' ),
+			'1000x750.png'
+		);
+
+		// Add three image sources.
+		await editor.openDocumentSettingsSidebar();
+		await page.getByRole( 'tab', { name: 'Settings' } ).click();
+		await mediaUtils.addImageSource( '1000x750.png' );
+		await mediaUtils.addImageSource( '600x450.png' );
+		await mediaUtils.addImageSource( '400x300.png' );
+
+		const panel = page
+			.getByRole( 'region', { name: 'Editor settings' } )
+			.locator( '.enable-responsive-image' );
+
+		// Capture the srcset of each source in its original order.
+		const [ firstSrcset, secondSrcset, thirdSrcset ] = (
+			( await editor.getBlocks() )[ 0 ].attributes.enableResponsiveImageSources as Source[]
+		 ).map( ( source ) => source.srcset );
+		await panel.getByRole( 'button', { name: 'Move up' } ).nth( 1 ).click();
+
+		await expect.poll( editor.getBlocks ).toMatchObject( [
+			{
+				attributes: {
+					enableResponsiveImageSources: [
+						{ srcset: secondSrcset },
+						{ srcset: firstSrcset },
+						{ srcset: thirdSrcset },
+					],
+				},
+			},
+		] );
+
+		// Focus follows the moved source to its new position.
+		await expect( panel.getByRole( 'button', { name: 'Move up' } ).nth( 0 ) ).toBeFocused();
+	} );
+
+	test( 'should move an image source down', async ( { editor, page, mediaUtils } ) => {
+		// Insert Image block with a main image.
+		await editor.insertBlock( { name: 'core/image' } );
+		const imageBlock = editor.canvas.getByRole( 'document', { name: 'Block: Image' } );
+		await expect( imageBlock ).toBeVisible();
+		await mediaUtils.uploadImage(
+			imageBlock.locator( 'data-testid=form-file-upload-input' ),
+			'1000x750.png'
+		);
+
+		// Add three image sources.
+		await editor.openDocumentSettingsSidebar();
+		await page.getByRole( 'tab', { name: 'Settings' } ).click();
+		await mediaUtils.addImageSource( '1000x750.png' );
+		await mediaUtils.addImageSource( '600x450.png' );
+		await mediaUtils.addImageSource( '400x300.png' );
+
+		const panel = page
+			.getByRole( 'region', { name: 'Editor settings' } )
+			.locator( '.enable-responsive-image' );
+		const [ firstSrcset, secondSrcset, thirdSrcset ] = (
+			( await editor.getBlocks() )[ 0 ].attributes.enableResponsiveImageSources as Source[]
+		 ).map( ( source ) => source.srcset );
+
+		// Move the second image source down.
+		await panel.getByRole( 'button', { name: 'Move down' } ).nth( 1 ).click();
+
+		await expect.poll( editor.getBlocks ).toMatchObject( [
+			{
+				attributes: {
+					enableResponsiveImageSources: [
+						{ srcset: firstSrcset },
+						{ srcset: thirdSrcset },
+						{ srcset: secondSrcset },
+					],
+				},
+			},
+		] );
+
+		// Focus follows the moved source to its new position.
+		await expect( panel.getByRole( 'button', { name: 'Move down' } ).nth( 2 ) ).toBeFocused();
+	} );
 } );
 
 class MediaUtils {
@@ -139,6 +225,12 @@ class MediaUtils {
 			.getByRole( 'button', { name: 'Select', exact: true } )
 			.click();
 		return filename;
+	}
+
+	async addImageSource( customFile: string ) {
+		await this.page.getByRole( 'button', { name: 'Add image source' } ).click();
+		await this.page.getByRole( 'button', { name: 'Set image source' } ).click();
+		return this.uploadSource( customFile );
 	}
 
 	async changeMediaQueryType( option: string, index = 0 ) {
