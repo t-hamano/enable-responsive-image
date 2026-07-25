@@ -194,6 +194,137 @@ test.describe( 'Image Block', () => {
 		// Focus follows the moved source to its new position.
 		await expect( panel.getByRole( 'button', { name: 'Move down' } ).nth( 2 ) ).toBeFocused();
 	} );
+
+	test( 'should move focus to the add button when the last image source is removed', async ( {
+		editor,
+		page,
+		mediaUtils,
+	} ) => {
+		// Insert Image block with a main image.
+		await editor.insertBlock( { name: 'core/image' } );
+		const imageBlock = editor.canvas.getByRole( 'document', { name: 'Block: Image' } );
+		await expect( imageBlock ).toBeVisible();
+		await mediaUtils.uploadImage(
+			imageBlock.locator( 'data-testid=form-file-upload-input' ),
+			'1000x750.png'
+		);
+
+		// Add a single image source.
+		await editor.openDocumentSettingsSidebar();
+		await page.getByRole( 'tab', { name: 'Settings' } ).click();
+		await mediaUtils.addImageSource( '1000x750.png' );
+
+		const panel = page
+			.getByRole( 'region', { name: 'Editor settings' } )
+			.locator( '.enable-responsive-image' );
+
+		await panel.getByRole( 'button', { name: 'Remove', exact: true } ).click();
+
+		await expect.poll( editor.getBlocks ).toMatchObject( [
+			{
+				attributes: {
+					enableResponsiveImageSources: [],
+				},
+			},
+		] );
+
+		// Focus moves to the add button because no image source is left.
+		await expect( page.getByRole( 'button', { name: 'Add image source' } ) ).toBeFocused();
+	} );
+
+	test( 'should move focus to the previous image source when a source is removed', async ( {
+		editor,
+		page,
+		mediaUtils,
+	} ) => {
+		// Insert Image block with a main image.
+		await editor.insertBlock( { name: 'core/image' } );
+		const imageBlock = editor.canvas.getByRole( 'document', { name: 'Block: Image' } );
+		await expect( imageBlock ).toBeVisible();
+		await mediaUtils.uploadImage(
+			imageBlock.locator( 'data-testid=form-file-upload-input' ),
+			'1000x750.png'
+		);
+
+		// Add three image sources.
+		await editor.openDocumentSettingsSidebar();
+		await page.getByRole( 'tab', { name: 'Settings' } ).click();
+		await mediaUtils.addImageSource( '1000x750.png' );
+		await mediaUtils.addImageSource( '600x450.png' );
+		await mediaUtils.addImageSource( '400x300.png' );
+
+		const panel = page
+			.getByRole( 'region', { name: 'Editor settings' } )
+			.locator( '.enable-responsive-image' );
+
+		// Capture the srcset of each source in its original order.
+		const [ firstSrcset, , thirdSrcset ] = (
+			( await editor.getBlocks() )[ 0 ].attributes.enableResponsiveImageSources as Source[]
+		 ).map( ( source ) => source.srcset );
+
+		// Remove the second image source.
+		await panel.getByRole( 'button', { name: 'Remove', exact: true } ).nth( 1 ).click();
+
+		await expect.poll( editor.getBlocks ).toMatchObject( [
+			{
+				attributes: {
+					enableResponsiveImageSources: [ { srcset: firstSrcset }, { srcset: thirdSrcset } ],
+				},
+			},
+		] );
+
+		// Focus moves to the previous image source.
+		await expect(
+			panel.getByRole( 'button', { name: 'Replace image source', exact: true } ).nth( 0 )
+		).toBeFocused();
+	} );
+
+	test( 'should move focus to the next image source when the first source is removed', async ( {
+		editor,
+		page,
+		mediaUtils,
+	} ) => {
+		// Insert Image block with a main image.
+		await editor.insertBlock( { name: 'core/image' } );
+		const imageBlock = editor.canvas.getByRole( 'document', { name: 'Block: Image' } );
+		await expect( imageBlock ).toBeVisible();
+		await mediaUtils.uploadImage(
+			imageBlock.locator( 'data-testid=form-file-upload-input' ),
+			'1000x750.png'
+		);
+
+		// Add three image sources.
+		await editor.openDocumentSettingsSidebar();
+		await page.getByRole( 'tab', { name: 'Settings' } ).click();
+		await mediaUtils.addImageSource( '1000x750.png' );
+		await mediaUtils.addImageSource( '600x450.png' );
+		await mediaUtils.addImageSource( '400x300.png' );
+
+		const panel = page
+			.getByRole( 'region', { name: 'Editor settings' } )
+			.locator( '.enable-responsive-image' );
+
+		// Capture the srcset of each source in its original order.
+		const [ , secondSrcset, thirdSrcset ] = (
+			( await editor.getBlocks() )[ 0 ].attributes.enableResponsiveImageSources as Source[]
+		 ).map( ( source ) => source.srcset );
+
+		// Remove the first image source.
+		await panel.getByRole( 'button', { name: 'Remove', exact: true } ).nth( 0 ).click();
+
+		await expect.poll( editor.getBlocks ).toMatchObject( [
+			{
+				attributes: {
+					enableResponsiveImageSources: [ { srcset: secondSrcset }, { srcset: thirdSrcset } ],
+				},
+			},
+		] );
+
+		// Focus moves to the next image source, which is now the first one.
+		await expect(
+			panel.getByRole( 'button', { name: 'Replace image source', exact: true } ).nth( 0 )
+		).toBeFocused();
+	} );
 } );
 
 class MediaUtils {
