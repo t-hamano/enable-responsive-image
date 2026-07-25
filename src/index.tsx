@@ -5,7 +5,7 @@ import { __ } from '@wordpress/i18n';
 import { addFilter } from '@wordpress/hooks';
 import { useSelect, useDispatch } from '@wordpress/data';
 import { BlockControls, InspectorControls } from '@wordpress/block-editor';
-import { ToolbarGroup, ToolbarButton } from '@wordpress/components';
+import { ToolbarButton } from '@wordpress/components';
 import type { BlockEditProps } from '@wordpress/blocks';
 
 /**
@@ -78,18 +78,16 @@ const withInspectorControl =
 				) }
 				{ url && sources?.length > 0 && SHOW_PREVIEW_BUTTON && (
 					<BlockControls group="parent">
-						<ToolbarGroup>
-							<ToolbarButton
-								icon={ icon }
-								isPressed={ isPreview }
-								label={
-									isPreview
-										? __( 'Disable responsive image preview', 'enable-responsive-image' )
-										: __( 'Enable responsive image preview', 'enable-responsive-image' )
-								}
-								onClick={ () => setIsPreview( ! isPreview ) }
-							/>
-						</ToolbarGroup>
+						<ToolbarButton
+							icon={ icon }
+							isPressed={ isPreview }
+							label={
+								isPreview
+									? __( 'Disable responsive image preview', 'enable-responsive-image' )
+									: __( 'Enable responsive image preview', 'enable-responsive-image' )
+							}
+							onClick={ () => setIsPreview( ! isPreview ) }
+						/>
 					</BlockControls>
 				) }
 				{ url && (
