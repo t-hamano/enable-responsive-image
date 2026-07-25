@@ -52,7 +52,7 @@ You can find a list of the available filters in the [Github readme](https://gith
 == Changelog ==
 
 = 1.7.0 =
-* Tested to WordPress 7.0
+* Tested to WordPress 7.1
 * Drop support for WordPress 6.9
 * Accessibility: Improve focus management when removing and reordering image sources
 
