@@ -24,8 +24,10 @@ export default function ImageList( props: BlockEditProps< BlockAttributes > ) {
 	const { attributes, setAttributes } = props;
 	const { enableResponsiveImageSources: sources } = attributes;
 
+	const toggleRefs = useRef< ( HTMLButtonElement | null )[] >( [] );
 	const moveUpRefs = useRef< ( HTMLButtonElement | null )[] >( [] );
 	const moveDownRefs = useRef< ( HTMLButtonElement | null )[] >( [] );
+	const addSourceRef = useRef< HTMLButtonElement | null >( null );
 
 	function onChange( newSource: Source, index: number ) {
 		const newSources = [ ...sources ];
@@ -60,10 +62,24 @@ export default function ImageList( props: BlockEditProps< BlockAttributes > ) {
 		} );
 	}
 
-	function onRemoveSource( index: number ) {
+	function onRemoveSource( index: number, shouldFocus = false ) {
 		const newSources = [ ...sources ];
 		newSources.splice( index, 1 );
 		setAttributes( { enableResponsiveImageSources: newSources } );
+
+		if ( ! shouldFocus ) {
+			return;
+		}
+
+		// Move focus to the previous source, falling back to the next one, or to
+		// the add button when no source is left, after the removal has rendered.
+		window.requestAnimationFrame( () => {
+			if ( newSources.length === 0 ) {
+				addSourceRef.current?.focus();
+				return;
+			}
+			toggleRefs.current[ index > 0 ? index - 1 : 0 ]?.focus();
+		} );
 	}
 	const dropdownMenuProps = ! useViewportMatch( 'medium', '<' )
 		? {
@@ -125,6 +141,9 @@ export default function ImageList( props: BlockEditProps< BlockAttributes > ) {
 									index={ index }
 									disableMoveUp={ index === 0 }
 									disableMoveDown={ index === sources.length - 1 }
+									toggleRef={ ( el ) => {
+										toggleRefs.current[ index ] = el;
+									} }
 									moveUpRef={ ( el ) => {
 										moveUpRefs.current[ index ] = el;
 									} }
@@ -134,13 +153,14 @@ export default function ImageList( props: BlockEditProps< BlockAttributes > ) {
 									source={ source }
 									onChangeOrder={ ( direction ) => onChangeOrder( direction, index ) }
 									onChange={ ( newSource ) => onChange( newSource, index ) }
-									onRemove={ () => onRemoveSource( index ) }
+									onRemove={ () => onRemoveSource( index, true ) }
 								/>
 								{ index < sources.length - 1 && <hr /> }
 							</fieldset>
 						</ToolsPanelItem>
 					) ) }
 				<Button
+					ref={ addSourceRef }
 					variant="primary"
 					className="enable-responsive-image__add-source"
 					disabled={ sources.length >= MAX_SOURCES }

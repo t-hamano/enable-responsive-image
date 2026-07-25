@@ -38,6 +38,7 @@ type Props = {
 	disableMoveUp: boolean;
 	disableMoveDown: boolean;
 	disableActions?: boolean;
+	toggleRef?: Ref< HTMLButtonElement >;
 	moveUpRef?: Ref< HTMLButtonElement >;
 	moveDownRef?: Ref< HTMLButtonElement >;
 	onChange: ( source: Source ) => void;
@@ -58,6 +59,7 @@ export default function SourceEditor( {
 	disableMoveUp = false,
 	disableMoveDown = false,
 	disableActions = false,
+	toggleRef,
 	moveUpRef,
 	moveDownRef,
 	onChangeOrder,
@@ -186,6 +188,7 @@ export default function SourceEditor( {
 					render={ ( { open } ) => (
 						<div className="enable-responsive-image__container">
 							<Button
+								ref={ toggleRef }
 								className={
 									! id ? 'enable-responsive-image__toggle' : 'enable-responsive-image__preview'
 								}
