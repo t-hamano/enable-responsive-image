@@ -1,0 +1,22 @@
+version: 2
+
+updates:
+  # GitHub Actions used in the workflows.
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly
+    groups:
+      actions:
+        patterns:
+          - '*'
+
+  # Composer dependencies.
+  - package-ecosystem: composer
+    directory: /
+    schedule:
+      interval: weekly
+    groups:
+      composer:
+        patterns:
+          - '*'
