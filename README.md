@@ -1,8 +1,8 @@
 # Enable Responsive Image
 
-[![Test](https://github.com/t-hamano/enable-responsive-image/actions/workflows/run-test.yml/badge.svg)](https://github.com/t-hamano/enable-responsive-image/actions/workflows/run-test.yml)
+[![Test](https://github.com/t-hamano/enable-responsive-image/actions/workflows/test.yml/badge.svg)](https://github.com/t-hamano/enable-responsive-image/actions/workflows/test.yml)
 
-[![Test and Deploy](https://github.com/t-hamano/enable-responsive-image/actions/workflows/run-test-and-deploy.yml/badge.svg)](https://github.com/t-hamano/enable-responsive-image/actions/workflows/run-test-and-deploy.yml)
+[![Deploy](https://github.com/t-hamano/enable-responsive-image/actions/workflows/deploy.yml/badge.svg)](https://github.com/t-hamano/enable-responsive-image/actions/workflows/deploy.yml)
 
 WordPress plugin that adds settings to the Image block to display different images depending on the width of the screen.
 
