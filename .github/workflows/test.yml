@@ -20,11 +20,6 @@ jobs:
     strategy:
       matrix:
         include:
-          - php: '8.0'
-            wp: WordPress
-          - php: '8.0'
-            wp: WordPress#7.1.2
-
           - php: '8.2'
             wp: WordPress
           - php: '8.2'

@@ -3,7 +3,7 @@
  * Plugin Name: Enable Responsive Image
  * Description: Adds settings to the Image block to display different images depending on the width of the screen.
  * Requires at least: 7.1
- * Requires PHP: 8.0
+ * Requires PHP: 8.2
  * Version: 1.7.0
  * Author: Aki Hamano
  * Author URI: https://github.com/t-hamano
