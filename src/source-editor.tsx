@@ -327,7 +327,6 @@ export default function SourceEditor( {
 						label={ __( 'Media query type', 'enable-responsive-image' ) }
 						onChange={ onChangeMediaType }
 						value={ mediaType || MEDIA_TYPES[ 0 ].value }
-						size="__unstable-large"
 					>
 						{ MEDIA_TYPES.map( ( { label, value } ) => (
 							<ToggleGroupControlOption key={ value } label={ label } value={ value } />
@@ -341,7 +340,6 @@ export default function SourceEditor( {
 						max={ MAX_MEDIA_VALUE }
 						allowReset
 						initialPosition={ DEFAULT_MEDIA_VALUE }
-						__next40pxDefaultSize
 					/>
 					<SelectControl
 						label={ __( 'Resolution', 'enable-responsive-image' ) }
@@ -349,7 +347,6 @@ export default function SourceEditor( {
 						options={ imageSizeOptions }
 						onChange={ onChangeResolution }
 						help={ __( 'Select the size of the source image.', 'enable-responsive-image' ) }
-						size="__unstable-large"
 					/>
 				</>
 			) }
