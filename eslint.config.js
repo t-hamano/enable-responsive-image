@@ -22,6 +22,21 @@ module.exports = [
 					allowedTextDomain: 'enable-responsive-image',
 				},
 			],
+			'@wordpress/use-import-as': [
+				'error',
+				{
+					'@wordpress/block-editor': {
+						__experimentalGetBorderClassesAndStyles: 'getBorderClassesAndStyles',
+						__experimentalGetShadowClassesAndStyles: 'getShadowClassesAndStyles',
+					},
+					'@wordpress/components': {
+						__experimentalToggleGroupControl: 'ToggleGroupControl',
+						__experimentalToggleGroupControlOption: 'ToggleGroupControlOption',
+						__experimentalToolsPanel: 'ToolsPanel',
+						__experimentalToolsPanelItem: 'ToolsPanelItem',
+					},
+				},
+			],
 			'no-nested-ternary': 'off',
 			'prettier/prettier': [
 				'error',
