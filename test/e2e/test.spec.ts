@@ -52,7 +52,7 @@ test.describe( 'Image Block', () => {
 		const blockSettings = page.getByRole( 'region', {
 			name: 'Editor settings',
 		} );
-		const ImageSourcesPanel = await blockSettings.locator( '.enable-responsive-image' );
+		const ImageSourcesPanel = blockSettings.locator( '.enable-responsive-image' );
 
 		// Add first image source.
 		await editor.openDocumentSettingsSidebar();
@@ -368,7 +368,7 @@ class MediaUtils {
 		const blockSettings = this.page.getByRole( 'region', {
 			name: 'Editor settings',
 		} );
-		const ImageSourcesPanel = await blockSettings.locator( '.enable-responsive-image' );
+		const ImageSourcesPanel = blockSettings.locator( '.enable-responsive-image' );
 		await ImageSourcesPanel.getByRole( 'radiogroup', { name: 'Media query type' } )
 			.nth( index )
 			.getByRole( 'radio', { name: option } )
@@ -379,7 +379,7 @@ class MediaUtils {
 		const blockSettings = this.page.getByRole( 'region', {
 			name: 'Editor settings',
 		} );
-		const ImageSourcesPanel = await blockSettings.locator( '.enable-responsive-image' );
+		const ImageSourcesPanel = blockSettings.locator( '.enable-responsive-image' );
 		await ImageSourcesPanel.getByRole( 'spinbutton', { name: 'Media query value (px)' } )
 			.nth( index )
 			.fill( value );
@@ -389,7 +389,7 @@ class MediaUtils {
 		const blockSettings = this.page.getByRole( 'region', {
 			name: 'Editor settings',
 		} );
-		const ImageSourcesPanel = await blockSettings.locator( '.enable-responsive-image' );
+		const ImageSourcesPanel = blockSettings.locator( '.enable-responsive-image' );
 
 		await ImageSourcesPanel.getByRole( 'combobox', { name: 'Resolution' } )
 			.nth( index )
