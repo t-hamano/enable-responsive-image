@@ -236,7 +236,7 @@ export default function SourceEditor( {
 																'enable-responsive-image'
 															),
 															index + 1
-													  )
+														)
 													: sprintf(
 															/* translators: 1: Current image source number. 2: New image source number. */
 															__(
@@ -245,7 +245,7 @@ export default function SourceEditor( {
 															),
 															index + 1,
 															index
-													  ) }
+														) }
 											</VisuallyHidden>
 										) }
 										<Button
@@ -269,7 +269,7 @@ export default function SourceEditor( {
 																'enable-responsive-image'
 															),
 															index + 1
-													  )
+														)
 													: sprintf(
 															/* translators: 1: Current image source number. 2: New image source number. */
 															__(
@@ -278,7 +278,7 @@ export default function SourceEditor( {
 															),
 															index + 1,
 															index + 2
-													  ) }
+														) }
 											</VisuallyHidden>
 										) }
 									</>

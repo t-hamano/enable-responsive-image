@@ -90,10 +90,10 @@ export default function ImageList( props: BlockEditProps< BlockAttributes > ) {
 				// TODO: Once the type is fixed upstream, remove this property.
 				// See: https://github.com/WordPress/gutenberg/pull/76027
 				label: '',
-		  }
+			}
 		: // TODO: Once the type is fixed upstream, remove this property.
-		  // See: https://github.com/WordPress/gutenberg/pull/76027
-		  { label: '' };
+			// See: https://github.com/WordPress/gutenberg/pull/76027
+			{ label: '' };
 
 	return (
 		<ToolsPanel
