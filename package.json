@@ -44,7 +44,7 @@
 		"husky": "^9.1.7",
 		"lint-staged": "17.6.0",
 		"prettier": "npm:wp-prettier@3.9.6",
-		"typescript": "7.0.2"
+		"typescript": "6.0.3"
 	},
 	"scripts": {
 		"wp-env": "wp-env",
