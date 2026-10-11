@@ -19,6 +19,12 @@
 		"node": ">=24.0.0",
 		"npm": ">=11.0.0"
 	},
+	"files": [
+		"src",
+		"build",
+		"enable-responsive-image.php",
+		"readme.txt"
+	],
 	"dependencies": {
 		"@wordpress/ui": "0.23.0"
 	},
@@ -52,6 +58,7 @@
 		"stop": "wp-env stop && wp-env --config .wp-env.test.json stop",
 		"start": "wp-scripts start",
 		"build": "wp-scripts build",
+		"plugin-zip": "npm run build && wp-scripts plugin-zip",
 		"check-licenses": "wp-scripts check-licenses",
 		"lint": "npm run lint:css && npm run lint:js && npm run lint:types && npm run lint:php && npm run lint:md-docs && npm run lint:pkg-json",
 		"lint:css": "wp-scripts lint-style",

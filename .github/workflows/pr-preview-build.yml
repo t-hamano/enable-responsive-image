@@ -1,0 +1,26 @@
+name: PR Preview - Build
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, edited]
+
+jobs:
+  build:
+    uses: WordPress/action-wp-playground-pr-preview/.github/workflows/preview-build.yml@v3
+    with:
+      artifacts: enable-responsive-image=enable-responsive-image.zip
+      node-version: '24'
+      build-command: |
+        npm ci
+        npm run plugin-zip
+        node -e '
+          const fs = require( "fs" );
+          const blueprint = JSON.parse( fs.readFileSync( ".wordpress-org/blueprints/blueprint.json", "utf8" ) );
+          for ( const step of blueprint.steps ) {
+            if ( step.step === "installPlugin" && step.pluginData?.slug === "enable-responsive-image" ) {
+              step.pluginData = { resource: "url", url: "{{ARTIFACT_URL:enable-responsive-image}}" };
+            }
+          }
+          fs.writeFileSync( "blueprint.json", JSON.stringify( blueprint ) );
+        '
+      blueprint-from-build: blueprint.json
