@@ -6,7 +6,9 @@ on:
 
 jobs:
   build:
-    uses: WordPress/action-wp-playground-pr-preview/.github/workflows/preview-build.yml@v3
+    permissions:
+      contents: read
+    uses: WordPress/action-wp-playground-pr-preview/.github/workflows/preview-build.yml@1b15093d61b5e98cdfeb31466f34ade495762cd7 # v4
     with:
       artifacts: enable-responsive-image=enable-responsive-image.zip
       node-version: '24'
