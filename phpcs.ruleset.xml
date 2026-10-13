@@ -2,6 +2,8 @@
 <ruleset name="WordPress Theme Coding Standards">
 	<description>A custom set of code standard rules to check for WordPress themes.</description>
 	<rule ref="WordPress-Core" />
+	<rule ref="PHPCompatibilityWP" />
+	<config name="testVersion" value="8.2-" />
 	<exclude-pattern>*/node_modules/*</exclude-pattern>
 	<exclude-pattern>*/vendor/*</exclude-pattern>
 	<exclude-pattern>*/build/*</exclude-pattern>
