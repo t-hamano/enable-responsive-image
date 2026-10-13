@@ -8,12 +8,12 @@
 		}
 	],
 	"require-dev": {
+		"dealerdirect/phpcodesniffer-composer-installer": "^1.2",
 		"squizlabs/php_codesniffer": "*",
-		"wp-coding-standards/wpcs": "^3.4"
-	},
-	"scripts": {
-		"phpcs": "phpcs --config-set installed_paths vendor/wp-coding-standards/wpcs,vendor/phpcsstandards/phpcsextra,vendor/phpcsstandards/phpcsutils",
-		"lint": "phpcs ./ --standard=./phpcs.ruleset.xml"
+		"wp-coding-standards/wpcs": "^3.4",
+		"phpcompatibility/phpcompatibility-wp": "^3.0@alpha",
+		"phpcompatibility/php-compatibility": "^10.0@alpha",
+		"phpcompatibility/phpcompatibility-paragonie": "^2.0@alpha"
 	},
 	"config": {
 		"allow-plugins": {

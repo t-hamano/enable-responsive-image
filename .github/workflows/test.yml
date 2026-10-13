@@ -51,10 +51,8 @@ jobs:
           npm ci
           npm run build
 
-      - name: Composer install and set phpcs
-        run: |
-          composer install
-          composer phpcs
+      - name: Composer install
+        run: composer install
 
       - name: Running lint check
         run: npm run lint
