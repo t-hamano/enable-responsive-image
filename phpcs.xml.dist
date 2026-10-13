@@ -1,6 +1,7 @@
 <?xml version="1.0"?>
 <ruleset name="WordPress Theme Coding Standards">
 	<description>A custom set of code standard rules to check for WordPress themes.</description>
+	<file>.</file>
 	<rule ref="WordPress-Core" />
 	<rule ref="PHPCompatibilityWP" />
 	<config name="testVersion" value="8.2-" />
