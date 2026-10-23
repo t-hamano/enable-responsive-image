@@ -15,25 +15,54 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+  lint:
+    runs-on: ubuntu-latest
+    name: Lint
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+
+      - name: Use desired version of Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version-file: '.nvmrc'
+
+      - name: Npm install
+        run: npm ci
+
+      - name: Composer install
+        run: composer install
+
+      - name: Running lint check
+        run: npm run lint
+
   test:
     runs-on: ubuntu-latest
     strategy:
       matrix:
         include:
+          # Browser differences only depend on the WordPress version,
+          # so all browsers run on the latest PHP only.
           - php: '8.2'
             wp: WordPress
+            browsers: chromium
           - php: '8.2'
             wp: WordPress#7.1.2
+            browsers: chromium
 
           - php: '8.4'
             wp: WordPress
+            browsers: chromium
           - php: '8.4'
             wp: WordPress#7.1.2
+            browsers: chromium
 
           - php: '8.5'
             wp: WordPress
+            browsers: chromium firefox webkit
           - php: '8.5'
             wp: WordPress#7.1.2
+            browsers: chromium firefox webkit
 
     name: PHP ${{ matrix.php }} / ${{ matrix.wp }} Test
 
@@ -51,14 +80,8 @@ jobs:
           npm ci
           npm run build
 
-      - name: Composer install
-        run: composer install
-
-      - name: Running lint check
-        run: npm run lint
-
       - name: Install Playwright dependencies
-        run: npx playwright install chromium firefox webkit --with-deps
+        run: npx playwright install ${{ matrix.browsers }} --with-deps
 
       - name: Install WordPress
         run: |
@@ -67,7 +90,7 @@ jobs:
           npm run wp-env-test run cli wp cli info
 
       - name: Running e2e tests
-        run: npm run test:e2e
+        run: npm run test:e2e -- $(printf -- '--project=%s ' ${{ matrix.browsers }})
 
       - name: Archive debug artifacts
         uses: actions/upload-artifact@v7
