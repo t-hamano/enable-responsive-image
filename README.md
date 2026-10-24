@@ -25,13 +25,13 @@ npm run build
 
 Filters the default media value (px).
 
-#### Parameters
+**Parameters:**
 
 - `$media_value`
 
   *(int)* The media value (px). Default is 600.
 
-#### Example
+**Example:**
 
 ```php
 function custom_enable_responsive_image_default_media_value( $default_media_value ) {
@@ -45,13 +45,13 @@ add_filter( 'enable_responsive_image_default_media_value', 'custom_enable_respon
 
 Filters whether the preview button is displayed on the block toolbar.
 
-#### Parameters
+**Parameters:**
 
 - `$show_preview_button`
 
   *(boolean)* Whether the preview button is displayed on the block toolbar. Default is `true`.
 
-#### Example
+**Example:**
 
 ```php
 // Disable the preview button.
