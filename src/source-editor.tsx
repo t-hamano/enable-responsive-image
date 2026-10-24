@@ -147,7 +147,7 @@ export default function SourceEditor( {
 	function onChangeResolution( newSlug: string ) {
 		const newUrl = image?.media_details?.sizes?.[ newSlug ]?.source_url;
 		if ( ! newUrl ) {
-			return null;
+			return;
 		}
 
 		onChange( {
