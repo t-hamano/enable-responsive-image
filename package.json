@@ -55,7 +55,6 @@
 	"scripts": {
 		"wp-env": "wp-env",
 		"wp-env-test": "wp-env --config .wp-env.test.json",
-		"stop": "wp-env stop && wp-env --config .wp-env.test.json stop",
 		"start": "wp-scripts start",
 		"build": "wp-scripts build",
 		"plugin-zip": "npm run build && wp-scripts plugin-zip",
@@ -68,7 +67,6 @@
 		"lint:md-docs": "wp-scripts lint-md-docs",
 		"lint:pkg-json": "wp-scripts lint-pkg-json",
 		"format": "wp-scripts format",
-		"test": "npm run lint:js && npm run test:e2e",
 		"test:e2e": "wp-scripts test-playwright",
 		"test:e2e:debug": "wp-scripts test-playwright --debug",
 		"prepare": "husky"
