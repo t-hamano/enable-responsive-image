@@ -2,5 +2,7 @@ node_modules/
 build/
 vendor/
 *.js
+*.ts
+*.tsx
 *.xml
 *.md
