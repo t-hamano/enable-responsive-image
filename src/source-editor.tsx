@@ -12,11 +12,10 @@ import {
 	Button,
 	DropZone,
 	RangeControl,
-	Spinner,
 	__experimentalToggleGroupControl as ToggleGroupControl,
 	__experimentalToggleGroupControlOption as ToggleGroupControlOption,
 } from '@wordpress/components';
-import { Stack, Link, SelectControl, VisuallyHidden } from '@wordpress/ui';
+import { Stack, Link, SelectControl, Spinner, VisuallyHidden } from '@wordpress/ui';
 import { useInstanceId } from '@wordpress/compose';
 import { MediaUpload, store as blockEditorStore } from '@wordpress/block-editor';
 import { useDispatch, useSelect } from '@wordpress/data';
