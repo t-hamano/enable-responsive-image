@@ -46,15 +46,11 @@ addFilter(
 	addSourceAttributes
 );
 
-type ResponsiveImageEditProps = BlockEditProps< BlockAttributes > & {
-	name: string;
-};
-
 function ResponsiveImageEdit( {
 	BlockEdit,
 	...props
-}: ResponsiveImageEditProps & {
-	BlockEdit: React.ComponentType< ResponsiveImageEditProps >;
+}: BlockEditProps< BlockAttributes > & {
+	BlockEdit: React.ComponentType< BlockEditProps< BlockAttributes > >;
 } ) {
 	const { attributes } = props;
 	const { url, enableResponsiveImageSources: sources } = attributes;
@@ -94,8 +90,8 @@ function ResponsiveImageEdit( {
 }
 
 const withInspectorControl = createHigherOrderComponent(
-	( BlockEdit: React.ComponentType< ResponsiveImageEditProps > ) =>
-		( props: ResponsiveImageEditProps ) => {
+	( BlockEdit: React.ComponentType< BlockEditProps< BlockAttributes > > ) =>
+		( props: BlockEditProps< BlockAttributes > & { name: string } ) => {
 			if ( props.name !== 'core/image' ) {
 				return <BlockEdit { ...props } />;
 			}
