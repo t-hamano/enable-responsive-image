@@ -160,6 +160,16 @@ export default function SourceEditor( {
 		} );
 	}
 
+	function renderToggleContent() {
+		if ( !! id && srcset ) {
+			return <img src={ srcset } alt="" />;
+		}
+		if ( isLoading ) {
+			return <Spinner />;
+		}
+		return __( 'Set image source', 'enable-responsive-image' );
+	}
+
 	return (
 		<Stack direction="column" gap="lg">
 			<Stack direction="column" gap="sm">
@@ -182,13 +192,7 @@ export default function SourceEditor( {
 										: __( 'Replace image source', 'enable-responsive-image' )
 								}
 							>
-								{ !! id && srcset ? (
-									<img src={ srcset } alt="" />
-								) : isLoading ? (
-									<Spinner />
-								) : (
-									__( 'Set image source', 'enable-responsive-image' )
-								) }
+								{ renderToggleContent() }
 							</Button>
 							<Stack
 								align="center"
