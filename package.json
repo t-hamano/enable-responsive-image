@@ -67,8 +67,8 @@
 		"lint:md-docs": "wp-scripts lint-md-docs",
 		"lint:pkg-json": "wp-scripts lint-pkg-json",
 		"format": "wp-scripts format",
-		"test:e2e": "wp-scripts test-playwright",
-		"test:e2e:debug": "wp-scripts test-playwright --debug",
+		"test:e2e": "wp-scripts test-playwright --wp-env-config=.wp-env.test.json",
+		"test:e2e:debug": "wp-scripts test-playwright --wp-env-config=.wp-env.test.json --debug",
 		"prepare": "husky"
 	},
 	"lint-staged": {
