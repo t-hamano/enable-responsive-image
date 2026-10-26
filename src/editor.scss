@@ -34,7 +34,6 @@
 	overflow: hidden;
 	display: flex;
 	justify-content: center;
-	height: 150px;
 	background-color: colors.$gray-100;
 
 	@media not (prefers-reduced-motion) {
@@ -42,7 +41,12 @@
 	}
 }
 
-.enable-responsive-image__preview {
+// Doubled to override the height of the 40px default size of the Button.
+.enable-responsive-image__toggle.enable-responsive-image__toggle {
+	height: 150px;
+}
+
+.enable-responsive-image__preview.enable-responsive-image__preview {
 	height: auto;
 }
 
