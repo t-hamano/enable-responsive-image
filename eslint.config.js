@@ -9,11 +9,15 @@ module.exports = [
 	},
 	...defaultConfig.configs.recommended,
 	{
+		linterOptions: {
+			reportUnusedDisableDirectives: 'error',
+		},
 		rules: {
 			'react/jsx-boolean-value': 'error',
 			'react/jsx-curly-brace-presence': [ 'error', { props: 'never', children: 'never' } ],
+			'jsdoc/escape-inline-tags': 'error',
+			'@wordpress/wp-global-usage': 'error',
 			'import/no-extraneous-dependencies': 'off',
-			'import/no-unresolved': 'off',
 			'@wordpress/no-unsafe-wp-apis': 'off',
 			'@wordpress/dependency-group': 'error',
 			'@wordpress/i18n-text-domain': [
@@ -38,16 +42,28 @@ module.exports = [
 				},
 			],
 			'no-nested-ternary': 'off',
-			'prettier/prettier': [
+		},
+	},
+	{
+		files: [ '**/*.ts', '**/*.tsx' ],
+		rules: {
+			'@typescript-eslint/consistent-type-imports': [
 				'error',
 				{
-					useTabs: true,
-					tabWidth: 2,
-					singleQuote: true,
-					printWidth: 100,
-					bracketSpacing: true,
-					parenSpacing: true,
-					bracketSameLine: false,
+					prefer: 'type-imports',
+					disallowTypeAnnotations: false,
+				},
+			],
+			'@typescript-eslint/no-restricted-imports': [
+				'error',
+				{
+					paths: [
+						{
+							name: 'react',
+							message: 'Please use React API through `@wordpress/element` instead.',
+							allowTypeImports: true,
+						},
+					],
 				},
 			],
 		},
