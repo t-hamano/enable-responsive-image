@@ -26,20 +26,6 @@
 	grid-column: 1 / -1;
 }
 
-.enable-responsive-image__container {
-	position: relative;
-
-	&:hover,
-	&:focus,
-	&:focus-within {
-
-		.enable-responsive-image__movers,
-		.enable-responsive-image__actions {
-			opacity: 1;
-		}
-	}
-}
-
 .enable-responsive-image__toggle,
 .enable-responsive-image__preview {
 	width: 100%;
@@ -96,6 +82,20 @@
 
 	@media not (prefers-reduced-motion) {
 		transition: opacity 50ms ease-out;
+	}
+}
+
+.enable-responsive-image__container {
+	position: relative;
+
+	&:hover,
+	&:focus,
+	&:focus-within {
+
+		.enable-responsive-image__movers,
+		.enable-responsive-image__actions {
+			opacity: 1;
+		}
 	}
 }
 
