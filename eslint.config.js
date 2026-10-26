@@ -17,6 +17,8 @@ module.exports = [
 			'react/jsx-curly-brace-presence': [ 'error', { props: 'never', children: 'never' } ],
 			'jsdoc/escape-inline-tags': 'error',
 			'@wordpress/wp-global-usage': 'error',
+			'@wordpress/data-no-store-string-literals': 'error',
+			'@wordpress/components-no-unsafe-button-disabled': 'error',
 			'import/no-extraneous-dependencies': 'off',
 			'@wordpress/no-unsafe-wp-apis': 'off',
 			'@wordpress/dependency-group': 'error',
@@ -47,6 +49,15 @@ module.exports = [
 	{
 		files: [ '**/*.ts', '**/*.tsx' ],
 		rules: {
+			'@typescript-eslint/ban-ts-comment': [
+				'error',
+				{
+					'ts-expect-error': 'allow-with-description',
+					'ts-ignore': true,
+					'ts-nocheck': true,
+					'ts-check': false,
+				},
+			],
 			'@typescript-eslint/consistent-type-imports': [
 				'error',
 				{

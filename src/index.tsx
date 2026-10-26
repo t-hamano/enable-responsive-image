@@ -14,7 +14,7 @@ import type { BlockEditProps } from '@wordpress/blocks';
 import BlockEditPreview from './block-edit-preview';
 import SourceList from './source-list';
 import './editor.scss';
-import './store';
+import { store } from './store';
 import { SHOW_PREVIEW_BUTTON } from './constants';
 import type { BlockAttributes } from './types';
 import { icon } from './icon';
@@ -59,15 +59,9 @@ const withInspectorControl =
 		const { attributes } = props;
 		const { url, enableResponsiveImageSources: sources } = attributes;
 
-		const isPreview = useSelect(
-			( select ) =>
-				select( 'enable-responsive-image' )
-					// @ts-ignore
-					.getIsPreview(),
-			[]
-		);
+		const isPreview = useSelect( ( select ) => select( store ).getIsPreview(), [] );
 
-		const { setIsPreview } = useDispatch( 'enable-responsive-image' );
+		const { setIsPreview } = useDispatch( store );
 
 		return (
 			<>

@@ -73,22 +73,16 @@ export default function SourceEditor( {
 			if ( ! id || ! isSelected ) {
 				return null;
 			}
-			return (
-				select( coreStore )
-					// @ts-ignore
-					.getEntityRecord( 'postType', 'attachment', id )
-			);
+			return select( coreStore ).getEntityRecord( 'postType', 'attachment', id );
 		},
 		[ id, isSelected ]
 	);
 
 	const { mediaUpload, imageSizes } = useSelect(
 		( select ) => ( {
-			imageSizes: select( blockEditorStore )
-				// @ts-ignore
-				.getSettings().imageSizes,
+			imageSizes: select( blockEditorStore ).getSettings().imageSizes,
 			mediaUpload: select( blockEditorStore )
-				// @ts-ignore
+				// @ts-expect-error `mediaUpload` is missing from the block editor settings type.
 				.getSettings().mediaUpload,
 		} ),
 		[]
@@ -170,9 +164,7 @@ export default function SourceEditor( {
 				setIsLoading( false );
 			},
 			onError( message: string ) {
-				// @ts-ignore
 				removeAllNotices();
-				// @ts-ignore
 				createErrorNotice( message, { type: 'snackbar' } );
 			},
 		} );
