@@ -30,13 +30,15 @@ function enable_responsive_image_enqueue_block_editor_assets() {
 		$asset_file['version']
 	);
 
-	wp_localize_script(
+	wp_add_inline_script(
 		'enable-responsive-image',
-		'enableResponsiveImage',
-		array(
-			'defaultMediaValue' => (int) apply_filters( 'enable_responsive_image_default_media_value', 600 ),
-			'showPreviewButton' => (bool) apply_filters( 'enable_responsive_image_show_preview_button', true ),
-		)
+		'window.enableResponsiveImage = ' . wp_json_encode(
+			array(
+				'defaultMediaValue' => (int) apply_filters( 'enable_responsive_image_default_media_value', 600 ),
+				'showPreviewButton' => (bool) apply_filters( 'enable_responsive_image_show_preview_button', true ),
+			)
+		) . ';',
+		'before'
 	);
 
 	wp_set_script_translations(
