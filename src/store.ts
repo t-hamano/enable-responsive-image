@@ -12,7 +12,7 @@ export const store = createReduxStore( 'enable-responsive-image', {
 		if ( action.type === 'UPDATE_IS_PREVIEW' ) {
 			return {
 				...state,
-				isPreview: ! state.isPreview,
+				isPreview: action.value,
 			};
 		}
 
