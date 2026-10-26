@@ -84,7 +84,7 @@ export default function ImageList( props: BlockEditProps< BlockAttributes > ) {
 	const dropdownMenuProps = ! useViewportMatch( 'medium', '<' )
 		? {
 				popoverProps: {
-					placement: 'left-start',
+					placement: 'left-start' as const,
 					offset: 259,
 				},
 			}
