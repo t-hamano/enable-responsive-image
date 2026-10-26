@@ -9,11 +9,11 @@ import clsx from 'clsx';
 import {
 	RichText,
 	useBlockProps,
-	// @ts-ignore: has no exported member
+	// @ts-expect-error Not exported in the type definitions.
 	__experimentalGetElementClassName,
-	// @ts-ignore: has no exported member
+	// @ts-expect-error Not exported in the type definitions.
 	__experimentalGetBorderClassesAndStyles as getBorderClassesAndStyles,
-	// @ts-ignore: has no exported member
+	// @ts-expect-error Not exported in the type definitions.
 	__experimentalGetShadowClassesAndStyles as getShadowClassesAndStyles,
 } from '@wordpress/block-editor';
 import type { BlockEditProps } from '@wordpress/blocks';
