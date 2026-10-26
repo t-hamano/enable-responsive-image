@@ -180,6 +180,7 @@ export default function SourceEditor( {
 					render={ ( { open } ) => (
 						<div className="enable-responsive-image__container">
 							<Button
+								__next40pxDefaultSize
 								ref={ toggleRef }
 								className={
 									! id ? 'enable-responsive-image__toggle' : 'enable-responsive-image__preview'
