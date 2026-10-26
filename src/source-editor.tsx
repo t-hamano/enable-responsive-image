@@ -13,11 +13,10 @@ import {
 	DropZone,
 	RangeControl,
 	Spinner,
-	SelectControl,
 	__experimentalToggleGroupControl as ToggleGroupControl,
 	__experimentalToggleGroupControlOption as ToggleGroupControlOption,
 } from '@wordpress/components';
-import { Stack, Link, VisuallyHidden } from '@wordpress/ui';
+import { Stack, Link, SelectControl, VisuallyHidden } from '@wordpress/ui';
 import { useInstanceId } from '@wordpress/compose';
 import { MediaUpload, store as blockEditorStore } from '@wordpress/block-editor';
 import { useDispatch, useSelect } from '@wordpress/data';
@@ -138,7 +137,11 @@ export default function SourceEditor( {
 		} );
 	}
 
-	function onChangeResolution( newSlug: string ) {
+	function onChangeResolution( item: { value: string | null } | null ) {
+		const newSlug = item?.value;
+		if ( ! newSlug ) {
+			return;
+		}
 		const newUrl = image?.media_details?.sizes?.[ newSlug ]?.source_url;
 		if ( ! newUrl ) {
 			return;
@@ -336,10 +339,14 @@ export default function SourceEditor( {
 					/>
 					<SelectControl
 						label={ __( 'Resolution', 'enable-responsive-image' ) }
-						value={ srcsetSlug }
-						options={ imageSizeOptions }
-						onChange={ onChangeResolution }
-						help={ __( 'Select the size of the source image.', 'enable-responsive-image' ) }
+						value={
+							imageSizeOptions.find(
+								( option: { value: string } ) => option.value === srcsetSlug
+							) ?? null
+						}
+						items={ imageSizeOptions }
+						onValueChange={ onChangeResolution }
+						description={ __( 'Select the size of the source image.', 'enable-responsive-image' ) }
 					/>
 				</>
 			) }

@@ -391,10 +391,7 @@ class MediaUtils {
 		} );
 		const ImageSourcesPanel = blockSettings.locator( '.enable-responsive-image' );
 
-		await ImageSourcesPanel.getByRole( 'combobox', { name: 'Resolution' } )
-			.nth( index )
-			.selectOption( {
-				label: option,
-			} );
+		await ImageSourcesPanel.getByRole( 'combobox', { name: 'Resolution' } ).nth( index ).click();
+		await this.page.getByRole( 'option', { name: option } ).click();
 	}
 }
