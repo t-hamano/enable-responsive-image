@@ -37,13 +37,7 @@ export default function ImageList( props: BlockEditProps< BlockAttributes > ) {
 
 	function onAddSource() {
 		const newSources = [ ...sources ];
-		newSources.push( {
-			srcset: undefined,
-			id: undefined,
-			slug: undefined,
-			mediaType: undefined,
-			mediaValue: undefined,
-		} );
+		newSources.push( {} );
 		setAttributes( { enableResponsiveImageSources: newSources } );
 	}
 
@@ -109,51 +103,50 @@ export default function ImageList( props: BlockEditProps< BlockAttributes > ) {
 					</Notice.Root>
 				}
 			>
-				{ sources.length > 0 &&
-					sources.map( ( source, index ) => (
-						<ToolsPanelItem
-							key={ index }
-							hasValue={ () => true }
-							isShownByDefault
-							label={ sprintf(
-								/* translators: %d: Image source number */
-								__( 'Image source %d', 'enable-responsive-image' ),
-								index + 1
-							) }
-							onDeselect={ () => onRemoveSource( index ) }
-							className="enable-responsive-image__source"
-						>
-							<fieldset>
-								<legend>
-									{ sprintf(
-										/* translators: %d: Image source number */
-										__( 'Image source %d', 'enable-responsive-image' ),
-										index + 1
-									) }
-								</legend>
-								<SourceEditor
-									{ ...props }
-									index={ index }
-									disableMoveUp={ index === 0 }
-									disableMoveDown={ index === sources.length - 1 }
-									toggleRef={ ( el ) => {
-										toggleRefs.current[ index ] = el;
-									} }
-									moveUpRef={ ( el ) => {
-										moveUpRefs.current[ index ] = el;
-									} }
-									moveDownRef={ ( el ) => {
-										moveDownRefs.current[ index ] = el;
-									} }
-									source={ source }
-									onChangeOrder={ ( direction ) => onChangeOrder( direction, index ) }
-									onChange={ ( newSource ) => onChange( newSource, index ) }
-									onRemove={ () => onRemoveSource( index, true ) }
-								/>
-								{ index < sources.length - 1 && <hr /> }
-							</fieldset>
-						</ToolsPanelItem>
-					) ) }
+				{ sources.map( ( source, index ) => (
+					<ToolsPanelItem
+						key={ index }
+						hasValue={ () => true }
+						isShownByDefault
+						label={ sprintf(
+							/* translators: %d: Image source number */
+							__( 'Image source %d', 'enable-responsive-image' ),
+							index + 1
+						) }
+						onDeselect={ () => onRemoveSource( index ) }
+						className="enable-responsive-image__source"
+					>
+						<fieldset>
+							<legend>
+								{ sprintf(
+									/* translators: %d: Image source number */
+									__( 'Image source %d', 'enable-responsive-image' ),
+									index + 1
+								) }
+							</legend>
+							<SourceEditor
+								{ ...props }
+								index={ index }
+								disableMoveUp={ index === 0 }
+								disableMoveDown={ index === sources.length - 1 }
+								toggleRef={ ( el ) => {
+									toggleRefs.current[ index ] = el;
+								} }
+								moveUpRef={ ( el ) => {
+									moveUpRefs.current[ index ] = el;
+								} }
+								moveDownRef={ ( el ) => {
+									moveDownRefs.current[ index ] = el;
+								} }
+								source={ source }
+								onChangeOrder={ ( direction ) => onChangeOrder( direction, index ) }
+								onChange={ ( newSource ) => onChange( newSource, index ) }
+								onRemove={ () => onRemoveSource( index, true ) }
+							/>
+							{ index < sources.length - 1 && <hr /> }
+						</fieldset>
+					</ToolsPanelItem>
+				) ) }
 				<Button
 					ref={ addSourceRef }
 					variant="primary"

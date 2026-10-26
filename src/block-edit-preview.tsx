@@ -62,14 +62,9 @@ export default function BlockEditPreview( { attributes }: BlockEditProps< BlockA
 	return (
 		<figure { ...blockProps }>
 			<picture>
-				{ filteredSources.length > 0 &&
-					filteredSources.map( ( { srcset, mediaType, mediaValue }, index ) => (
-						<source
-							key={ index }
-							srcSet={ srcset }
-							media={ `(${ mediaType }: ${ mediaValue }px)` }
-						/>
-					) ) }
+				{ filteredSources.map( ( { srcset, mediaType, mediaValue }, index ) => (
+					<source key={ index } srcSet={ srcset } media={ `(${ mediaType }: ${ mediaValue }px)` } />
+				) ) }
 				<img
 					src={ url }
 					className={ borderProps.className || undefined }
