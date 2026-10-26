@@ -21,13 +21,13 @@ if ( ! defined( 'ABSPATH' ) ) {
 function enable_responsive_image_enqueue_block_editor_assets() {
 	$plugin_path = untrailingslashit( plugin_dir_path( __FILE__ ) );
 	$plugin_url  = untrailingslashit( plugin_dir_url( __FILE__ ) );
-	$asset_file  = include untrailingslashit( plugin_dir_path( __FILE__ ) ) . '/build/index.asset.php';
+	$asset_file  = include $plugin_path . '/build/index.asset.php';
 
 	wp_enqueue_script(
 		'enable-responsive-image',
 		$plugin_url . '/build/index.js',
 		$asset_file['dependencies'],
-		filemtime( $plugin_path . '/build/index.js' )
+		$asset_file['version']
 	);
 
 	wp_localize_script(
@@ -48,7 +48,7 @@ function enable_responsive_image_enqueue_block_editor_assets() {
 		'enable-responsive-image',
 		$plugin_url . '/build/index.css',
 		array(),
-		filemtime( $plugin_path . '/build/index.css' )
+		$asset_file['version']
 	);
 }
 
