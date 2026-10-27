@@ -45,6 +45,7 @@
 		"@wordpress/i18n": "7.0.0",
 		"@wordpress/icons": "19.0.0",
 		"@wordpress/notices": "6.0.0",
+		"@wordpress/primitives": "5.0.0",
 		"@wordpress/scripts": "^37.0.0",
 		"clsx": "2.1.1",
 		"husky": "^9.1.7",
