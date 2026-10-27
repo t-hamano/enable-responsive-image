@@ -392,6 +392,6 @@ class MediaUtils {
 		const ImageSourcesPanel = blockSettings.locator( '.enable-responsive-image' );
 
 		await ImageSourcesPanel.getByRole( 'combobox', { name: 'Resolution' } ).nth( index ).click();
-		await this.page.getByRole( 'option', { name: option } ).click();
+		await this.page.getByRole( 'listbox' ).getByRole( 'option', { name: option } ).click();
 	}
 }
