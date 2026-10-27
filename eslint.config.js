@@ -46,7 +46,6 @@ module.exports = [
 					},
 				},
 			],
-			'no-nested-ternary': 'off',
 		},
 	},
 	{

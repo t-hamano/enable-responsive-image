@@ -38,32 +38,24 @@ import type { Media, Source } from './types';
 import { DEFAULT_MEDIA_VALUE, MEDIA_TYPES, MIN_MEDIA_VALUE, MAX_MEDIA_VALUE } from './constants';
 
 type Props = {
-	source?: Source;
-	index?: number;
+	source: Source;
+	index: number;
 	disableMoveUp: boolean;
 	disableMoveDown: boolean;
-	disableActions?: boolean;
 	toggleRef?: Ref< HTMLButtonElement >;
 	moveUpRef?: Ref< HTMLButtonElement >;
 	moveDownRef?: Ref< HTMLButtonElement >;
 	onChange: ( source: Source ) => void;
 	onRemove: () => void;
-	onChangeOrder?: ( direction: number ) => void;
+	onChangeOrder: ( direction: number ) => void;
 	isSelected: boolean;
 };
 
 export default function SourceEditor( {
-	source = {
-		srcset: undefined,
-		id: undefined,
-		slug: undefined,
-		mediaType: undefined,
-		mediaValue: undefined,
-	},
+	source,
 	index,
 	disableMoveUp = false,
 	disableMoveDown = false,
-	disableActions = false,
 	toggleRef,
 	moveUpRef,
 	moveDownRef,
@@ -83,13 +75,9 @@ export default function SourceEditor( {
 		[ id, isSelected ]
 	);
 
+	// @ts-expect-error `mediaUpload` is missing from the block editor settings type.
 	const { mediaUpload, imageSizes } = useSelect(
-		( select ) => ( {
-			imageSizes: select( blockEditorStore ).getSettings().imageSizes,
-			mediaUpload: select( blockEditorStore )
-				// @ts-expect-error `mediaUpload` is missing from the block editor settings type.
-				.getSettings().mediaUpload,
-		} ),
+		( select ) => select( blockEditorStore ).getSettings(),
 		[]
 	);
 
@@ -179,6 +167,16 @@ export default function SourceEditor( {
 		} );
 	}
 
+	function renderToggleContent() {
+		if ( !! id && srcset ) {
+			return <img src={ srcset } alt="" />;
+		}
+		if ( isLoading ) {
+			return <Spinner />;
+		}
+		return __( 'Set image source', 'enable-responsive-image' );
+	}
+
 	return (
 		<Stack direction="column" gap="lg">
 			<Stack direction="column" gap="sm">
@@ -202,13 +200,7 @@ export default function SourceEditor( {
 										: __( 'Replace image source', 'enable-responsive-image' )
 								}
 							>
-								{ !! id && srcset ? (
-									<img src={ srcset } alt="" />
-								) : isLoading ? (
-									<Spinner />
-								) : (
-									__( 'Set image source', 'enable-responsive-image' )
-								) }
+								{ renderToggleContent() }
 							</Button>
 							<Stack
 								align="center"
@@ -228,30 +220,28 @@ export default function SourceEditor( {
 											size="small"
 											disabled={ disableMoveUp }
 											aria-describedby={ moveUpDescriptionId }
-											onClick={ () => onChangeOrder?.( -1 ) }
+											onClick={ () => onChangeOrder( -1 ) }
 										/>
-										{ index !== undefined && (
-											<VisuallyHidden id={ moveUpDescriptionId }>
-												{ disableMoveUp
-													? sprintf(
-															/* translators: %d: Image source number. */
-															__(
-																'Image source %d is at the beginning of the content and can’t be moved up',
-																'enable-responsive-image'
-															),
-															index + 1
-														)
-													: sprintf(
-															/* translators: 1: Current image source number. 2: New image source number. */
-															__(
-																'Move image source %1$d to position %2$d',
-																'enable-responsive-image'
-															),
-															index + 1,
-															index
-														) }
-											</VisuallyHidden>
-										) }
+										<VisuallyHidden id={ moveUpDescriptionId }>
+											{ disableMoveUp
+												? sprintf(
+														/* translators: %d: Image source number. */
+														__(
+															'Image source %d is at the beginning of the content and can’t be moved up',
+															'enable-responsive-image'
+														),
+														index + 1
+													)
+												: sprintf(
+														/* translators: 1: Current image source number. 2: New image source number. */
+														__(
+															'Move image source %1$d to position %2$d',
+															'enable-responsive-image'
+														),
+														index + 1,
+														index
+													) }
+										</VisuallyHidden>
 										<IconButton
 											variant="minimal"
 											tone="neutral"
@@ -262,63 +252,59 @@ export default function SourceEditor( {
 											size="small"
 											disabled={ disableMoveDown }
 											aria-describedby={ moveDownDescriptionId }
-											onClick={ () => onChangeOrder?.( 1 ) }
+											onClick={ () => onChangeOrder( 1 ) }
 										/>
-										{ index !== undefined && (
-											<VisuallyHidden id={ moveDownDescriptionId }>
-												{ disableMoveDown
-													? sprintf(
-															/* translators: %d: Image source number. */
-															__(
-																'Image source %d is at the end of the content and can’t be moved down',
-																'enable-responsive-image'
-															),
-															index + 1
-														)
-													: sprintf(
-															/* translators: 1: Current image source number. 2: New image source number. */
-															__(
-																'Move image source %1$d to position %2$d',
-																'enable-responsive-image'
-															),
-															index + 1,
-															index + 2
-														) }
-											</VisuallyHidden>
-										) }
+										<VisuallyHidden id={ moveDownDescriptionId }>
+											{ disableMoveDown
+												? sprintf(
+														/* translators: %d: Image source number. */
+														__(
+															'Image source %d is at the end of the content and can’t be moved down',
+															'enable-responsive-image'
+														),
+														index + 1
+													)
+												: sprintf(
+														/* translators: 1: Current image source number. 2: New image source number. */
+														__(
+															'Move image source %1$d to position %2$d',
+															'enable-responsive-image'
+														),
+														index + 1,
+														index + 2
+													) }
+										</VisuallyHidden>
 									</>
 								) }
 							</Stack>
-							{ ! disableActions && (
-								<Stack
-									align="center"
-									justify="space-between"
-									gap="sm"
-									className="enable-responsive-image__actions"
+							<Stack
+								align="center"
+								justify="space-between"
+								gap="sm"
+								className="enable-responsive-image__actions"
+							>
+								<Button
+									className="enable-responsive-image__action"
+									onClick={ open }
+									aria-hidden="true"
+									variant="minimal"
+									tone="neutral"
+									size="compact"
 								>
-									<Button
-										className="enable-responsive-image__action"
-										onClick={ open }
-										aria-hidden="true"
-										variant="minimal"
-										tone="neutral"
-										size="compact"
-									>
-										{ !! id
-											? __( 'Replace', 'enable-responsive-image' )
-											: __( 'Select', 'enable-responsive-image' ) }
-									</Button>
-									<Button
-										className="enable-responsive-image__action"
-										onClick={ onRemove }
-										variant="minimal"
-										tone="neutral"
-										size="compact"
-									>
-										{ __( 'Remove', 'enable-responsive-image' ) }
-									</Button>
-								</Stack>
-							) }
+									{ !! id
+										? __( 'Replace', 'enable-responsive-image' )
+										: __( 'Select', 'enable-responsive-image' ) }
+								</Button>
+								<Button
+									className="enable-responsive-image__action"
+									onClick={ onRemove }
+									variant="minimal"
+									tone="neutral"
+									size="compact"
+								>
+									{ __( 'Remove', 'enable-responsive-image' ) }
+								</Button>
+							</Stack>
 							<DropZone onFilesDrop={ onDropFiles } />
 						</div>
 					) }

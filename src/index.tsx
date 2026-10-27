@@ -6,6 +6,7 @@ import { addFilter } from '@wordpress/hooks';
 import { useSelect, useDispatch } from '@wordpress/data';
 import { BlockControls, InspectorControls } from '@wordpress/block-editor';
 import { ToolbarButton } from '@wordpress/components';
+import { createHigherOrderComponent } from '@wordpress/compose';
 import type { BlockEditProps } from '@wordpress/blocks';
 
 /**
@@ -45,53 +46,60 @@ addFilter(
 	addSourceAttributes
 );
 
-const withInspectorControl =
+function ResponsiveImageEdit( {
+	BlockEdit,
+	...props
+}: BlockEditProps< BlockAttributes > & {
+	BlockEdit: React.ComponentType< BlockEditProps< BlockAttributes > >;
+} ) {
+	const { attributes } = props;
+	const { url, enableResponsiveImageSources: sources } = attributes;
+
+	const isPreview = useSelect( ( select ) => select( store ).getIsPreview(), [] );
+
+	const { setIsPreview } = useDispatch( store );
+
+	return (
+		<>
+			{ url && sources?.length > 0 && isPreview ? (
+				<BlockEditPreview { ...props } />
+			) : (
+				<BlockEdit { ...props } />
+			) }
+			{ url && sources?.length > 0 && SHOW_PREVIEW_BUTTON && (
+				<BlockControls group="parent">
+					<ToolbarButton
+						icon={ icon }
+						isPressed={ isPreview }
+						label={
+							isPreview
+								? __( 'Disable responsive image preview', 'enable-responsive-image' )
+								: __( 'Enable responsive image preview', 'enable-responsive-image' )
+						}
+						onClick={ () => setIsPreview( ! isPreview ) }
+					/>
+				</BlockControls>
+			) }
+			{ url && (
+				<InspectorControls>
+					<SourceList { ...props } />
+				</InspectorControls>
+			) }
+		</>
+	);
+}
+
+const withInspectorControl = createHigherOrderComponent(
 	( BlockEdit: React.ComponentType< BlockEditProps< BlockAttributes > > ) =>
-	(
-		props: BlockEditProps< BlockAttributes > & {
-			name: string;
-		}
-	) => {
-		if ( props.name !== 'core/image' ) {
-			return <BlockEdit { ...props } />;
-		}
+		( props: BlockEditProps< BlockAttributes > & { name: string } ) => {
+			if ( props.name !== 'core/image' ) {
+				return <BlockEdit { ...props } />;
+			}
 
-		const { attributes } = props;
-		const { url, enableResponsiveImageSources: sources } = attributes;
-
-		const isPreview = useSelect( ( select ) => select( store ).getIsPreview(), [] );
-
-		const { setIsPreview } = useDispatch( store );
-
-		return (
-			<>
-				{ url && sources?.length > 0 && isPreview ? (
-					<BlockEditPreview { ...props } />
-				) : (
-					<BlockEdit { ...props } />
-				) }
-				{ url && sources?.length > 0 && SHOW_PREVIEW_BUTTON && (
-					<BlockControls group="parent">
-						<ToolbarButton
-							icon={ icon }
-							isPressed={ isPreview }
-							label={
-								isPreview
-									? __( 'Disable responsive image preview', 'enable-responsive-image' )
-									: __( 'Enable responsive image preview', 'enable-responsive-image' )
-							}
-							onClick={ () => setIsPreview( ! isPreview ) }
-						/>
-					</BlockControls>
-				) }
-				{ url && (
-					<InspectorControls>
-						<SourceList { ...props } />
-					</InspectorControls>
-				) }
-			</>
-		);
-	};
+			return <ResponsiveImageEdit { ...props } BlockEdit={ BlockEdit } />;
+		},
+	'withInspectorControl'
+);
 
 addFilter(
 	'editor.BlockEdit',
