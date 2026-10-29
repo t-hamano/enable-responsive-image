@@ -45,12 +45,15 @@ test.describe( 'Image Block', () => {
 
 	test( 'should create image with image sources', async ( { editor, page, mediaUtils } ) => {
 		await mediaUtils.insertImageBlock();
+		const panel = page
+			.getByRole( 'region', { name: 'Editor settings' } )
+			.locator( '.enable-responsive-image' );
 
 		// Add first image source.
 		await page.getByRole( 'button', { name: 'Add image source' } ).click();
 		await page.getByRole( 'button', { name: 'Set image source' } ).click();
 		const firstSourceFilename = await mediaUtils.uploadSource( '600x450.png' );
-		const firstSource = mediaUtils.panel.locator( 'img' );
+		const firstSource = panel.locator( 'img' );
 		await expect( firstSource ).toBeVisible();
 		await expect( firstSource ).toHaveAttribute( 'src', new RegExp( firstSourceFilename ) );
 
@@ -62,7 +65,7 @@ test.describe( 'Image Block', () => {
 		await page.getByRole( 'button', { name: 'Add image source' } ).click();
 		await page.getByRole( 'button', { name: 'Set image source' } ).click();
 		const secondSourceFilename = await mediaUtils.uploadSource( '400x300.png' );
-		const secondSource = mediaUtils.panel.locator( 'img' ).nth( 1 );
+		const secondSource = panel.locator( 'img' ).nth( 1 );
 
 		await expect( secondSource ).toBeVisible();
 		await expect( secondSource ).toHaveAttribute( 'src', new RegExp( secondSourceFilename ) );
@@ -98,8 +101,11 @@ test.describe( 'Image Block', () => {
 		expect( sources?.[ 1 ]?.srcset?.includes( secondSourceFilename ) ).toBe( true );
 	} );
 
-	test( 'should move an image source up', async ( { editor, mediaUtils } ) => {
+	test( 'should move an image source up', async ( { editor, page, mediaUtils } ) => {
 		await mediaUtils.insertImageBlock();
+		const panel = page
+			.getByRole( 'region', { name: 'Editor settings' } )
+			.locator( '.enable-responsive-image' );
 
 		// Add three image sources.
 		await mediaUtils.addImageSource( '1000x750.png' );
@@ -108,7 +114,7 @@ test.describe( 'Image Block', () => {
 
 		// Capture the srcset of each source in its original order.
 		const [ firstSrcset, secondSrcset, thirdSrcset ] = await mediaUtils.getSrcsets();
-		await mediaUtils.panel.getByRole( 'button', { name: 'Move up' } ).nth( 1 ).click();
+		await panel.getByRole( 'button', { name: 'Move up' } ).nth( 1 ).click();
 
 		await expect.poll( editor.getBlocks ).toMatchObject( [
 			{
@@ -123,13 +129,14 @@ test.describe( 'Image Block', () => {
 		] );
 
 		// Focus follows the moved source to its new position.
-		await expect(
-			mediaUtils.panel.getByRole( 'button', { name: 'Move up' } ).nth( 0 )
-		).toBeFocused();
+		await expect( panel.getByRole( 'button', { name: 'Move up' } ).nth( 0 ) ).toBeFocused();
 	} );
 
-	test( 'should move an image source down', async ( { editor, mediaUtils } ) => {
+	test( 'should move an image source down', async ( { editor, page, mediaUtils } ) => {
 		await mediaUtils.insertImageBlock();
+		const panel = page
+			.getByRole( 'region', { name: 'Editor settings' } )
+			.locator( '.enable-responsive-image' );
 
 		// Add three image sources.
 		await mediaUtils.addImageSource( '1000x750.png' );
@@ -139,7 +146,7 @@ test.describe( 'Image Block', () => {
 		const [ firstSrcset, secondSrcset, thirdSrcset ] = await mediaUtils.getSrcsets();
 
 		// Move the second image source down.
-		await mediaUtils.panel.getByRole( 'button', { name: 'Move down' } ).nth( 1 ).click();
+		await panel.getByRole( 'button', { name: 'Move down' } ).nth( 1 ).click();
 
 		await expect.poll( editor.getBlocks ).toMatchObject( [
 			{
@@ -154,9 +161,7 @@ test.describe( 'Image Block', () => {
 		] );
 
 		// Focus follows the moved source to its new position.
-		await expect(
-			mediaUtils.panel.getByRole( 'button', { name: 'Move down' } ).nth( 2 )
-		).toBeFocused();
+		await expect( panel.getByRole( 'button', { name: 'Move down' } ).nth( 2 ) ).toBeFocused();
 	} );
 
 	test( 'should move focus to the add button when the last image source is removed', async ( {
@@ -165,11 +170,14 @@ test.describe( 'Image Block', () => {
 		mediaUtils,
 	} ) => {
 		await mediaUtils.insertImageBlock();
+		const panel = page
+			.getByRole( 'region', { name: 'Editor settings' } )
+			.locator( '.enable-responsive-image' );
 
 		// Add a single image source.
 		await mediaUtils.addImageSource( '1000x750.png' );
 
-		await mediaUtils.panel.getByRole( 'button', { name: 'Remove', exact: true } ).click();
+		await panel.getByRole( 'button', { name: 'Remove', exact: true } ).click();
 
 		await expect.poll( editor.getBlocks ).toMatchObject( [
 			{
@@ -185,9 +193,13 @@ test.describe( 'Image Block', () => {
 
 	test( 'should move focus to the previous image source when a source is removed', async ( {
 		editor,
+		page,
 		mediaUtils,
 	} ) => {
 		await mediaUtils.insertImageBlock();
+		const panel = page
+			.getByRole( 'region', { name: 'Editor settings' } )
+			.locator( '.enable-responsive-image' );
 
 		// Add three image sources.
 		await mediaUtils.addImageSource( '1000x750.png' );
@@ -198,7 +210,7 @@ test.describe( 'Image Block', () => {
 		const [ firstSrcset, , thirdSrcset ] = await mediaUtils.getSrcsets();
 
 		// Remove the second image source.
-		await mediaUtils.panel.getByRole( 'button', { name: 'Remove', exact: true } ).nth( 1 ).click();
+		await panel.getByRole( 'button', { name: 'Remove', exact: true } ).nth( 1 ).click();
 
 		await expect.poll( editor.getBlocks ).toMatchObject( [
 			{
@@ -210,15 +222,19 @@ test.describe( 'Image Block', () => {
 
 		// Focus moves to the previous image source.
 		await expect(
-			mediaUtils.panel.getByRole( 'button', { name: 'Replace image source', exact: true } ).nth( 0 )
+			panel.getByRole( 'button', { name: 'Replace image source', exact: true } ).nth( 0 )
 		).toBeFocused();
 	} );
 
 	test( 'should move focus to the next image source when the first source is removed', async ( {
 		editor,
+		page,
 		mediaUtils,
 	} ) => {
 		await mediaUtils.insertImageBlock();
+		const panel = page
+			.getByRole( 'region', { name: 'Editor settings' } )
+			.locator( '.enable-responsive-image' );
 
 		// Add three image sources.
 		await mediaUtils.addImageSource( '1000x750.png' );
@@ -229,7 +245,7 @@ test.describe( 'Image Block', () => {
 		const [ , secondSrcset, thirdSrcset ] = await mediaUtils.getSrcsets();
 
 		// Remove the first image source.
-		await mediaUtils.panel.getByRole( 'button', { name: 'Remove', exact: true } ).nth( 0 ).click();
+		await panel.getByRole( 'button', { name: 'Remove', exact: true } ).nth( 0 ).click();
 
 		await expect.poll( editor.getBlocks ).toMatchObject( [
 			{
@@ -241,7 +257,7 @@ test.describe( 'Image Block', () => {
 
 		// Focus moves to the next image source, which is now the first one.
 		await expect(
-			mediaUtils.panel.getByRole( 'button', { name: 'Replace image source', exact: true } ).nth( 0 )
+			panel.getByRole( 'button', { name: 'Replace image source', exact: true } ).nth( 0 )
 		).toBeFocused();
 	} );
 
@@ -306,10 +322,13 @@ test.describe( 'Image Block', () => {
 
 	test( 'should reset all image sources', async ( { editor, page, mediaUtils } ) => {
 		await mediaUtils.insertImageBlock();
+		const panel = page
+			.getByRole( 'region', { name: 'Editor settings' } )
+			.locator( '.enable-responsive-image' );
 		await mediaUtils.addImageSource( '600x450.png' );
 		await mediaUtils.addImageSource( '400x300.png' );
 
-		await mediaUtils.panel.getByRole( 'button', { name: 'Image sources options' } ).click();
+		await panel.getByRole( 'button', { name: 'Image sources options' } ).click();
 		await page.getByRole( 'menuitem', { name: 'Reset all' } ).click();
 
 		await expect.poll( editor.getBlocks ).toMatchObject( [
@@ -319,7 +338,7 @@ test.describe( 'Image Block', () => {
 				},
 			},
 		] );
-		await expect( mediaUtils.panel.locator( 'img' ) ).toHaveCount( 0 );
+		await expect( panel.locator( 'img' ) ).toHaveCount( 0 );
 	} );
 
 	test.describe( 'with the preview button disabled by the filter', () => {
@@ -407,12 +426,6 @@ class MediaUtils {
 		this.basePath = path.join( __dirname, 'assets' );
 	}
 
-	get panel() {
-		return this.page
-			.getByRole( 'region', { name: 'Editor settings' } )
-			.locator( '.enable-responsive-image' );
-	}
-
 	cleanup() {
 		for ( const tmpDirectory of this.tmpDirectories ) {
 			fs.rmSync( tmpDirectory, { recursive: true, force: true } );
@@ -472,7 +485,10 @@ class MediaUtils {
 	}
 
 	async changeMediaQueryType( option: string, index = 0 ) {
-		await this.panel
+		const panel = this.page
+			.getByRole( 'region', { name: 'Editor settings' } )
+			.locator( '.enable-responsive-image' );
+		await panel
 			.getByRole( 'radiogroup', { name: 'Media query type' } )
 			.nth( index )
 			.getByRole( 'radio', { name: option } )
@@ -480,14 +496,20 @@ class MediaUtils {
 	}
 
 	async changeMediaQueryValue( value: string, index = 0 ) {
-		await this.panel
+		const panel = this.page
+			.getByRole( 'region', { name: 'Editor settings' } )
+			.locator( '.enable-responsive-image' );
+		await panel
 			.getByRole( 'spinbutton', { name: 'Media query value (px)' } )
 			.nth( index )
 			.fill( value );
 	}
 
 	async changeResolution( option: string, index = 0 ) {
-		await this.panel.getByRole( 'combobox', { name: 'Resolution' } ).nth( index ).click();
+		const panel = this.page
+			.getByRole( 'region', { name: 'Editor settings' } )
+			.locator( '.enable-responsive-image' );
+		await panel.getByRole( 'combobox', { name: 'Resolution' } ).nth( index ).click();
 		await this.page.getByRole( 'listbox' ).getByRole( 'option', { name: option } ).click();
 	}
 }
