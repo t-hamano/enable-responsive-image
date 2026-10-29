@@ -3,13 +3,9 @@
  */
 import { __ } from '@wordpress/i18n';
 
-export const DEFAULT_MEDIA_VALUE = Number.isInteger(
-	window?.enableResponsiveImage?.defaultMediaValue
-)
-	? window.enableResponsiveImage.defaultMediaValue
-	: 600;
+export const DEFAULT_MEDIA_VALUE = window.enableResponsiveImage.defaultMediaValue;
 
-export const SHOW_PREVIEW_BUTTON = window?.enableResponsiveImage?.showPreviewButton === true;
+export const SHOW_PREVIEW_BUTTON = window.enableResponsiveImage.showPreviewButton;
 
 export const MEDIA_TYPES = [
 	{
