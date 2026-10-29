@@ -32,7 +32,7 @@ const addSourceAttributes = ( settings: { [ key: string ]: any } ) => {
 			enableResponsiveImageSources: {
 				type: 'array',
 				items: {
-					type: 'number',
+					type: 'object',
 				},
 				default: [],
 			},
