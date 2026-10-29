@@ -161,6 +161,7 @@ export default function SourceEditor( {
 				setIsLoading( false );
 			},
 			onError( message: string ) {
+				setIsLoading( false );
 				removeAllNotices();
 				createErrorNotice( message, { type: 'snackbar' } );
 			},
