@@ -25,6 +25,7 @@ playwright.config.js
 package-lock.json
 package.json
 phpcs.xml.dist
+phpunit.xml.dist
 README.md
 tsconfig.json
 *.tsbuildinfo

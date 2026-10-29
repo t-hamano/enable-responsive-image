@@ -68,6 +68,7 @@
 		"lint:md-docs": "wp-scripts lint-md-docs",
 		"lint:pkg-json": "wp-scripts lint-pkg-json",
 		"format": "wp-scripts format",
+		"test:php": "wp-env --config .wp-env.test.json run cli --env-cwd=wp-content/plugins/enable-responsive-image vendor/bin/phpunit",
 		"test:e2e": "wp-scripts test-playwright --wp-env-config=.wp-env.test.json",
 		"test:e2e:debug": "wp-scripts test-playwright --wp-env-config=.wp-env.test.json --debug",
 		"prepare": "husky"

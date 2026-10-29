@@ -13,7 +13,9 @@
 		"wp-coding-standards/wpcs": "^3.4",
 		"phpcompatibility/phpcompatibility-wp": "^3.0@alpha",
 		"phpcompatibility/php-compatibility": "^10.0@alpha",
-		"phpcompatibility/phpcompatibility-paragonie": "^2.0@alpha"
+		"phpcompatibility/phpcompatibility-paragonie": "^2.0@alpha",
+		"phpunit/phpunit": "^9.6",
+		"yoast/phpunit-polyfills": "^4.0"
 	},
 	"config": {
 		"allow-plugins": {

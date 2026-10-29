@@ -46,6 +46,47 @@ jobs:
       - name: Running lint check
         run: npm run lint
 
+  php-unit-test:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    timeout-minutes: 15
+    strategy:
+      matrix:
+        php: ['8.2', '8.4', '8.5']
+        wp: ['WordPress', 'WordPress#7.1.3']
+        include:
+          - wp: WordPress
+            label: WP trunk
+          - wp: WordPress#7.1.3
+            label: WP 7.1.3
+
+    name: PHP Unit / PHP ${{ matrix.php }} / ${{ matrix.label }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+
+      - name: Use desired version of Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version-file: '.nvmrc'
+          cache: 'npm'
+
+      - name: Npm install
+        run: npm ci
+
+      - name: Composer install
+        run: composer install
+
+      - name: Install WordPress
+        run: |
+          WP_ENV_CORE=WordPress/${{ matrix.wp }} WP_ENV_PHP_VERSION=${{ matrix.php }} npm run wp-env-test start
+          npm run wp-env-test run cli wp core version
+
+      - name: Running PHP unit tests
+        run: npm run test:php
+
   e2e-test:
     runs-on: ubuntu-latest
     permissions:
