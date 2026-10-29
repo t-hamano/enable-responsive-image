@@ -9,7 +9,6 @@
 /vendor
 .distignore
 .editorconfig
-.markdownlint.json
 .gitignore
 .npmrc
 .nvmrc
@@ -21,11 +20,11 @@
 composer.json
 composer.lock
 eslint.config.js
-playwright.config.js
 package-lock.json
 package.json
 phpcs.xml.dist
 phpunit.xml.dist
+playwright.config.js
 README.md
 tsconfig.json
 *.tsbuildinfo
