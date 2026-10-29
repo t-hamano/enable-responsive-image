@@ -92,7 +92,7 @@ export default function ImageList( props: BlockEditProps< BlockAttributes > ) {
 		>
 			<MediaUploadCheck
 				fallback={
-					<Notice.Root className="enable-responsive-image__notice" intent="warning">
+					<Notice.Root intent="warning" style={ { gridColumn: '1 / -1' } }>
 						<Notice.Description>
 							{ __(
 								'To edit the image, you need permission to upload media.',
@@ -148,7 +148,7 @@ export default function ImageList( props: BlockEditProps< BlockAttributes > ) {
 				) ) }
 				<Button
 					ref={ addSourceRef }
-					className="enable-responsive-image__add-source"
+					style={ { gridColumn: '1 / -1' } }
 					disabled={ sources.length >= MAX_SOURCES }
 					onClick={ onAddSource }
 				>
