@@ -17,8 +17,8 @@ export interface Media {
 }
 
 export interface enableResponsiveImageVars {
-	defaultMediaValue: string;
-	showPreviewButton: string;
+	defaultMediaValue: number;
+	showPreviewButton: boolean;
 }
 
 declare global {
