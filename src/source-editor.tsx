@@ -161,6 +161,7 @@ export default function SourceEditor( {
 				setIsLoading( false );
 			},
 			onError( message: string ) {
+				setIsLoading( false );
 				createErrorNotice( message, {
 					id: 'enable-responsive-image-upload-error',
 					type: 'snackbar',
@@ -288,7 +289,6 @@ export default function SourceEditor( {
 								<Button
 									className="enable-responsive-image__action"
 									onClick={ open }
-									aria-hidden="true"
 									variant="minimal"
 									tone="neutral"
 									size="compact"
