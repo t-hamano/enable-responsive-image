@@ -1,6 +1,3 @@
-@use "~@wordpress/base-styles/variables" as variables;
-@use "~@wordpress/base-styles/colors" as colors;
-
 .enable-responsive-image__source {
 
 	legend {
@@ -28,8 +25,8 @@
 
 	@media not (prefers-reduced-motion) {
 		transition:
-			background-color var(--wpds-motion-duration-sm) ease-out,
-			color var(--wpds-motion-duration-sm) ease-out;
+			background-color var(--wpds-motion-duration-sm) var(--wpds-motion-easing-subtle),
+			color var(--wpds-motion-duration-sm) var(--wpds-motion-easing-subtle);
 	}
 }
 
@@ -38,7 +35,7 @@
 	border-radius: var(--wpds-border-radius-sm);
 
 	&:hover {
-		background: colors.$gray-300;
+		background: var(--wpds-color-background-interactive-neutral-weak-active);
 		color: var(--wpds-color-foreground-content-neutral);
 	}
 }
@@ -51,13 +48,13 @@
 	position: absolute;
 
 	@media not (prefers-reduced-motion) {
-		transition: opacity var(--wpds-motion-duration-xs) ease-out;
+		transition: opacity var(--wpds-motion-duration-xs) var(--wpds-motion-easing-subtle);
 	}
 }
 
 .enable-responsive-image__mover {
-	backdrop-filter: blur(16px) saturate(180%);
-	background: rgba(colors.$white, 0.75);
+	backdrop-filter: blur(var(--wpds-dimension-size-2xs)) saturate(180%);
+	background: color-mix(in srgb, var(--wpds-color-background-surface-neutral-strong) 75%, transparent);
 }
 
 .enable-responsive-image__actions {
@@ -69,7 +66,7 @@
 	position: absolute;
 
 	@media not (prefers-reduced-motion) {
-		transition: opacity var(--wpds-motion-duration-xs) ease-out;
+		transition: opacity var(--wpds-motion-duration-xs) var(--wpds-motion-easing-subtle);
 	}
 }
 
@@ -88,8 +85,8 @@
 }
 
 .enable-responsive-image__action {
-	backdrop-filter: blur(variables.$grid-unit-20) saturate(180%);
-	background: rgba(colors.$white, 0.75);
+	backdrop-filter: blur(var(--wpds-dimension-size-2xs)) saturate(180%);
+	background: color-mix(in srgb, var(--wpds-color-background-surface-neutral-strong) 75%, transparent);
 	flex-grow: 1;
 	justify-content: center;
 }
