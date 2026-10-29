@@ -18,6 +18,22 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
+/**
+ * Returns the default media value (px).
+ *
+ * @return int The default media value (px).
+ */
+function enable_responsive_image_get_default_media_value() {
+	/**
+	 * Filters the default media value (px).
+	 *
+	 * @since 1.0.0
+	 *
+	 * @param int $media_value The media value (px). Default is 600.
+	 */
+	return (int) apply_filters( 'enable_responsive_image_default_media_value', 600 );
+}
+
 function enable_responsive_image_enqueue_block_editor_assets() {
 	$plugin_path = untrailingslashit( plugin_dir_path( __FILE__ ) );
 	$plugin_url  = untrailingslashit( plugin_dir_url( __FILE__ ) );
@@ -34,7 +50,14 @@ function enable_responsive_image_enqueue_block_editor_assets() {
 		'enable-responsive-image',
 		'window.enableResponsiveImage = ' . wp_json_encode(
 			array(
-				'defaultMediaValue' => (int) apply_filters( 'enable_responsive_image_default_media_value', 600 ),
+				'defaultMediaValue' => enable_responsive_image_get_default_media_value(),
+				/**
+				 * Filters whether the preview button is displayed on the block toolbar.
+				 *
+				 * @since 1.0.0
+				 *
+				 * @param bool $show_preview_button Whether the preview button is displayed. Default is true.
+				 */
 				'showPreviewButton' => (bool) apply_filters( 'enable_responsive_image_show_preview_button', true ),
 			)
 		) . ';',
@@ -85,14 +108,7 @@ function enable_responsive_image_render_block_image( $block_content, $block ) {
 	$image_tag           = $matches[0];
 	$allowed_media_types = array( 'min-width', 'max-width' );
 
-	/**
-	 * Filters the default media value (px).
-	 *
-	 * @since 1.0.0
-	 *
-	 * @param int $media_value The media value (px). Default is 600.
-	 */
-	$default_media_value = (int) apply_filters( 'enable_responsive_image_default_media_value', 600 );
+	$default_media_value = enable_responsive_image_get_default_media_value();
 
 	$source_tags = '';
 
