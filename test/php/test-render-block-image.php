@@ -35,10 +35,14 @@ class Test_Render_Block_Image extends WP_UnitTestCase {
 
 	/**
 	 * Tests that the image is wrapped in a picture element with a source for each image source.
+	 *
+	 * @dataProvider data_image_tag
+	 *
+	 * @param string $image_tag Image tag.
 	 */
-	public function test_wraps_image_in_picture() {
-		$this->assertEqualHTML(
-			'<figure class="wp-block-image"><picture><source srcset="https://example.com/mobile.jpg" media="(max-width: 600px)"/><source srcset="https://example.com/desktop.jpg" media="(min-width: 1200px)"/>' . self::IMAGE_TAG . '</picture></figure>',
+	public function test_wraps_image_in_picture( $image_tag ) {
+		$this->assertSame(
+			'<figure class="wp-block-image"><picture><source srcset="https://example.com/mobile.jpg" media="(max-width: 600px)"/><source srcset="https://example.com/desktop.jpg" media="(min-width: 1200px)"/>' . $image_tag . '</picture></figure>',
 			$this->render(
 				array(
 					array(
@@ -50,8 +54,23 @@ class Test_Render_Block_Image extends WP_UnitTestCase {
 						'mediaType'  => 'min-width',
 						'mediaValue' => 1200,
 					),
-				)
+				),
+				'<figure class="wp-block-image">' . $image_tag . '</figure>'
 			)
+		);
+	}
+
+	/**
+	 * Data provider for test_wraps_image_in_picture().
+	 *
+	 * @return array[] Image tags in different forms.
+	 */
+	public function data_image_tag() {
+		return array(
+			'self-closing'         => array( self::IMAGE_TAG ),
+			'not self-closing'     => array( '<img src="https://example.com/image.jpg" alt="">' ),
+			'uppercase tag name'   => array( '<IMG src="https://example.com/image.jpg" alt="">' ),
+			'> in attribute value' => array( '<img src="https://example.com/image.jpg" alt="a > b">' ),
 		);
 	}
 

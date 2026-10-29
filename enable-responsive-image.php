@@ -76,9 +76,14 @@ function enable_responsive_image_render_block_image( $block_content, $block ) {
 		return $block_content;
 	}
 
-	preg_match( '/<img.*?\/>/', $block_content, $matches );
+	$processor = new WP_HTML_Tag_Processor( $block_content );
 
-	if ( ! isset( $matches[0] ) ) {
+	if ( ! $processor->next_tag( 'img' ) ) {
+		return $block_content;
+	}
+
+	// Match the img tag whether or not it is self-closing, allowing `>` inside quoted attribute values.
+	if ( ! preg_match( '/<img\b(?:[^>"\']|"[^"]*"|\'[^\']*\')*>/i', $block_content, $matches ) ) {
 		return $block_content;
 	}
 
@@ -117,7 +122,7 @@ function enable_responsive_image_render_block_image( $block_content, $block ) {
 	return $block_content;
 }
 
-// The image block has the same hook with priority 10 and
+// The image block has the same hook with priority 15 and
 // adds a button element for the Lightbox after the img tag.
 // This hook must be run after so that this button element is
 // not wrapped in a picture tag.
