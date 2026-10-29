@@ -35,10 +35,14 @@ class Test_Render_Block_Image extends WP_UnitTestCase {
 
 	/**
 	 * Tests that the image is wrapped in a picture element with a source for each image source.
+	 *
+	 * @dataProvider data_image_tag
+	 *
+	 * @param string $image_tag Image tag.
 	 */
-	public function test_wraps_image_in_picture() {
-		$this->assertEqualHTML(
-			'<figure class="wp-block-image"><picture><source srcset="https://example.com/mobile.jpg" media="(max-width: 600px)"/><source srcset="https://example.com/desktop.jpg" media="(min-width: 1200px)"/>' . self::IMAGE_TAG . '</picture></figure>',
+	public function test_wraps_image_in_picture( $image_tag ) {
+		$this->assertSame(
+			'<figure class="wp-block-image"><picture><source srcset="https://example.com/mobile.jpg" media="(max-width: 600px)"/><source srcset="https://example.com/desktop.jpg" media="(min-width: 1200px)"/>' . $image_tag . '</picture></figure>',
 			$this->render(
 				array(
 					array(
@@ -50,27 +54,6 @@ class Test_Render_Block_Image extends WP_UnitTestCase {
 						'mediaType'  => 'min-width',
 						'mediaValue' => 1200,
 					),
-				)
-			)
-		);
-	}
-
-	/**
-	 * Tests that img tags in different forms are wrapped in a picture element.
-	 *
-	 * @dataProvider data_image_tag_variations
-	 *
-	 * @param string $image_tag Image tag.
-	 */
-	public function test_wraps_image_tag_variations( $image_tag ) {
-		$this->assertSame(
-			'<figure class="wp-block-image"><picture><source srcset="https://example.com/mobile.jpg" media="(max-width: 600px)"/>' . $image_tag . '</picture></figure>',
-			$this->render(
-				array(
-					array(
-						'srcset'    => 'https://example.com/mobile.jpg',
-						'mediaType' => 'max-width',
-					),
 				),
 				'<figure class="wp-block-image">' . $image_tag . '</figure>'
 			)
@@ -78,16 +61,16 @@ class Test_Render_Block_Image extends WP_UnitTestCase {
 	}
 
 	/**
-	 * Data provider for test_wraps_image_tag_variations().
+	 * Data provider for test_wraps_image_in_picture().
 	 *
-	 * @return array[] Image tags.
+	 * @return array[] Image tags in different forms.
 	 */
-	public function data_image_tag_variations() {
+	public function data_image_tag() {
 		return array(
-			'not self-closing'      => array( '<img src="https://example.com/image.jpg" alt="">' ),
-			'self-closing no space' => array( '<img src="https://example.com/image.jpg" alt=""/>' ),
-			'uppercase tag name'    => array( '<IMG src="https://example.com/image.jpg" alt="">' ),
-			'> in attribute value'  => array( '<img src="https://example.com/image.jpg" alt="a > b">' ),
+			'self-closing'         => array( self::IMAGE_TAG ),
+			'not self-closing'     => array( '<img src="https://example.com/image.jpg" alt="">' ),
+			'uppercase tag name'   => array( '<IMG src="https://example.com/image.jpg" alt="">' ),
+			'> in attribute value' => array( '<img src="https://example.com/image.jpg" alt="a > b">' ),
 		);
 	}
 
