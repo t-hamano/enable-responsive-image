@@ -9,13 +9,20 @@ import type { Ref } from 'react';
 import { useState } from '@wordpress/element';
 import { __, sprintf } from '@wordpress/i18n';
 import {
-	Button,
 	DropZone,
 	RangeControl,
 	__experimentalToggleGroupControl as ToggleGroupControl,
 	__experimentalToggleGroupControlOption as ToggleGroupControlOption,
 } from '@wordpress/components';
-import { Stack, Link, SelectControl, Spinner, VisuallyHidden } from '@wordpress/ui';
+import {
+	Button,
+	IconButton,
+	Stack,
+	Link,
+	SelectControl,
+	Spinner,
+	VisuallyHidden,
+} from '@wordpress/ui';
 import { useInstanceId } from '@wordpress/compose';
 import { MediaUpload, store as blockEditorStore } from '@wordpress/block-editor';
 import { useDispatch, useSelect } from '@wordpress/data';
@@ -180,7 +187,8 @@ export default function SourceEditor( {
 					render={ ( { open } ) => (
 						<div className="enable-responsive-image__container">
 							<Button
-								__next40pxDefaultSize
+								variant="minimal"
+								tone="neutral"
 								ref={ toggleRef }
 								className={
 									! id ? 'enable-responsive-image__toggle' : 'enable-responsive-image__preview'
@@ -202,7 +210,9 @@ export default function SourceEditor( {
 							>
 								{ ! ( disableMoveUp && disableMoveDown ) && (
 									<>
-										<Button
+										<IconButton
+											variant="minimal"
+											tone="neutral"
 											ref={ moveUpRef }
 											className="enable-responsive-image__mover"
 											label={ __( 'Move up', 'enable-responsive-image' ) }
@@ -211,7 +221,6 @@ export default function SourceEditor( {
 											disabled={ disableMoveUp }
 											aria-describedby={ moveUpDescriptionId }
 											onClick={ () => onChangeOrder( -1 ) }
-											accessibleWhenDisabled
 										/>
 										<VisuallyHidden id={ moveUpDescriptionId }>
 											{ disableMoveUp
@@ -233,7 +242,9 @@ export default function SourceEditor( {
 														index
 													) }
 										</VisuallyHidden>
-										<Button
+										<IconButton
+											variant="minimal"
+											tone="neutral"
 											ref={ moveDownRef }
 											className="enable-responsive-image__mover"
 											label={ __( 'Move down', 'enable-responsive-image' ) }
@@ -242,7 +253,6 @@ export default function SourceEditor( {
 											disabled={ disableMoveDown }
 											aria-describedby={ moveDownDescriptionId }
 											onClick={ () => onChangeOrder( 1 ) }
-											accessibleWhenDisabled
 										/>
 										<VisuallyHidden id={ moveDownDescriptionId }>
 											{ disableMoveDown
@@ -277,6 +287,8 @@ export default function SourceEditor( {
 									className="enable-responsive-image__action"
 									onClick={ open }
 									aria-hidden="true"
+									variant="minimal"
+									tone="neutral"
 									size="compact"
 								>
 									{ !! id
@@ -286,6 +298,8 @@ export default function SourceEditor( {
 								<Button
 									className="enable-responsive-image__action"
 									onClick={ onRemove }
+									variant="minimal"
+									tone="neutral"
 									size="compact"
 								>
 									{ __( 'Remove', 'enable-responsive-image' ) }

@@ -17,40 +17,24 @@
 	}
 }
 
-.enable-responsive-image__notice {
-	grid-column: 1 / -1;
-}
-
-.enable-responsive-image__add-source {
-	justify-content: center;
-	grid-column: 1 / -1;
-}
-
 .enable-responsive-image__toggle,
 .enable-responsive-image__preview {
 	width: 100%;
 	padding: 0;
-	box-shadow: 0 0 0 0 var(--wp-admin-theme-color);
 	overflow: hidden;
 	display: flex;
 	justify-content: center;
 	background-color: colors.$gray-100;
 
 	@media not (prefers-reduced-motion) {
-		transition: all 0.1s ease-out;
+		transition:
+			background-color 0.1s ease-out,
+			color 0.1s ease-out;
 	}
 }
 
-// Doubled to override the height of the 40px default size of the Button.
-.enable-responsive-image__toggle.enable-responsive-image__toggle {
-	height: 150px;
-}
-
-.enable-responsive-image__preview.enable-responsive-image__preview {
-	height: auto;
-}
-
 .enable-responsive-image__toggle {
+	height: 150px;
 	border-radius: variables.$radius-small;
 
 	&:hover {

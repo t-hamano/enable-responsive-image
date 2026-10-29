@@ -4,11 +4,10 @@
 import { useRef } from '@wordpress/element';
 import { __, sprintf } from '@wordpress/i18n';
 import {
-	Button,
 	__experimentalToolsPanel as ToolsPanel,
 	__experimentalToolsPanelItem as ToolsPanelItem,
 } from '@wordpress/components';
-import { Notice } from '@wordpress/ui';
+import { Button, Notice } from '@wordpress/ui';
 import { MediaUploadCheck } from '@wordpress/block-editor';
 import { useViewportMatch } from '@wordpress/compose';
 import type { BlockEditProps } from '@wordpress/blocks';
@@ -93,7 +92,7 @@ export default function ImageList( props: BlockEditProps< BlockAttributes > ) {
 		>
 			<MediaUploadCheck
 				fallback={
-					<Notice.Root className="enable-responsive-image__notice" intent="warning">
+					<Notice.Root intent="warning" style={ { gridColumn: '1 / -1' } }>
 						<Notice.Description>
 							{ __(
 								'To edit the image, you need permission to upload media.',
@@ -149,12 +148,9 @@ export default function ImageList( props: BlockEditProps< BlockAttributes > ) {
 				) ) }
 				<Button
 					ref={ addSourceRef }
-					variant="primary"
-					className="enable-responsive-image__add-source"
+					style={ { gridColumn: '1 / -1' } }
 					disabled={ sources.length >= MAX_SOURCES }
-					accessibleWhenDisabled
 					onClick={ onAddSource }
-					__next40pxDefaultSize
 				>
 					{ __( 'Add image source', 'enable-responsive-image' ) }
 				</Button>
