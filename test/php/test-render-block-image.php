@@ -37,7 +37,7 @@ class Test_Render_Block_Image extends WP_UnitTestCase {
 	 * Tests that the image is wrapped in a picture element with a source for each image source.
 	 */
 	public function test_wraps_image_in_picture() {
-		$this->assertSame(
+		$this->assertEqualHTML(
 			'<figure class="wp-block-image"><picture><source srcset="https://example.com/mobile.jpg" media="(max-width: 600px)"/><source srcset="https://example.com/desktop.jpg" media="(min-width: 1200px)"/>' . self::IMAGE_TAG . '</picture></figure>',
 			$this->render(
 				array(
@@ -63,7 +63,7 @@ class Test_Render_Block_Image extends WP_UnitTestCase {
 	 * @param mixed $media_type Media type.
 	 */
 	public function test_invalid_media_type_falls_back_to_max_width( $media_type ) {
-		$this->assertSame(
+		$this->assertEqualHTML(
 			'<figure class="wp-block-image"><picture><source srcset="https://example.com/mobile.jpg" media="(max-width: 600px)"/>' . self::IMAGE_TAG . '</picture></figure>',
 			$this->render(
 				array(
@@ -115,8 +115,8 @@ class Test_Render_Block_Image extends WP_UnitTestCase {
 	 * @param array $source Image source without a valid media value.
 	 */
 	public function test_empty_media_value_uses_default_media_value( $source ) {
-		$this->assertStringContainsString(
-			'<source srcset="https://example.com/mobile.jpg" media="(max-width: 600px)"/>',
+		$this->assertEqualHTML(
+			'<figure class="wp-block-image"><picture><source srcset="https://example.com/mobile.jpg" media="(max-width: 600px)"/>' . self::IMAGE_TAG . '</picture></figure>',
 			$this->render( array( $source ) )
 		);
 	}
@@ -166,15 +166,17 @@ class Test_Render_Block_Image extends WP_UnitTestCase {
 
 		remove_filter( 'enable_responsive_image_default_media_value', $callback );
 
-		$this->assertStringContainsString( '<source srcset="https://example.com/mobile.jpg" media="(max-width: 1000px)"/>', $output );
-		$this->assertStringContainsString( '<source srcset="https://example.com/tablet.jpg" media="(max-width: 800px)"/>', $output );
+		$this->assertEqualHTML(
+			'<figure class="wp-block-image"><picture><source srcset="https://example.com/mobile.jpg" media="(max-width: 1000px)"/><source srcset="https://example.com/tablet.jpg" media="(max-width: 800px)"/>' . self::IMAGE_TAG . '</picture></figure>',
+			$output
+		);
 	}
 
 	/**
 	 * Tests that image sources without `srcset` or `mediaType` are skipped.
 	 */
 	public function test_ignores_source_without_required_keys() {
-		$this->assertSame(
+		$this->assertEqualHTML(
 			'<figure class="wp-block-image"><picture><source srcset="https://example.com/mobile.jpg" media="(max-width: 600px)"/>' . self::IMAGE_TAG . '</picture></figure>',
 			$this->render(
 				array(
