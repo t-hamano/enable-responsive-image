@@ -5,3 +5,4 @@ node_modules/
 vendor/
 .wp-env.override.json
 *.zip
+.phpunit.result.cache
