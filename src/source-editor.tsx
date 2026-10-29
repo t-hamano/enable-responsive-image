@@ -286,7 +286,6 @@ export default function SourceEditor( {
 								<Button
 									className="enable-responsive-image__action"
 									onClick={ open }
-									aria-hidden="true"
 									variant="minimal"
 									tone="neutral"
 									size="compact"
