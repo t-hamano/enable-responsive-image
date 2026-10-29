@@ -81,7 +81,7 @@ export default function SourceEditor( {
 		[]
 	);
 
-	const { createErrorNotice, removeAllNotices } = useDispatch( noticesStore );
+	const { createErrorNotice } = useDispatch( noticesStore );
 
 	const [ isLoading, setIsLoading ] = useState( false );
 
@@ -162,8 +162,10 @@ export default function SourceEditor( {
 			},
 			onError( message: string ) {
 				setIsLoading( false );
-				removeAllNotices();
-				createErrorNotice( message, { type: 'snackbar' } );
+				createErrorNotice( message, {
+					id: 'enable-responsive-image-upload-error',
+					type: 'snackbar',
+				} );
 			},
 		} );
 	}
