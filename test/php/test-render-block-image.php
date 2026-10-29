@@ -3,8 +3,14 @@
  * @package Enable_Responsive_Image
  */
 
+/**
+ * Tests for enable_responsive_image_render_block_image().
+ */
 class Test_Render_Block_Image extends WP_UnitTestCase {
 
+	/**
+	 * Image tag used in the block content.
+	 */
 	const IMAGE_TAG = '<img src="https://example.com/image.jpg" alt=""/>';
 
 	/**
@@ -27,6 +33,9 @@ class Test_Render_Block_Image extends WP_UnitTestCase {
 		);
 	}
 
+	/**
+	 * Tests that the image is wrapped in a picture element with a source for each image source.
+	 */
 	public function test_wraps_image_in_picture() {
 		$this->assertSame(
 			'<figure class="wp-block-image"><picture><source srcset="https://example.com/mobile.jpg" media="(max-width: 600px)"/><source srcset="https://example.com/desktop.jpg" media="(min-width: 1200px)"/>' . self::IMAGE_TAG . '</picture></figure>',
@@ -47,7 +56,11 @@ class Test_Render_Block_Image extends WP_UnitTestCase {
 	}
 
 	/**
+	 * Tests that an unsupported media type falls back to `max-width` instead of being output as is.
+	 *
 	 * @dataProvider data_invalid_media_type
+	 *
+	 * @param mixed $media_type Media type.
 	 */
 	public function test_invalid_media_type_falls_back_to_max_width( $media_type ) {
 		$this->assertSame(
@@ -63,6 +76,11 @@ class Test_Render_Block_Image extends WP_UnitTestCase {
 		);
 	}
 
+	/**
+	 * Data provider for test_invalid_media_type_falls_back_to_max_width().
+	 *
+	 * @return array[] Media types that are not `max-width` or `min-width`.
+	 */
 	public function data_invalid_media_type() {
 		return array(
 			'unknown media type' => array( 'min-height' ),
@@ -72,6 +90,9 @@ class Test_Render_Block_Image extends WP_UnitTestCase {
 		);
 	}
 
+	/**
+	 * Tests that the srcset URL is escaped so that it cannot break out of the attribute.
+	 */
 	public function test_srcset_is_escaped() {
 		$output = $this->render(
 			array(
@@ -87,7 +108,11 @@ class Test_Render_Block_Image extends WP_UnitTestCase {
 	}
 
 	/**
+	 * Tests that the default breakpoint is used when no breakpoint is set.
+	 *
 	 * @dataProvider data_empty_media_value
+	 *
+	 * @param array $source Image source without a valid media value.
 	 */
 	public function test_empty_media_value_uses_default_media_value( $source ) {
 		$this->assertStringContainsString(
@@ -96,6 +121,11 @@ class Test_Render_Block_Image extends WP_UnitTestCase {
 		);
 	}
 
+	/**
+	 * Data provider for test_empty_media_value_uses_default_media_value().
+	 *
+	 * @return array[] Image sources whose media value is missing or empty.
+	 */
 	public function data_empty_media_value() {
 		$source = array(
 			'srcset'    => 'https://example.com/mobile.jpg',
@@ -109,6 +139,10 @@ class Test_Render_Block_Image extends WP_UnitTestCase {
 		);
 	}
 
+	/**
+	 * Tests that the `enable_responsive_image_default_media_value` filter changes the default breakpoint,
+	 * but not a breakpoint that is set explicitly.
+	 */
 	public function test_default_media_value_filter_is_applied() {
 		$callback = static function () {
 			return 1000;
@@ -136,6 +170,9 @@ class Test_Render_Block_Image extends WP_UnitTestCase {
 		$this->assertStringContainsString( '<source srcset="https://example.com/tablet.jpg" media="(max-width: 800px)"/>', $output );
 	}
 
+	/**
+	 * Tests that image sources without `srcset` or `mediaType` are skipped.
+	 */
 	public function test_ignores_source_without_required_keys() {
 		$this->assertSame(
 			'<figure class="wp-block-image"><picture><source srcset="https://example.com/mobile.jpg" media="(max-width: 600px)"/>' . self::IMAGE_TAG . '</picture></figure>',
@@ -157,12 +194,22 @@ class Test_Render_Block_Image extends WP_UnitTestCase {
 	}
 
 	/**
+	 * Tests that the block content is returned as is when there is nothing to change.
+	 *
 	 * @dataProvider data_unchanged_content
+	 *
+	 * @param array  $block         Parsed block.
+	 * @param string $block_content Block content.
 	 */
 	public function test_returns_content_unchanged( $block, $block_content ) {
 		$this->assertSame( $block_content, enable_responsive_image_render_block_image( $block_content, $block ) );
 	}
 
+	/**
+	 * Data provider for test_returns_content_unchanged().
+	 *
+	 * @return array[] Blocks that have no valid image sources or no img tag, and their block content.
+	 */
 	public function data_unchanged_content() {
 		$block_content = '<figure class="wp-block-image">' . self::IMAGE_TAG . '</figure>';
 		$valid_sources = array(
@@ -196,6 +243,9 @@ class Test_Render_Block_Image extends WP_UnitTestCase {
 		);
 	}
 
+	/**
+	 * Tests that the lightbox button added by core is placed after the picture element, not inside it.
+	 */
 	public function test_lightbox_button_is_outside_picture() {
 		$output = do_blocks(
 			'<!-- wp:image {"lightbox":{"enabled":true},"enableResponsiveImageSources":[{"srcset":"https://example.com/mobile.jpg","mediaType":"max-width"}]} -->
