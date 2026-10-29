@@ -81,6 +81,12 @@ module.exports = [
 			],
 		},
 	},
+	{
+		files: [ 'src/**' ],
+		rules: {
+			'import/no-extraneous-dependencies': 'error',
+		},
+	},
 	...defaultConfig.configs[ 'test-playwright' ].map( ( config ) => ( {
 		...config,
 		files: [ 'test/e2e/**/*.ts' ],
