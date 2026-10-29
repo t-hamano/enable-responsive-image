@@ -21,6 +21,7 @@ import type { BlockEditProps } from '@wordpress/blocks';
 /**
  * Internal dependencies
  */
+import { DEFAULT_MEDIA_VALUE } from './constants';
 import type { BlockAttributes } from './types';
 
 function mediaPosition( { x, y } = { x: 0.5, y: 0.5 } ) {
@@ -44,8 +45,8 @@ export default function BlockEditPreview( { attributes }: BlockEditProps< BlockA
 	const borderProps = getBorderClassesAndStyles( attributes );
 	const shadowProps = getShadowClassesAndStyles( attributes );
 
-	const filteredSources = sources.filter( ( { srcset, mediaType, mediaValue } ) => {
-		return srcset && mediaType && mediaValue;
+	const filteredSources = sources.filter( ( { srcset, mediaType } ) => {
+		return srcset && mediaType;
 	} );
 
 	const classes = clsx( {
@@ -63,7 +64,11 @@ export default function BlockEditPreview( { attributes }: BlockEditProps< BlockA
 		<figure { ...blockProps }>
 			<picture>
 				{ filteredSources.map( ( { srcset, mediaType, mediaValue }, index ) => (
-					<source key={ index } srcSet={ srcset } media={ `(${ mediaType }: ${ mediaValue }px)` } />
+					<source
+						key={ index }
+						srcSet={ srcset }
+						media={ `(${ mediaType }: ${ mediaValue || DEFAULT_MEDIA_VALUE }px)` }
+					/>
 				) ) }
 				<img
 					src={ url }

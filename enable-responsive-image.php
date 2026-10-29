@@ -68,7 +68,7 @@ function enable_responsive_image_render_block_image( $block_content, $block ) {
 	$filtered_sources = array_filter(
 		$block['attrs']['enableResponsiveImageSources'],
 		function ( $source ) {
-			return isset( $source['srcset'], $source['mediaType'], $source['mediaValue'] );
+			return isset( $source['srcset'], $source['mediaType'] );
 		}
 	);
 
@@ -102,7 +102,7 @@ function enable_responsive_image_render_block_image( $block_content, $block ) {
 			'<source srcset="%1$s" media="(%2$s: %3$dpx)"/>',
 			esc_url( $source['srcset'] ),
 			$media_type,
-			$source['mediaValue'] ? (int) $source['mediaValue'] : $default_media_value,
+			! empty( $source['mediaValue'] ) ? (int) $source['mediaValue'] : $default_media_value,
 		);
 	}
 
