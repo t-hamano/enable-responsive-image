@@ -5,6 +5,9 @@
 		"https://downloads.wordpress.org/plugin/wordpress-beta-tester.zip",
 		"https://downloads.wordpress.org/plugin/wp-downgrade.zip"
 	],
+	"mappings": {
+		"wp-content/plugins/enable-responsive-image-test-plugins": "./test/e2e/plugins"
+	},
 	"testsEnvironment": false,
 	"port": 8889,
 	"phpmyadminPort": 9001,
