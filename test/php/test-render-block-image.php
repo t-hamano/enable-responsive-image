@@ -56,6 +56,42 @@ class Test_Render_Block_Image extends WP_UnitTestCase {
 	}
 
 	/**
+	 * Tests that img tags in different forms are wrapped in a picture element.
+	 *
+	 * @dataProvider data_image_tag_variations
+	 *
+	 * @param string $image_tag Image tag.
+	 */
+	public function test_wraps_image_tag_variations( $image_tag ) {
+		$this->assertSame(
+			'<figure class="wp-block-image"><picture><source srcset="https://example.com/mobile.jpg" media="(max-width: 600px)"/>' . $image_tag . '</picture></figure>',
+			$this->render(
+				array(
+					array(
+						'srcset'    => 'https://example.com/mobile.jpg',
+						'mediaType' => 'max-width',
+					),
+				),
+				'<figure class="wp-block-image">' . $image_tag . '</figure>'
+			)
+		);
+	}
+
+	/**
+	 * Data provider for test_wraps_image_tag_variations().
+	 *
+	 * @return array[] Image tags.
+	 */
+	public function data_image_tag_variations() {
+		return array(
+			'not self-closing'      => array( '<img src="https://example.com/image.jpg" alt="">' ),
+			'self-closing no space' => array( '<img src="https://example.com/image.jpg" alt=""/>' ),
+			'uppercase tag name'    => array( '<IMG src="https://example.com/image.jpg" alt="">' ),
+			'> in attribute value'  => array( '<img src="https://example.com/image.jpg" alt="a > b">' ),
+		);
+	}
+
+	/**
 	 * Tests that an unsupported media type falls back to `max-width` instead of being output as is.
 	 *
 	 * @dataProvider data_invalid_media_type
