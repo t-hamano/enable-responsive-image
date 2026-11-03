@@ -1,7 +1,7 @@
 /**
  * WordPress dependencies
  */
-import { __ } from '@wordpress/i18n';
+import { _x } from '@wordpress/i18n';
 
 export const DEFAULT_MEDIA_VALUE = window.enableResponsiveImage.defaultMediaValue;
 
@@ -9,11 +9,11 @@ export const SHOW_PREVIEW_BUTTON = window.enableResponsiveImage.showPreviewButto
 
 export const MEDIA_TYPES = [
 	{
-		label: __( 'max-width', 'enable-responsive-image' ),
+		label: _x( 'max-width', 'CSS media feature', 'enable-responsive-image' ),
 		value: 'max-width',
 	},
 	{
-		label: __( 'min-width', 'enable-responsive-image' ),
+		label: _x( 'min-width', 'CSS media feature', 'enable-responsive-image' ),
 		value: 'min-width',
 	},
 ];
