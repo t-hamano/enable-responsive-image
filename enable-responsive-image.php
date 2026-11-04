@@ -68,7 +68,7 @@ function enable_responsive_image_render_block_image( $block_content, $block ) {
 	$filtered_sources = array_filter(
 		$block['attrs']['enableResponsiveImageSources'],
 		function ( $source ) {
-			return isset( $source['srcset'], $source['mediaType'] );
+			return isset( $source['srcset'], $source['mediaType'] ) && is_string( $source['srcset'] );
 		}
 	);
 
