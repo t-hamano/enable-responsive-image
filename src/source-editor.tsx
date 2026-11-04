@@ -21,6 +21,7 @@ import {
 	Link,
 	SelectControl,
 	Spinner,
+	Text,
 	VisuallyHidden,
 } from '@wordpress/ui';
 import { useInstanceId } from '@wordpress/compose';
@@ -312,44 +313,71 @@ export default function SourceEditor( {
 					) }
 				/>
 				{ !! id && srcset && (
-					<Link className="enable-responsive-image__url" href={ srcset } openInNewTab>
-						{ srcset }
-					</Link>
+					<>
+						<Link className="enable-responsive-image__url" href={ srcset } openInNewTab>
+							{ srcset }
+						</Link>
+						<Text variant="body-sm" className="enable-responsive-image__media-query">
+							{ mediaType === 'min-width'
+								? sprintf(
+										/* translators: %d: Media query value in pixels. */
+										__(
+											'Displayed when the screen width is %dpx or more',
+											'enable-responsive-image'
+										),
+										mediaValue || DEFAULT_MEDIA_VALUE
+									)
+								: sprintf(
+										/* translators: %d: Media query value in pixels. */
+										__(
+											'Displayed when the screen width is %dpx or less',
+											'enable-responsive-image'
+										),
+										mediaValue || DEFAULT_MEDIA_VALUE
+									) }
+						</Text>
+					</>
 				) }
 			</Stack>
 			{ !! id && srcset && (
-				<>
-					<ToggleGroupControl
-						isBlock
-						label={ __( 'Media query type', 'enable-responsive-image' ) }
-						onChange={ onChangeMediaType }
-						value={ mediaType || MEDIA_TYPES[ 0 ].value }
-					>
-						{ MEDIA_TYPES.map( ( { label, value } ) => (
-							<ToggleGroupControlOption key={ value } label={ label } value={ value } />
-						) ) }
-					</ToggleGroupControl>
-					<RangeControl
-						label={ __( 'Media query value (px)', 'enable-responsive-image' ) }
-						value={ mediaValue || DEFAULT_MEDIA_VALUE }
-						onChange={ onChangeMediaValue }
-						min={ MIN_MEDIA_VALUE }
-						max={ MAX_MEDIA_VALUE }
-						allowReset
-						initialPosition={ DEFAULT_MEDIA_VALUE }
-					/>
-					<SelectControl
-						label={ __( 'Resolution', 'enable-responsive-image' ) }
-						value={
-							imageSizeOptions.find(
-								( option: { value: string } ) => option.value === srcsetSlug
-							) ?? null
-						}
-						items={ imageSizeOptions }
-						onValueChange={ onChangeResolution }
-						description={ __( 'Select the size of the source image.', 'enable-responsive-image' ) }
-					/>
-				</>
+				<details className="enable-responsive-image__media-settings">
+					<summary>{ __( 'Media settings', 'enable-responsive-image' ) }</summary>
+					<Stack direction="column" gap="lg">
+						<ToggleGroupControl
+							isBlock
+							label={ __( 'Media query type', 'enable-responsive-image' ) }
+							onChange={ onChangeMediaType }
+							value={ mediaType || MEDIA_TYPES[ 0 ].value }
+						>
+							{ MEDIA_TYPES.map( ( { label, value } ) => (
+								<ToggleGroupControlOption key={ value } label={ label } value={ value } />
+							) ) }
+						</ToggleGroupControl>
+						<RangeControl
+							label={ __( 'Media query value (px)', 'enable-responsive-image' ) }
+							value={ mediaValue || DEFAULT_MEDIA_VALUE }
+							onChange={ onChangeMediaValue }
+							min={ MIN_MEDIA_VALUE }
+							max={ MAX_MEDIA_VALUE }
+							allowReset
+							initialPosition={ DEFAULT_MEDIA_VALUE }
+						/>
+						<SelectControl
+							label={ __( 'Resolution', 'enable-responsive-image' ) }
+							value={
+								imageSizeOptions.find(
+									( option: { value: string } ) => option.value === srcsetSlug
+								) ?? null
+							}
+							items={ imageSizeOptions }
+							onValueChange={ onChangeResolution }
+							description={ __(
+								'Select the size of the source image.',
+								'enable-responsive-image'
+							) }
+						/>
+					</Stack>
+				</details>
 			) }
 		</Stack>
 	);

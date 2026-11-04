@@ -58,8 +58,12 @@ test.describe( 'Image Block', () => {
 		await expect( firstSource ).toHaveAttribute( 'src', new RegExp( firstSourceFilename ) );
 
 		// Change first image setting.
+		await mediaUtils.openMediaSettings();
 		await mediaUtils.changeMediaQueryValue( '800' );
 		await mediaUtils.changeResolution( 'Medium' );
+		await expect(
+			panel.getByText( 'Displayed when the screen width is 800px or less' )
+		).toBeVisible();
 
 		// Add second image source.
 		await page.getByRole( 'button', { name: 'Add image source' } ).click();
@@ -71,9 +75,13 @@ test.describe( 'Image Block', () => {
 		await expect( secondSource ).toHaveAttribute( 'src', new RegExp( secondSourceFilename ) );
 
 		// Chage second image setting.
+		await mediaUtils.openMediaSettings( 1 );
 		await mediaUtils.changeMediaQueryValue( '500', 1 );
 		await mediaUtils.changeMediaQueryType( 'min-width', 1 );
 		await mediaUtils.changeResolution( 'Thumbnail', 1 );
+		await expect(
+			panel.getByText( 'Displayed when the screen width is 500px or more' )
+		).toBeVisible();
 
 		await expect.poll( editor.getBlocks ).toMatchObject( [
 			{
@@ -264,6 +272,7 @@ test.describe( 'Image Block', () => {
 	test( 'should render image sources on the frontend', async ( { editor, page, mediaUtils } ) => {
 		await mediaUtils.insertImageBlock();
 		const sourceFilename = await mediaUtils.addImageSource( '600x450.png' );
+		await mediaUtils.openMediaSettings();
 		await mediaUtils.changeMediaQueryValue( '800' );
 
 		await expect.poll( editor.getBlocks ).toMatchObject( [
@@ -482,6 +491,13 @@ class MediaUtils {
 		await this.page.getByRole( 'button', { name: 'Add image source' } ).click();
 		await this.page.getByRole( 'button', { name: 'Set image source' } ).click();
 		return this.uploadSource( customFile );
+	}
+
+	async openMediaSettings( index = 0 ) {
+		const panel = this.page
+			.getByRole( 'region', { name: 'Editor settings' } )
+			.locator( '.enable-responsive-image' );
+		await panel.getByText( 'Media settings', { exact: true } ).nth( index ).click();
 	}
 
 	async changeMediaQueryType( option: string, index = 0 ) {

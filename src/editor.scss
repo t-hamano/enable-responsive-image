@@ -95,3 +95,24 @@
 	font-size: var(--wpds-typography-font-size-sm);
 	word-break: break-all;
 }
+
+.enable-responsive-image__media-query {
+	color: var(--wpds-color-foreground-content-neutral-weak);
+}
+
+.enable-responsive-image__media-settings {
+
+	summary {
+		cursor: pointer;
+		font-weight: var(--wpds-typography-font-weight-emphasis);
+
+		&:focus-visible {
+			outline: var(--wpds-border-width-focus) solid var(--wpds-color-stroke-focus);
+			outline-offset: var(--wpds-border-width-focus);
+		}
+	}
+
+	&[open] summary {
+		margin-bottom: var(--wpds-dimension-gap-lg);
+	}
+}
