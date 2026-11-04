@@ -215,6 +215,27 @@ class Test_Render_Block_Image extends WP_UnitTestCase {
 	}
 
 	/**
+	 * Tests that image sources whose `srcset` is not a string are skipped.
+	 */
+	public function test_ignores_source_with_non_string_srcset() {
+		$this->assertEqualHTML(
+			'<figure class="wp-block-image"><picture><source srcset="https://example.com/mobile.jpg" media="(max-width: 600px)"/>' . self::IMAGE_TAG . '</picture></figure>',
+			$this->render(
+				array(
+					array(
+						'srcset'    => array( 'https://example.com/tablet.jpg' ),
+						'mediaType' => 'max-width',
+					),
+					array(
+						'srcset'    => 'https://example.com/mobile.jpg',
+						'mediaType' => 'max-width',
+					),
+				)
+			)
+		);
+	}
+
+	/**
 	 * Tests that the block content is returned as is when there is nothing to change.
 	 *
 	 * @dataProvider data_unchanged_content
