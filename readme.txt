@@ -2,8 +2,8 @@
 Contributors: wildworks, Toro_Unit
 Tags: gutenberg, block, image, responsive
 Requires at least: 7.1
-Tested up to: 7.1
-Stable tag: 1.7.0
+Tested up to: 7.2
+Stable tag: 1.8.0
 Requires PHP: 8.2
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -50,6 +50,18 @@ You can find a list of the available filters in the [Github readme](https://gith
 * Source: https://openverse.org/image/cd8e5cc5-d38a-462e-b4c1-1ea5c6f94e20
 
 == Changelog ==
+
+= 1.8.0 =
+* Tested to WordPress 7.2
+* Drop support for WordPress 7.0
+* Drop support for PHP 8.0 and 8.1
+* Enhancement: Show when each image source is displayed and collapse its media settings
+* Enhancement: Update block sidebar controls to the new WordPress UI components
+* Fix: Output image sources whose media query value was reset, using the default value
+* Fix: Wrap images in the picture element even when the img tag is not self-closing
+* Fix: Prevent a fatal error when an image source has an invalid srcset value
+* Fix: Hide the spinner and keep other notices when an image upload fails
+* Accessibility: Remove aria-hidden from the focusable Replace and Select buttons
 
 = 1.7.0 =
 * Tested to WordPress 7.1
