@@ -38,6 +38,17 @@ import { isBlobURL } from '@wordpress/blob';
 import type { Media, Source } from './types';
 import { DEFAULT_MEDIA_VALUE, MEDIA_TYPES, MIN_MEDIA_VALUE, MAX_MEDIA_VALUE } from './constants';
 
+// `mediaUpload` and `imageSizes` are not typed in the block editor settings type.
+type BlockEditorSettings = {
+	mediaUpload: ( options: {
+		allowedTypes: string[];
+		filesList: File[];
+		onFileChange: ( files: Media[] ) => void;
+		onError: ( message: string ) => void;
+	} ) => void;
+	imageSizes: { name: string; slug: string }[];
+};
+
 type Props = {
 	source: Source;
 	index: number;
@@ -76,9 +87,8 @@ export default function SourceEditor( {
 		[ id, isSelected ]
 	);
 
-	// @ts-expect-error `mediaUpload` is missing from the block editor settings type.
 	const { mediaUpload, imageSizes } = useSelect(
-		( select ) => select( blockEditorStore ).getSettings(),
+		( select ) => select( blockEditorStore ).getSettings() as BlockEditorSettings,
 		[]
 	);
 
@@ -91,10 +101,10 @@ export default function SourceEditor( {
 	const moveDownDescriptionId = `enable-responsive-image__mover-description-down-${ instanceId }`;
 
 	const imageSizeOptions = imageSizes
-		.filter( ( { slug }: { slug: string } ) => {
+		.filter( ( { slug } ) => {
 			return image?.media_details?.sizes?.[ slug ]?.source_url;
 		} )
-		.map( ( { name, slug }: { name: string; slug: string } ) => ( {
+		.map( ( { name, slug } ) => ( {
 			value: slug,
 			label: name,
 		} ) );
@@ -153,7 +163,7 @@ export default function SourceEditor( {
 		mediaUpload( {
 			allowedTypes: [ 'image' ],
 			filesList,
-			onFileChange( [ newImage ]: Media[] ) {
+			onFileChange( [ newImage ] ) {
 				if ( isBlobURL( newImage?.url ) ) {
 					setIsLoading( true );
 					return;
@@ -161,7 +171,7 @@ export default function SourceEditor( {
 				onSelectImage( newImage );
 				setIsLoading( false );
 			},
-			onError( message: string ) {
+			onError( message ) {
 				setIsLoading( false );
 				createErrorNotice( message, {
 					id: 'enable-responsive-image-upload-error',
