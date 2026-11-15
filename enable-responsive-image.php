@@ -27,7 +27,8 @@ function enable_responsive_image_enqueue_block_editor_assets() {
 		'enable-responsive-image',
 		$plugin_url . '/build/index.js',
 		$asset_file['dependencies'],
-		$asset_file['version']
+		$asset_file['version'],
+		array( 'in_footer' => false )
 	);
 
 	wp_add_inline_script(
