@@ -47,6 +47,46 @@ jobs:
       - name: Running lint check
         run: npm run lint
 
+  plugin-check:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    timeout-minutes: 15
+
+    name: Plugin Check
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+
+      - name: Use desired version of Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version-file: '.nvmrc'
+          check-latest: true
+          cache: 'npm'
+
+      - name: Npm install and build
+        run: |
+          npm ci
+          npm run build
+
+      # Check the same files that are deployed to WordPress.org.
+      - name: Copy distributed files
+        run: |
+          mkdir -p "$RUNNER_TEMP/dist/enable-responsive-image"
+          rsync -rc --exclude-from=.distignore ./ "$RUNNER_TEMP/dist/enable-responsive-image/"
+          # The development config loads the plugin from the repository root,
+          # which would conflict with the copied plugin.
+          rm .wp-env.json
+
+      - name: Run Plugin Check
+        uses: WordPress/plugin-check-action@10857da14b6c2246d15402b3e69f777edcf8c12e # v1.1.9
+        with:
+          build-dir: ${{ runner.temp }}/dist/enable-responsive-image
+          # Report the results as annotations only, without a pull request comment.
+          repo-token: ''
+
   php-unit-test:
     runs-on: ubuntu-latest
     permissions:
